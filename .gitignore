@@ -6,3 +6,5 @@ tmp/
 notes.*
 !notes.org
 !notes.pdf
+yatproj/secret.py
+__pycache__/
