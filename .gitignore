@@ -2,6 +2,7 @@
 .idea
 *.log
 tmp/
+data/
 
 notes.*
 !notes.org
