@@ -1,18 +1,16 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.decorators import action, permission_classes, authentication_classes
+from rest_framework.decorators import action
 from .models import Board
 from yatproj.serializers import BoardSerializer
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 class BoardViewSet(viewsets.ModelViewSet):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
-    @action(detail=False, url_path='by_name/(?P<name>.+)', methods=['GET'])
+    @action(detail=False, url_path='by_name/(?P<name>.+)')
     def by_name(self, request, name = None):
         queryset = self.get_queryset().filter(name=name)
         if not queryset.exists():
