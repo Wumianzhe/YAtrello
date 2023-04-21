@@ -8,7 +8,7 @@ class Group(models.Model):
     id = models.IntegerField(validators=[MaxValueValidator(999)], primary_key=True)
     is_visible = models.BooleanField(default=False)
     name = models.CharField(max_length=25)
-
+    
 
 class Board(models.Model):
     id = models.IntegerField(validators=[MaxValueValidator(999)], primary_key=True)
@@ -36,7 +36,7 @@ class Task(models.Model):
     time_start = models.DateTimeField(default=timezone.now)
     time_deadline = models.DateTimeField(null=True)
 
-class Subtasks(models.Model):
+class Subtask(models.Model):
     id = models.IntegerField(validators=[MaxValueValidator(999)], primary_key=True)
     task_id = models.ForeignKey(Task, on_delete=models.CASCADE)
     is_completed = models.BooleanField(default=False)
