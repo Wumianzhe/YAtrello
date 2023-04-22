@@ -17,12 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework import routers
-from yatapp.views import BoardViewSet
+from yatapp.views import BoardViewSet, SectionViewSet, GroupViewSet, TaskViewSet, SubtaskViewSet, CommentViewSet
 
 
 router = routers.DefaultRouter()
 
 router.register(r'boards', BoardViewSet)
+router.register(r'sections', SectionViewSet)
+router.register(r'groups', GroupViewSet)
+router.register(r'tasks', TaskViewSet)
+router.register(r'subtasks', SubtaskViewSet)
+router.register(r'comments', CommentViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),

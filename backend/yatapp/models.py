@@ -20,7 +20,7 @@ class Board(models.Model):
 class Section(models.Model):
     id = models.IntegerField(validators=[MaxValueValidator(999)],primary_key=True)
     name = models.CharField(max_length=25)
-    board_id = models.ForeignKey(Board,on_delete=models.CASCADE)
+    board_id = models.ForeignKey(Board, on_delete=models.CASCADE)
 
 class UserGroup(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
