@@ -1,28 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
 import React, { useState, useEffect } from 'react';
+import {BrowserRouter} from "react-router-dom";
+import AppRouter from "./components/AppRouter";
+import Navbar from "./components/UI/Navbar";
+import SectionService from "./API/SectionService";
+import BoardsService from "./API/BoardsService";
+import BoardsList from "./API/BoardsList";
+import SectionList from "./API/SectionList";
+
+const  boardsService  =  new  BoardsService();
 
 function App() {
   const [data, setData] = useState(null);
 
+  async function getBoards2 () {
+      const response = await BoardsService.getBoards2();
+      console.log(response);
+  }
+  function getBoards () {
+    boardsService.getBoards().then((result) => {
+      console.log(result);
+      //self.setState({ customers:  result.data, nextPageURL:  result.nextlink})
+    });
+}
+  //*
   useEffect(() => {
-    // Send GET request when component mounts
-    fetch('http://localhost:8080')
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.error(error));
+    getBoards()
+    getBoards2()
+
   }, []);
+  //*/
   return (
-    <div>
-      {/* Render data when available */}
-      {data && (
-        <ul>
-          {data.map(item => (
-            <li key={item.id}>{item.name}</li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <BrowserRouter>
+        <Navbar/>
+        <AppRouter/>
+        <SectionList/>
+    </BrowserRouter>
+    
   );
 }
 
