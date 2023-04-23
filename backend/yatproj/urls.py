@@ -15,9 +15,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include, re_path
+from rest_framework import routers
+from yatapp.views import BoardViewSet, SectionViewSet, GroupViewSet, TaskViewSet, SubtaskViewSet, CommentViewSet
+
+
+router = routers.DefaultRouter()
+
+router.register(r'boards', BoardViewSet)
+router.register(r'sections', SectionViewSet)
+router.register(r'groups', GroupViewSet)
+router.register(r'tasks', TaskViewSet)
+router.register(r'subtasks', SubtaskViewSet)
+router.register(r'comments', CommentViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('api/')
+    path('api/', include(router.urls)),
+    path('auth/', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
 ]
