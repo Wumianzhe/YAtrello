@@ -1,5 +1,4 @@
 import React from 'react';
-import FormDialog from "../components/FormDialog";
 
 const Board = () => {
     return (
@@ -7,7 +6,6 @@ const Board = () => {
             <h1 style={{color: 'green'}}>
                 Тут находится основная страница!
             </h1>
-            <FormDialog/>
         </div>
     );
 };

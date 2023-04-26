@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
 
 function SectionList() {
 
-    const [sections, setSections] = React.useState([{id: 5, name: '', boaard_id: 1}]);
+    const [sections, setSections] = useState([{id: 5, name: '', board_id: 1}]);
     const  sectionService  =  new  SectionService();
-    const [spacing, setSpacing] = React.useState(2);
+    const [spacing, setSpacing] = useState(2);
     const classes = useStyles();
 
     function getSections () {
