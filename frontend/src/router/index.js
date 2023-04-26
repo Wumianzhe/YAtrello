@@ -1,6 +1,6 @@
 import Board from "../pages/Board";
-import Log from "../pages/Log";
-import Reg from "../pages/Reg";
+import Log from "../pages/Login";
+import Reg from "../pages/Register";
 import Profile from "../pages/Profile";
 import FullWidthGrid from "../pages/Main";
 
