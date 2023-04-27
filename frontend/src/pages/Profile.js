@@ -1,42 +1,27 @@
 import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from "@mui/material/Box";
+import { Grid } from '@mui/material';
+import ProfileCard from '../components/ProfileCards';
+import PersonalInfoCards from '../components/PersonalInfoCards';
 
 const Profile = () => {
     return (
-        <div>
-            <Box
-            display="flex"
-            justifyContent="center"
-
-            minHeight="100vh"
+        <Box padding={3}>
+            <Grid
+                container
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
             >
-                <Box>
-                    <h1 style={{color: '#002a84'}}>
-                        Тут находится профиль пользователя!
-                    </h1>
-                    <Box
-                    justifyContent="center"
-                    display="flex">
-                        <Box>
-                            <Avatar
-                                alt="Remy Sharp"
-                                sx={{ width: 125, height: 125 }}
-                            />
-                            <Box
-                            justifyContent="center"
-                            display="flex">
-                                <h1>
-                                    login
-                                    <br/>
-                                    info  
-                                </h1>
-                            </Box>
-                        </Box>
-                    </Box>
-                </Box>  
-            </Box>
-        </div>
+                <Grid item>
+                    <ProfileCard/>
+                </Grid>
+                <Grid item>
+                    <PersonalInfoCards/>
+                </Grid>
+            </Grid>
+        </Box>
     );
 };
 
