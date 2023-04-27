@@ -1,10 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import { createStyles } from '@mui/styles';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 import Scrollable from '../components/UI/Scrollable';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = createStyles((theme) => ({
     root: {
       flexGrow: 1,
       padding: theme.spacing(2),

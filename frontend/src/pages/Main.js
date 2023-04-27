@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< Updated upstream
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { createStyles } from '@mui/styles'
 import Paper from '@mui/material/Paper';
@@ -8,13 +7,6 @@ import Grid from '@mui/material/Grid';
 const theme = createTheme();
 
 const useStyles = createStyles((theme) => ({
-=======
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-
-const useStyles = makeStyles((theme) => ({
->>>>>>> Stashed changes
   root: {
     flexGrow: 1,
     padding: theme.spacing(2),
