@@ -74,8 +74,13 @@ export default function PrimarySearchAppBar() {
     // router.push('/board')
     handleMenuClose();
   };
-  const goToLogOut = () => {
-    // router.push('/reg')
+  const goToRegistration = () => {
+
+    //router.push('/reg')
+    handleMenuClose();
+  };
+  const goToAuthorization = () => {
+    //router.push('/log')
     handleMenuClose();
   };
 
@@ -98,7 +103,8 @@ export default function PrimarySearchAppBar() {
     >
       <MenuItem onClick={goToProfile}>Profile</MenuItem>
       <MenuItem onClick={goToBoards}>My boards</MenuItem>
-      <MenuItem onClick={goToLogOut}>Log out</MenuItem>
+      <MenuItem onClick={goToRegistration}>Registration</MenuItem>
+      <MenuItem onClick={goToAuthorization }>Authorization</MenuItem>
     </Menu>
   );
 
