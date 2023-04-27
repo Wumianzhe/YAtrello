@@ -11,7 +11,3 @@ export const privateRoutes = [
   { path: '/profile', component: Profile, exact: true },
   { path: '/', component: FullWidthGrid, exact: true }
 ]
-
-export const publicRoutes = [ // Not used right now
-  { path: '/', component: Log, exact: true },
-]
