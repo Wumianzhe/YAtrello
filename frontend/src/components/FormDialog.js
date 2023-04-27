@@ -7,8 +7,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import IconButton from "@material-ui/core/IconButton";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import IconButton from "@mui/material/IconButton";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import SectionService from "../API/SectionService";
 
