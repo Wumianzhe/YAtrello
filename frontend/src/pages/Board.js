@@ -1,9 +1,11 @@
 import React from 'react';
 import { createStyles } from '@mui/styles';
 import Paper from '@mui/material/Paper';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Scrollable from '../components/UI/Scrollable';
 
+const theme = createTheme();
 const useStyles = createStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -105,4 +107,11 @@ const Board = () => {
     );
 };
 
-export default Board;
+
+export default function ExpBoard() {
+  return (
+    <ThemeProvider theme={theme}>
+      <Board/>
+    </ThemeProvider>
+  )
+}

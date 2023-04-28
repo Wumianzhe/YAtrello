@@ -11,7 +11,9 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import {Link} from "react-router-dom";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+const theme = createTheme();
 const useStyles = createStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -35,7 +37,7 @@ const useStyles = createStyles((theme) => ({
   }));
 
 const Log = () => {
-    const classes = useStyles();
+    const classes = useStyles(theme);
 
     const [values, setValues] = React.useState({
         email: '',
@@ -121,4 +123,10 @@ const Log = () => {
     );
 };
 
-export default Log;
+export default function ExpLog() {
+  return (
+    <ThemeProvider theme={theme}>
+      <Log/>
+    </ThemeProvider>
+  )
+}
