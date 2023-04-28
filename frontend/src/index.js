@@ -2,28 +2,35 @@ import React from 'react';
 import ReactDOM from 'react-dom/client'
 import {RouterProvider,createBrowserRouter} from "react-router-dom";
 import Root,{ loader as rootLoader, action as rootAction} from './pages/Root';
-import Contact, {loader as contactLoader} from './pages/contact';
-import EditContact from './pages/edit';
 import ErrorPage from './pages/error-page';
-import './styles/index.css'
 
-export const routes = [
+const routes = [
 {
     path:"/",
-    element: <Root />,
+    element: <Navbar />,
     errorElement: <ErrorPage/>,
     loader: rootLoader,
     action: rootAction,
     children: [
         {
-            path: "contacts/:contactId",
-            loader: contactLoader,
-            element: <Contact />
+            path:"users/:uid",
+            element: <Profile/>
         },
         {
-            path: "contacts/:contactId/edit",
-            element: <EditContact/>,
-            loader: contactLoader,
+            path:"boards/:board_id",
+            element: <Board/>
+        },
+        {
+            path:"login",
+            element: <Login/>
+        },
+        {
+            path:"register",
+            element: <Register/>
+        },
+        {
+            path:"dashboard/:uid",
+            element: <Main/>
         }
     ]
 },
