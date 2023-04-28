@@ -1,12 +1,12 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { createStyles } from '@mui/styles'
+import { createStyles,withStyles } from '@mui/styles'
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 const theme = createTheme();
 
-const useStyles = createStyles((theme) => ({
+const styles = createStyles(({theme}) => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(2),
@@ -56,18 +56,36 @@ const useStyles = createStyles((theme) => ({
     background: '#f777fa',
   },
 }));
+const MyBoard = (props) => {
+  return (
+    <>
+    <Paper className={props.classes.paper_boards}>
+      Board
+    </Paper>
+    </>
+  )
+}
+const MyTask = (props) => {
+  return (
+    <Paper className={props.classes.paper_task}>
+      Task
+    </Paper>
+  )
+}
+
+const BoardPaper = withStyles(styles)(MyBoard)
+const TaskPaper = withStyles(styles)(MyTask)
 
 function MainInternal() {
-  const classes = useStyles();
-  <div className={classes.root}>
+  <div>
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Paper className={classes.paper_main}>Main</Paper>
+        <Paper>Main</Paper>
       </Grid>
       <Grid item xs={12} sm={6}>
 
         <Grid item xs={12}>
-          <Paper className={classes.paper_analytics}>
+          <Paper>
             Analitics
             <br />
             Analitics
@@ -80,29 +98,28 @@ function MainInternal() {
         </Grid>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Paper className={classes.paper_boards}>Board</Paper>
+            <BoardPaper/>
           </Grid>
           <Grid item xs={6}>
-            <Paper className={classes.paper_boards}>Board</Paper>
+            <BoardPaper/>
           </Grid>
 
           <Grid item xs={6}>
-            <Paper className={classes.paper_boards2}>Board</Paper>
+            <BoardPaper/>
           </Grid>
           <Grid item xs={6}>
-            <Paper className={classes.paper_boards2}>Board</Paper>
+            <BoardPaper/>
           </Grid>
         </Grid>
 
       </Grid>
       <Grid item xs={12} sm={6}>
-        <Paper className={classes.paper_task1}>Task</Paper>
-
-        <Paper className={classes.paper_task2}>Tasks</Paper>
-        <Paper className={classes.paper_task2}>Tasks</Paper>
-        <Paper className={classes.paper_task2}>Tasks</Paper>
-        <Paper className={classes.paper_task2}>Tasks</Paper>
-        <Paper className={classes.paper_task2}>Tasks</Paper>
+        <TaskPaper/>
+        <TaskPaper/>
+        <TaskPaper/>
+        <TaskPaper/>
+        <TaskPaper/>
+        <TaskPaper/>
       </Grid>
     </Grid>
   </div>
