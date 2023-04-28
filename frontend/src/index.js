@@ -1,7 +1,11 @@
 import React from 'react';
+import Board, {loader as boardLoader} from "./pages/BoardPH"
+import Login from "./pages/LoginPH"
+import Register from "./pages/RegisterPH"
+import Profile, {loader as profileLoader } from "./pages/ProfilePH"
+import Main, {loader as mainLoader} from "./pages/DashboardPH"
 import ReactDOM from 'react-dom/client'
 import {RouterProvider,createBrowserRouter} from "react-router-dom";
-import Root,{ loader as rootLoader, action as rootAction} from './pages/Root';
 import ErrorPage from './pages/error-page';
 
 const routes = [
@@ -9,16 +13,16 @@ const routes = [
     path:"/",
     element: <Navbar />,
     errorElement: <ErrorPage/>,
-    loader: rootLoader,
-    action: rootAction,
     children: [
         {
             path:"users/:uid",
-            element: <Profile/>
+            element: <Profile/>,
+            loader: profileLoader
         },
         {
             path:"boards/:board_id",
-            element: <Board/>
+            element: <Board/>,
+            loader: boardLoader
         },
         {
             path:"login",
@@ -30,7 +34,8 @@ const routes = [
         },
         {
             path:"dashboard/:uid",
-            element: <Main/>
+            element: <Main/>,
+            loader: mainLoader
         }
     ]
 },
