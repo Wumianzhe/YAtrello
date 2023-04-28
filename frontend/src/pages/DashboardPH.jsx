@@ -1,7 +1,7 @@
 // dashboard placeholder. Transfer contents from board here and rename
 import { useLoaderData } from "react-router-dom";
 
-export function loader (params) {
+export function loader ({params}) {
   // should be
   // const board = await getBoard(params.uid)
   const user = params.uid;

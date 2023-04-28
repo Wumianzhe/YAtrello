@@ -1,6 +1,7 @@
 import React from 'react';
 import Board, {loader as boardLoader} from "./pages/BoardPH"
 import Login from "./pages/LoginPH"
+import Root from "./pages/Root"
 import Register from "./pages/RegisterPH"
 import Profile, {loader as profileLoader } from "./pages/ProfilePH"
 import Main, {loader as mainLoader} from "./pages/DashboardPH"
@@ -11,7 +12,7 @@ import ErrorPage from './pages/error-page';
 const routes = [
 {
     path:"/",
-    element: <Navbar />,
+    element: <Root/>,
     errorElement: <ErrorPage/>,
     children: [
         {
