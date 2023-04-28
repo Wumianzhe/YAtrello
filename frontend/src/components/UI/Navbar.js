@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
+import {Link} from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -66,24 +67,6 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(null);
   };
 
-  const goToProfile = () => {
-    // router.push('/profile')
-    handleMenuClose();
-  };
-  const goToBoards = () => {
-    // router.push('/board')
-    handleMenuClose();
-  };
-  const goToRegistration = () => {
-
-    //router.push('/reg')
-    handleMenuClose();
-  };
-  const goToAuthorization = () => {
-    //router.push('/log')
-    handleMenuClose();
-  };
-
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -101,10 +84,12 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={goToProfile}>Profile</MenuItem>
-      <MenuItem onClick={goToBoards}>My boards</MenuItem>
-      <MenuItem onClick={goToRegistration}>Registration</MenuItem>
-      <MenuItem onClick={goToAuthorization }>Authorization</MenuItem>
+      <MenuItem>
+        <Link to={`users/1`} onClick={handleMenuClose}>Profile</Link>
+      </MenuItem>
+      <MenuItem>
+        <Link to={`dashboard/1`} onClick={handleMenuClose}>Dashboard</Link>
+      </MenuItem>
     </Menu>
   );
 

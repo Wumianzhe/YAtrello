@@ -1,12 +1,9 @@
-import {Outlet, Link} from "react-router-dom"
+import {Outlet} from "react-router-dom"
+import Navbar from "../components/UI/Navbar"
 export default function Root() {
   return (
     <>
-    <nav>
-      <Link to={`users/1`}>
-        To user1
-      </Link>
-    </nav>
+      <Navbar/>
       <Outlet/>
     </>
   )
