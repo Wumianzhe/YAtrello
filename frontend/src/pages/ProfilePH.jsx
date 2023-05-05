@@ -16,13 +16,13 @@ export function loader ({params}) {
 
 function PersonInfo(userId) {
   const [data, setData] = useState([]);
-
+  const token = 'f603a47518d62f757d464cddd4552e4e5572e038'
   useEffect(() => {
     fetch('http://localhost:8080/auth/users/' + userId + '/', {
           method: 'GET',
           origin: 'CHmI',
           headers: {
-            'Authorization': 'Token f603a47518d62f757d464cddd4552e4e5572e038',
+            'Authorization': `Token ${token}`,
             'Content-Type': 'application/json'
           }
         })
