@@ -1,5 +1,6 @@
 // board placeholder. Transfer contents from board here and rename
 import { useLoaderData } from "react-router-dom";
+import ExpBoard from './Board';
 
 export function loader ({params}) {
   // should be
@@ -15,6 +16,7 @@ export default function Board() {
       <h1>
         Board with id ${board}
       </h1>
+      <ExpBoard/>
     </div>
   )
 }

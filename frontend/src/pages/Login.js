@@ -62,16 +62,16 @@ const Log = () => {
         console.log(values);
     };
     return (
-        <div className={classes.root}>
+        <div style={classes.root}>
             
-            <Grid container justifyContent="center" className={classes.main_grid_style}> 
+            <Grid container justifyContent="center" style={classes.main_grid_style}> 
                 <Grid item xs={12} sm={5}>
-                    <Paper className={classes.paper}>
+                    <Paper style={classes.paper}>
                         <h1 style={{color: 'blue'}}>
                             Authorization
                         </h1>
-                        <div className={classes.div_style}>
-                            <FormControl className={classes.form_style} variant="outlined">
+                        <div style={classes.div_style}>
+                            <FormControl style={classes.form_style} variant="outlined">
                                 <InputLabel htmlFor="component-outlined">Email</InputLabel>
                                 <OutlinedInput 
                                     id="component-outlined" 
@@ -81,8 +81,8 @@ const Log = () => {
                                 />
                             </FormControl>
                         </div>
-                        <div className={classes.div_style}>
-                            <FormControl className={classes.form_style} variant="outlined">
+                        <div style={classes.div_style}>
+                            <FormControl style={classes.form_style} variant="outlined">
                                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-password"
@@ -90,22 +90,23 @@ const Log = () => {
                                     value={values.password}
                                     onChange={handleChange('password')}
                                     endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                        >
-                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                        </IconButton>
-                                    </InputAdornment>
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                            >
+                                            {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
                                     }
+                                    label="password"
                                     labelWidth={70}
                                 />
                             </FormControl>
                         </div>
-                        <div className={classes.div_style}>
+                        <div style={classes.div_style}>
                             <Button 
                                 variant="contained" 
                                 style={{background: 'blue'}}

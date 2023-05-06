@@ -1,0 +1,35 @@
+.myLnk {
+    padding: 5px 15px;
+    color: teal;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.root {
+    flex-grow: 1;
+    padding: 16px;
+    margin-top: 16px;
+}
+.paper {
+    padding: 16px;
+    text-align: center;
+    color: pink;
+    text-decoration-color: pink;
+    background: '#ffbdff';
+}
+.paper_main123123 {
+    padding: 16px;
+    text-align: center;
+    color: red;
+    background: '#ffefff';
+}
+
+.paper_task {
+    margin-left: 16px;
+    margin-top: 16px;
+    padding: 16px;
+    text-align: center;
+    color: green;
+    background: '#ffefff';
+  }

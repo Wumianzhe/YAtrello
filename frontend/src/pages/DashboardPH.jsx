@@ -1,5 +1,6 @@
 // dashboard placeholder. Transfer contents from board here and rename
 import { useLoaderData } from "react-router-dom";
+import FullWidthGrid from './Main'
 
 export function loader ({params}) {
   // should be
@@ -14,6 +15,7 @@ export default function Main() {
       <h1>
         Main page for user ${user}
       </h1>
+      <FullWidthGrid/>
     </div>
   )
 }

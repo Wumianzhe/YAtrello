@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 
 const theme = createTheme();
 
-const styles = createStyles(({theme}) => ({
+const styles = createStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(2),
@@ -59,6 +59,7 @@ const styles = createStyles(({theme}) => ({
 const MyBoard = (props) => {
   return (
     <>
+    {console.log(props.classes.paper_boards)}
     <Paper className={props.classes.paper_boards}>
       Board
     </Paper>
@@ -73,10 +74,12 @@ const MyTask = (props) => {
   )
 }
 
-const BoardPaper = withStyles(styles)(MyBoard)
-const TaskPaper = withStyles(styles)(MyTask)
+const BoardPaper = withStyles(styles(theme))(MyBoard)
+const TaskPaper = withStyles(styles(theme))(MyTask)
 
 function MainInternal() {
+  const classes = styles(theme);
+  return(
   <div>
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -123,6 +126,7 @@ function MainInternal() {
       </Grid>
     </Grid>
   </div>
+  )
 }
 
 export default function FullWidthGrid() {

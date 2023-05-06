@@ -4,13 +4,15 @@ import Paper from '@mui/material/Paper';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Scrollable from '../components/UI/Scrollable';
+import App from '../styles/App.css'
+import { useLoaderData } from "react-router-dom";
 
 const theme = createTheme();
 const useStyles = createStyles((theme) => ({
     root: {
       flexGrow: 1,
       padding: theme.spacing(2),
-      "margin-top": theme.spacing(2),
+      marginTop: theme.spacing(2),
     },
     paper: {
       padding: theme.spacing(2),
@@ -25,8 +27,8 @@ const useStyles = createStyles((theme) => ({
       background: '#ffefff',
     },
     paper_task: {
-      "margin-left": theme.spacing(2),
-      "margin-top":theme.spacing(2),
+      marginLeft: theme.spacing(2),
+      marginTop:theme.spacing(2),
       padding: theme.spacing(1),
       textAlign: 'center',
       color: theme.palette.text.secondary,
@@ -35,7 +37,10 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const Board = () => {
-    const classes = useStyles();
+    const board = useLoaderData();
+    console.log("hello")
+    console.log(board)
+    const classes = useStyles(theme);
 
     const items = [
         {
@@ -72,14 +77,14 @@ const Board = () => {
     ]
 
     return (
-        <div className={classes.root}>
-          <Paper className={classes.paper_main}>Main</Paper>
+        <div style={classes.root}>
+          <Paper sx={classes.paper_main}>Main</Paper>
           <Scrollable _class="sections_line">
               {
                 items.map((v, i) => {
                   return (
                     <Grid key={i} item>
-                        <Paper className={classes.paper}>
+                        <Paper sx={classes.paper}>
 
                             <div key={i} className="sections_item">
                                 <h2>{v.title}</h2>
@@ -88,7 +93,7 @@ const Board = () => {
                             {i===0 ? 
                               items2.map((t, j) => {
                                 return (
-                                  <Paper key={j} className={classes.paper_task}>
+                                  <Paper key={j} sx={classes.paper_task}>
                                     <h2>{t.title}</h2>
                                     <p>{t.text}</p>
                                   </Paper>

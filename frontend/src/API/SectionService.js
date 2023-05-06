@@ -28,7 +28,7 @@ export default class SectionService{
 		return axios.get(url).then(response => response.data);
 	}
 	getSectionById(pk) {
-		const url = `${API_URL}/api/section/${pk}`;
+		const url = `${API_URL}/api/sections/${pk}`;
 		return axios.get(url).then(response => response.data);
 	}
 	deleteSection(section){
