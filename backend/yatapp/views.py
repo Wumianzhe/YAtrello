@@ -1,11 +1,26 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
+from django.contrib.auth.decorators import login_required
 from .models import Board,Section, Group, Task, Subtask, Comment
 from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, UserSerializer
 from rest_framework.permissions import AllowAny
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
+
+@api_view(['GET'])
+def uid_by_token(request):
+    permisson_classes = [AllowAny]
+    auth_header = request.META.get('HTTP_AUTHORIZATION')
+    if auth_header is not None and auth_header.startswith('Token '):
+        token_key = auth_header.split()[1]
+        try:
+            token = Token.objects.get(key=token_key)
+            user = User.objects.get(pk=token.user_id)
+            return Response({'user_id':token.user_id, 'username': user.username}, status= status.HTTP_200_OK)
+        except:
+            return Response({'error':'invalid token'}, status=status.HTTP_400_BAD_REQUEST)
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = User.objects.all()

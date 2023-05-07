@@ -10,6 +10,7 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom";
 import ErrorPage from './pages/error-page';
 import {action as loginAction} from "./pages/LoginPH"
+import {action as registerAction} from "./pages/RegisterPH"
 
 const routes = [
   {
@@ -34,16 +35,9 @@ const routes = [
         loader: boardLoader
       },
       {
-        path: "register",
-        element: <Register />
-      },
-      {
         index: true,
         element: <Main />,
         // loader: mainLoader
-      }, {
-        path: "dashboard",
-        element: <Main />,
       }
     ]
   },
@@ -51,6 +45,11 @@ const routes = [
     path: "/login",
     element: <Login />,
     action: loginAction,
+  },
+  {
+    path: "register",
+    element: <Register />,
+    action: registerAction,
   },
 ]
 

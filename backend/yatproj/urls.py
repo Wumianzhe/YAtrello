@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework import routers
-from yatapp.views import BoardViewSet, SectionViewSet, GroupViewSet, TaskViewSet, SubtaskViewSet, CommentViewSet, UserViewSet
+from yatapp.views import BoardViewSet, SectionViewSet, GroupViewSet, TaskViewSet, SubtaskViewSet, CommentViewSet, UserViewSet, uid_by_token
 
 
 router = routers.DefaultRouter()
@@ -34,5 +34,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('auth/', include('djoser.urls')),
+    path('auth/uid_by_token/', uid_by_token, name='token by id'),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
+
 ]
