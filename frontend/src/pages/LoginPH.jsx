@@ -1,7 +1,7 @@
 // Login placeholder. Transfer contents from login here and rename
 import { handleLogin as login } from "../API/Auth";
 import Button from '@mui/material/Button';
-import {Form, redirect} from 'react-router-dom';
+import {Form, redirect, Link} from 'react-router-dom';
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -32,7 +32,9 @@ export default function Login() {
         </label>
         <p>
           <Button type="submit">Login</Button>
-          <Button type="button">Cancel</Button>
+          <Button type="button">
+            <Link to='/register'> Register</Link>
+          </Button>
         </p>
       </Form>
     </div>

@@ -27,6 +27,17 @@ export const handleLogin = async (login, pass) => {
        }).catch(err => console.log(err));
 }
 
+export const handleRegister = async(formData) => {
+  const registerPayload = {
+    username: formData.get("login"),
+    password: formData.get("pass"),
+    email: formData.get("email")
+  }
+  await axInstance.post(`/auth/users/`, registerPayload)
+                  .then().catch(err => console.log(err))
+  await handleLogin(registerPayload.username,registerPayload.password);
+}
+
 export function logout() {
   axInstance.post(`/auth/token/logout`, {})
        .then().catch(err => console.log(err));
