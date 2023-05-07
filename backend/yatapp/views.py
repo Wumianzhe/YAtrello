@@ -5,6 +5,7 @@ from .models import Board,Section, Group, Task, Subtask, Comment, Profile
 from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, ProfileSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.authtoken.models import Token
+from django.contrib.auth import get_user_model
 
 
 @api_view(['GET'])
@@ -19,7 +20,9 @@ def uid_by_token(request):
             return Response({'user_id':token.user_id, 'username': user.username}, status= status.HTTP_200_OK)
         except:
             return Response({'error':'invalid token'}, status=status.HTTP_400_BAD_REQUEST)
-class UserViewSet(viewsets.ModelViewSet):
+        
+
+class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
