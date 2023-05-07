@@ -5,7 +5,6 @@ from .models import Board,Section, Group, Task, Subtask, Comment, Profile
 from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, ProfileSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.authtoken.models import Token
-from django.contrib.auth import get_user_model
 
 
 @api_view(['GET'])
