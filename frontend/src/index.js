@@ -41,9 +41,6 @@ const routes = [
         index: true,
         element: <Main />,
         // loader: mainLoader
-      }, {
-        path: "dashboard",
-        element: <Main />,
       }
     ]
   },

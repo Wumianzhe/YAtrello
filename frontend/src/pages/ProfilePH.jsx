@@ -6,40 +6,19 @@ import Box from "@mui/material/Box";
 import { Grid } from '@mui/material';
 import ProfileCard from '../components/ProfileCards';
 import PersonalInfoCards from '../components/PersonalInfoCards';
+import { getUidByToken, getUserData } from "../API/Auth";
 
-export function loader ({params}) {
-  // should be
-  // const board = await getBoard(params.uid)
-  const user = params["uid"];
+export async function loader ({params}) {
+  let uid = params["uid"];
+  if (uid === undefined) {
+    uid = await getUidByToken();
+  }
+  const user = await getUserData(uid.user_id);
   return user;
 }
 
-function PersonInfo(userId) {
-  const [data, setData] = useState([]);
-  const token = 'f603a47518d62f757d464cddd4552e4e5572e038'
-  useEffect(() => {
-    fetch('http://localhost:8080/auth/users/' + userId + '/', {
-          method: 'GET',
-          origin: 'CHmI',
-          headers: {
-            'Authorization': `Token ${token}`,
-            'Content-Type': 'application/json'
-          }
-        })
-      .then(response => response.json())
-      .then(data => setData(data));
-  }, []);
-  return (
-    data
-  );
-}
-
-
 export default function Main() {
-
-  const user = useLoaderData();
-  const data = PersonInfo(user)
-  console.log(data)
+  const data = useLoaderData();
   return (
       <Box padding={3}>
           <Grid
