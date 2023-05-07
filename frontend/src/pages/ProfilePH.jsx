@@ -10,7 +10,7 @@ import PersonalInfoCards from '../components/PersonalInfoCards';
 export function loader ({params}) {
   // should be
   // const board = await getBoard(params.uid)
-  const user = params.uid;
+  const user = params["uid"];
   return user;
 }
 
