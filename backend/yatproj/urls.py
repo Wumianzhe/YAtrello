@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework import routers
-from yatapp.views import BoardViewSet, SectionViewSet, GroupViewSet, TaskViewSet, SubtaskViewSet, CommentViewSet
+from yatapp.views import BoardViewSet, SectionViewSet, GroupViewSet, TaskViewSet, SubtaskViewSet, CommentViewSet, UserViewSet
 
 
 router = routers.DefaultRouter()
@@ -28,6 +28,7 @@ router.register(r'groups', GroupViewSet)
 router.register(r'tasks', TaskViewSet)
 router.register(r'subtasks', SubtaskViewSet)
 router.register(r'comments', CommentViewSet)
+router.register(r'users', UserViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

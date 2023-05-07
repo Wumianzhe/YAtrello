@@ -2,9 +2,15 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import Board,Section, Group, Task, Subtask, Comment
-from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer
+from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, UserSerializer
 from rest_framework.permissions import AllowAny
+from django.contrib.auth.models import User
 
+class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    
 class BoardViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Board.objects.all()
