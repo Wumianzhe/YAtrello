@@ -28,8 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
+AUTH_USER_MODEL = 'yatapp.Profile'
 
 INSTALLED_APPS = [
     'corsheaders',
