@@ -7,7 +7,7 @@ export const axInstance = axios.create({
 export function hasJWT() {
   let flag = false;
   localStorage.getItem("token") ? flag=true:flag=false;
-  if (axInstance.defaults.headers.common["Authorization"] === undefined) {
+  if (flag && axInstance.defaults.headers.common["Authorization"] === undefined) {
     axInstance.defaults.headers.common["Authorization"] = `Token ${localStorage.getItem("token")}`
   }
   return flag
