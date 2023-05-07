@@ -9,6 +9,7 @@ import Main from "./pages/DashboardPH"
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom";
 import ErrorPage from './pages/error-page';
+import {action as loginAction} from "./pages/LoginPH"
 
 const routes = [
   {
@@ -23,7 +24,7 @@ const routes = [
     },
     children: [
       {
-        path: "users/:uid",
+        path: "users/:uid?",
         element: <Profile />,
         loader: profileLoader
       },
@@ -48,7 +49,8 @@ const routes = [
   },
   {
     path: "/login",
-    element: <Login />
+    element: <Login />,
+    action: loginAction,
   },
 ]
 

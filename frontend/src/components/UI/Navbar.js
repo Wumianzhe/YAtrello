@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
+import {logout} from '../../API/Auth'
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -85,10 +86,18 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem>
-        <Link to={`users/1`} onClick={handleMenuClose}>Profile</Link>
+        <Link to={`users`} onClick={handleMenuClose}>Profile</Link>
       </MenuItem>
       <MenuItem>
-        <Link to={`dashboard/1`} onClick={handleMenuClose}>Dashboard</Link>
+        <Link to={`dashboard`} onClick={handleMenuClose}>Dashboard</Link>
+      </MenuItem>
+      <MenuItem>
+        <Link to={`/login`} onClick={() => {
+          logout()
+          handleMenuClose()
+        }}>
+          Logout
+        </Link>
       </MenuItem>
     </Menu>
   );

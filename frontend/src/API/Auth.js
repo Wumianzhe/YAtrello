@@ -1,7 +1,8 @@
-import { setAuthToken } from "../helpers";
 import axios from 'axios'
 
-export const SERVER_URL='http://localhost:8080'
+export const axInstance = axios.create({
+  baseURL : 'http://localhost:8080'
+})
 
 export function hasJWT() {
   let flag = false;
@@ -9,16 +10,40 @@ export function hasJWT() {
   return flag
 }
 
-export const handleSubmit = (login, pass) => {
+export const handleLogin = async (login, pass) => {
   const loginPayload = {
     username: login,
     password: pass
   }
-  axios.post(`${SERVER_URL}/auth/token/login`, loginPayload)
+  await axInstance.post(`/auth/token/login`, loginPayload)
        .then(response => {
-         const token = response.data.token;
+         const token = response.data.auth_token;
 
          localStorage.setItem("token", token);
          setAuthToken(token);
        }).catch(err => console.log(err));
+}
+
+export function logout() {
+  axInstance.post(`/auth/token/logout`, {})
+       .then().catch(err => console.log(err));
+  setAuthToken(null);
+  localStorage.removeItem("token");
+}
+
+export function getUserData(uid) {
+  let data
+  axInstance.get(`/auth/users/${uid}/`,{})
+       .then(response => {
+         data = response.data
+       }).catch(err => console.log(err));
+  return data
+}
+
+export const setAuthToken = token => {
+  if (token) {
+    axInstance.defaults.headers.common["Authorization"] = `Token ${token}`
+  } else {
+    delete axInstance.defaults.headers.common["Authorization"]
+  }
 }
