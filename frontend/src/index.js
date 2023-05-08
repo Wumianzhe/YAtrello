@@ -5,7 +5,7 @@ import Root from "./pages/Root"
 import { hasJWT } from './API/Auth';
 import Register from "./pages/Register"
 import Profile, { loader as profileLoader } from "./pages/Profile"
-import Main from "./pages/DashboardPH"
+import FullWidthGrid, {loader as mainLoader, action as mainAction} from "./pages/Main"
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom";
 import ErrorPage from './pages/error-page';
@@ -36,8 +36,9 @@ const routes = [
       },
       {
         index: true,
-        element: <Main />,
-        // loader: mainLoader
+        element: <FullWidthGrid />,
+        loader: mainLoader,
+        action: mainAction
       }
     ]
   },

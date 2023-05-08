@@ -1,10 +1,29 @@
 import React from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { createStyles,withStyles } from '@mui/styles'
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import ProfileService from '../API/ProfileService';
+import BoardsList from '../components/BoardsList'
+import { getUidByToken } from '../API/Auth'
 
 const theme = createTheme();
+const profileService = new ProfileService();
+
+export async function loader () {
+  const uid = await getUidByToken();
+  const boards = await profileService.getBoards(uid);
+  if (boards.length == 0) {
+    console.log("this user has no boards"); // debug-only. Remove when there'll be visual way of displaying this
+  }
+  const tasks = await profileService.getTasks(uid);
+  return {boards,tasks};
+}
+
+export async function action() {
+
+}
 
 const styles = createStyles((theme) => ({
   root: {
@@ -56,16 +75,6 @@ const styles = createStyles((theme) => ({
     background: '#f777fa',
   },
 }));
-const MyBoard = (props) => {
-  return (
-    <>
-    {console.log(props.classes.paper_boards)}
-    <Paper className={props.classes.paper_boards}>
-      Board
-    </Paper>
-    </>
-  )
-}
 const MyTask = (props) => {
   return (
     <Paper className={props.classes.paper_task}>
@@ -74,10 +83,10 @@ const MyTask = (props) => {
   )
 }
 
-const BoardPaper = withStyles(styles(theme))(MyBoard)
 const TaskPaper = withStyles(styles(theme))(MyTask)
 
 function MainInternal() {
+  const {boards,tasks} = useLoaderData();
   const classes = styles(theme);
   return(
   <div>
@@ -99,21 +108,7 @@ function MainInternal() {
             <br />
           </Paper>
         </Grid>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <BoardPaper/>
-          </Grid>
-          <Grid item xs={6}>
-            <BoardPaper/>
-          </Grid>
-
-          <Grid item xs={6}>
-            <BoardPaper/>
-          </Grid>
-          <Grid item xs={6}>
-            <BoardPaper/>
-          </Grid>
-        </Grid>
+        <BoardsList boards={boards}/>
 
       </Grid>
       <Grid item xs={12} sm={6}>

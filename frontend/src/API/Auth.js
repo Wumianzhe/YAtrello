@@ -67,7 +67,7 @@ export async function getUidByToken() {
   let uid;
   await axInstance.get(`auth/uid_by_token`, {})
             .then(response => {
-              uid = response.data
+              uid = response.data.user_id
             }).catch(err => console.log(err));
   return uid;
 }
