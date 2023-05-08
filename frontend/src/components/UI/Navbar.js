@@ -89,7 +89,7 @@ export default function PrimarySearchAppBar() {
         <Link to={`users`} onClick={handleMenuClose}>Profile</Link>
       </MenuItem>
       <MenuItem>
-        <Link to={`dashboard`} onClick={handleMenuClose}>Dashboard</Link>
+        <Link to={`/`} onClick={handleMenuClose}>Dashboard</Link>
       </MenuItem>
       <MenuItem>
         <Link to={`/login`} onClick={() => {
