@@ -5,53 +5,26 @@ import { Grid } from '@mui/material';
 import SectionCards from '../components/SectionCards';
 import Scrollable from '../components/UI/Scrollable';
 import '../styles/App.css';
+import BoardsService from "../API/BoardsService";
 
 import FormDialog from '../components/FormDialog'
 
 
-export function loader ({params}) {
+export async function loader ({params}) {
   // should be
   // const board = await getBoard(params.uid)
-  const board = params.board_id;
+  const BS = new BoardsService();
+  let board = await BS.getBoard(params.board_id);
+  board.sections = await BS.getSections(params.board_id);
   return board;
 }
 
-function SectionList() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    fetch('http://localhost:8080/api/sections/', {
-          method: 'GET',
-          origin: 'CHmI',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-      .then(response => response.json())
-      .then(data => setData(data));
-  }, []);
-  return (
-    data
-  );
-}
-function SectionsByBoardId(sectionList, boardId){
-  let sectionArray = sectionList.filter(section => section.board_id.toString() === boardId.toString());
-  console.log("sectionArray");
-  console.log(sectionArray);
-  console.log("boardId");
-  console.log(boardId);
-  return sectionArray;
-}
-
-
 export default function Board() {
-  const board = useLoaderData();//board_id
-  //const section_list = SectionList();
-  const section_list = SectionsByBoardId(SectionList(), board);
-  console.log(section_list)
+  const board = useLoaderData();
   return (
     <Grid container padding={7} spacing={3}>
       <Scrollable _class="sections_line">
-        {section_list.map((sec, i) =>
+        {board.sections.map((sec, i) =>
             <Grid key={i} item>
               <SectionCards sec={sec}/>
             </Grid>
