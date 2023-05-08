@@ -1,6 +1,18 @@
-import { handleRegister as register } from "../API/Auth";
+import React from 'react';
+import { createStyles } from '@mui/styles';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
-import {Form, redirect} from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {Form, redirect, Link} from 'react-router-dom';
+import { handleRegister as register } from "../API/Auth";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -8,41 +20,131 @@ export async function action({ request }) {
   return redirect(`/`);
 }
 
+
+const theme = createTheme();
+const useStyles = createStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+      padding: theme.spacing(2),
+    },
+    paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+
+    },
+    form_style: {
+        width: theme.spacing(40),
+    },
+    main_grid_style: {
+        padding: theme.spacing(10),
+    },
+    div_style: {
+        padding: theme.spacing(1),
+    }
+  }));
+
+const Reg = () => {
+    const classes = useStyles(theme);
+
+    const [values, setValues] = React.useState({
+        email: '',
+        password: '',
+        showPassword: false,
+    });
+
+    const handleClickShowPassword = () => {
+        setValues({ ...values, showPassword: !values.showPassword });
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+    return (
+        <div style={classes.root}>
+            <Form method="post">
+            <Grid container justifyContent="center" style={classes.main_grid_style}> 
+                <Grid item xs={12} sm={5}>
+                    <Paper style={classes.paper}>
+                        <h1 style={{color: 'blue'}}>
+                            Registration
+                        </h1>
+                        <div style={classes.div_style}>
+                            <FormControl style={classes.form_style} variant="outlined">
+                                <InputLabel htmlFor="component-outlined">Login</InputLabel>
+                                <OutlinedInput 
+                                    id="component-outlined" 
+                                    //value={values.email} 
+                                    //onChange={handleChange('email')} 
+                                    label="login"
+                                    type="text"
+                                    name="login" 
+                                />
+                            </FormControl>
+                        </div>
+                        <div style={classes.div_style}>
+                            <FormControl style={classes.form_style} variant="outlined">
+                                <InputLabel htmlFor="component-outlined">Email</InputLabel>
+                                <OutlinedInput 
+                                    id="component-outlined" 
+                                    //value={values.email} 
+                                    //onChange={handleChange('email')} 
+                                    label="email"
+                                    type="text"
+                                    name="email" 
+                                />
+                            </FormControl>
+                        </div>
+                        <div style={classes.div_style}>
+                            <FormControl style={classes.form_style} variant="outlined">
+                                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-password"
+                                    type={values.showPassword ? 'text' : 'password'}
+                                    //value={values.password}
+                                    //onChange={handleChange('password')}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                            >
+                                            {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    label="password"
+                                    labelWidth={70}
+                                    name="pass"
+                                />
+                            </FormControl>
+                        </div>
+                        <div style={classes.div_style}>
+                            <Button 
+                                variant="contained" 
+                                style={{background: 'blue'}}
+                                //onClick={verificationAndAuthorization}
+                                type="submit"
+                            >
+                                Register
+                            </Button>
+                        </div>
+                        <Link to={'/login'} style={{color: 'blue'}}>Already registered?</Link>
+                    </Paper>
+                </Grid>
+            </Grid>
+            </Form>
+        </div>
+    );
+};
+
 export default function Register() {
   return (
-    <div>
-      <h1>
-        Registration page
-      </h1>
-      <Form method="post">
-        <div>
-        <label>
-          <span>login</span>
-          <input
-            type="text"
-            name="login"
-          />
-        </label>
-        <label>
-          <span>email</span>
-          <input
-            type="text"
-            name="email"
-          />
-        </label>
-        <label>
-          <span>password</span>
-          <input
-            type="text"
-            name="pass"
-          />
-        </label>
-        </div>
-        <p>
-          <Button type="submit">Register</Button>
-          <Button type="button">Cancel</Button>
-        </p>
-      </Form>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Reg/>
+    </ThemeProvider>
   )
 }

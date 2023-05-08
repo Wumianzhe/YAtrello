@@ -32,15 +32,17 @@ function TaskBySectionId(taskList, secId){
 
 export default function SectionCards(props) {
     const taskList = TaskBySectionId(TaskList(), props.sec.id)
-    console.log(taskList)
+    //console.log("section id", props.sec.id)
+    //console.log("taskList")
+    //console.log(taskList)
   return (
     <Card sx={{ maxWidth: 500, minWidth: 300 }}>
       <CardContent>
         <Typography variant="h5" component="div">
           {props.sec.name}
         </Typography>
-        {taskList.map(task =>
-          <TaskCard task={task}/>
+        {taskList.map((task, i) =>
+          <TaskCard key={i} task={task}/>
         )}
       </CardContent>
       <CardActions>

@@ -38,7 +38,7 @@ export default function BasicCard(props) {
         <Button variant="secondary" size="small" onClick={handleClickOpen}>
         ...
         </Button>
-        <Dialog open={open} onClose={handleClose} fullWidth="true">
+        <Dialog open={open} onClose={handleClose} fullWidth={true}>
         <DialogTitle>{props.task.text}</DialogTitle>
         <DialogContent>
             <DialogContentText>

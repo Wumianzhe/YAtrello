@@ -10,8 +10,17 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
-import {Link} from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+import { handleLogin as login } from "../API/Auth";
+import {Form, redirect, Link} from 'react-router-dom';
+
+export async function action({ request }) {
+    const formData = await request.formData();
+    await login(formData.get("login"), formData.get("pass"));
+    return redirect(`/`);
+  }
+
 
 const theme = createTheme();
 const useStyles = createStyles((theme) => ({
@@ -63,7 +72,7 @@ const Log = () => {
     };
     return (
         <div style={classes.root}>
-            
+            <Form method="post">
             <Grid container justifyContent="center" style={classes.main_grid_style}> 
                 <Grid item xs={12} sm={5}>
                     <Paper style={classes.paper}>
@@ -72,12 +81,14 @@ const Log = () => {
                         </h1>
                         <div style={classes.div_style}>
                             <FormControl style={classes.form_style} variant="outlined">
-                                <InputLabel htmlFor="component-outlined">Email</InputLabel>
+                                <InputLabel htmlFor="component-outlined">Login</InputLabel>
                                 <OutlinedInput 
                                     id="component-outlined" 
-                                    value={values.email} 
-                                    onChange={handleChange('email')} 
-                                    label="email" 
+                                    //value={values.email} 
+                                    //onChange={handleChange('email')} 
+                                    label="login1"
+                                    type="text"
+                                    name="login" 
                                 />
                             </FormControl>
                         </div>
@@ -87,8 +98,8 @@ const Log = () => {
                                 <OutlinedInput
                                     id="outlined-adornment-password"
                                     type={values.showPassword ? 'text' : 'password'}
-                                    value={values.password}
-                                    onChange={handleChange('password')}
+                                    //value={values.password}
+                                    //onChange={handleChange('password')}
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <IconButton
@@ -103,6 +114,7 @@ const Log = () => {
                                     }
                                     label="password"
                                     labelWidth={70}
+                                    name="pass"
                                 />
                             </FormControl>
                         </div>
@@ -110,16 +122,17 @@ const Log = () => {
                             <Button 
                                 variant="contained" 
                                 style={{background: 'blue'}}
-                                onClick={verificationAndAuthorization}
+                                //onClick={verificationAndAuthorization}
+                                type="submit"
                             >
                                 Authorization
                             </Button>
                         </div>
-                        <Link to={'/reg'} style={{color: 'blue'}}>Not registered yet?</Link>
+                        <Link to={'/register'} style={{color: 'blue'}}>Not registered yet?</Link>
                     </Paper>
                 </Grid>
             </Grid>
-
+            </Form>
         </div>
     );
 };
