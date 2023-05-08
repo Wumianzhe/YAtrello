@@ -1,8 +1,8 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action, api_view
-from .models import Board,Section, Group, Task, Subtask, Comment, Profile, UserGroup
-from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, ProfileSerializer, UserGroupSerializer
+from .models import Board,Section, Group, Task, Subtask, Comment, Profile
+from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, ProfileSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.authtoken.models import Token
 from django.db.models import Q
@@ -31,15 +31,14 @@ class ProfileViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
     @action(detail=True, methods=["get"], url_path=r'groups',)
     def groups(self,request, pk = None):
-        groups = UserGroup.objects.filter(user_id = pk)
-        serializer = UserGroupSerializer(groups, many = True)
+        groups = Profile.objects.get(pk=pk).groups.all()
+        serializer = GroupSerializer(groups, many = True)
         return Response(serializer.data)
     @action(detail=True, methods=["get"], url_path=r'boards',)
     def boards(self,request, pk = None):
-        groups = UserGroup.objects.filter(user_id = pk).values('group_id')
-        board_admin = Board.objects.filter(admin_gid__in = groups)
-        board_user = Board.objects.filter(user_gid__in = groups)
-        serializer = BoardSerializer([board_admin,board_user], many= True);
+        groups = Profile.objects.get(pk=pk).groups.all().values('id')
+        boards = Board.objects.filter(Q(admin_gid__in = groups) | Q(user_gid__in = groups))
+        serializer = BoardSerializer(boards, many= True);
         return Response(serializer.data)
     serializer_class = ProfileSerializer
     
@@ -104,14 +103,3 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer = CommentSerializer(comments, many = True)
         return Response(serializer.data)
     serializer_class = CommentSerializer
-
-class UserGroupViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
-    queryset = Comment.objects.all()
-    serializer_class = UserGroupSerializer
-    @action(detail=False, url_path='by_user_id/(?P<user_id>[0-9]+)')
-    def by_user_id(self, request, user_id = None):
-        usergroups = UserGroup.objects.filter(user_id = user_id).values('group_id')
-        serializer = UserGroupSerializer(usergroups, many = True)
-        return Response(serializer.data)
-    #@action(detail=False, url_path='')

@@ -6,6 +6,10 @@ from django.utils import timezone
 
 # Create your models here. 
 
+class Group(models.Model):
+    id = models.AutoField(primary_key=True)
+    is_visible = models.BooleanField(default=False)
+    name = models.CharField(max_length=25)
 
 class Profile(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
@@ -16,6 +20,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     short_bio = models.TextField(blank=True, validators=[MaxLengthValidator(999)])
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    groups = models.ManyToManyField(Group)
     
     objects = ProfileManager()
 
@@ -23,29 +28,16 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
 
-
-
-class Group(models.Model):
-    id = models.AutoField(primary_key=True)
-    is_visible = models.BooleanField(default=False)
-    name = models.CharField(max_length=25)
-    
-
 class Board(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=25)
     admin_gid = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='board_admins')
     user_gid = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='board_users')
 
-
 class Section(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=25)
     board_id = models.ForeignKey(Board, on_delete=models.CASCADE)
-
-class UserGroup(models.Model):
-    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
 
 class Task(models.Model):
     id = models.AutoField(primary_key=True)
