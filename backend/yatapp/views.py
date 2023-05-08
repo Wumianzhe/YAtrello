@@ -1,11 +1,9 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action, api_view
-from django.contrib.auth.decorators import login_required
-from .models import Board,Section, Group, Task, Subtask, Comment
-from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, UserSerializer
+from .models import Board,Section, Group, Task, Subtask, Comment, Profile
+from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, ProfileSerializer
 from rest_framework.permissions import AllowAny
-from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
 
@@ -17,14 +15,16 @@ def uid_by_token(request):
         token_key = auth_header.split()[1]
         try:
             token = Token.objects.get(key=token_key)
-            user = User.objects.get(pk=token.user_id)
+            user = Profile.objects.get(pk=token.user_id)
             return Response({'user_id':token.user_id, 'username': user.username}, status= status.HTTP_200_OK)
         except:
             return Response({'error':'invalid token'}, status=status.HTTP_400_BAD_REQUEST)
-class UserViewSet(viewsets.ModelViewSet):
+        
+
+class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
     
 class BoardViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
@@ -34,13 +34,18 @@ class BoardViewSet(viewsets.ModelViewSet):
     def by_name(self, request, name = None):
         queryset = self.get_queryset().filter(name=name)
         if not queryset.exists():
-            return Response({'msg':'Object not found'}, status= status.HTTP_404_NOT_FOUND)    
+            return Response({'error':'Object not found'}, status= status.HTTP_404_NOT_FOUND)    
         serializer = self.get_serializer(queryset, many = True)
         return Response(serializer.data)
 
 class SectionViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Section.objects.all()
+    @action(detail= False, url_path='by_board_id/(?P<board_id>[0-9]+)')
+    def by_board_id(self, request, board_id = None):
+        sections = Section.objects.filter(board_id=board_id)
+        serializer = SectionSerializer(sections, many = True)
+        return Response(serializer.data)
     serializer_class = SectionSerializer
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -51,14 +56,29 @@ class GroupViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Task.objects.all()
+    @action(detail= False, url_path='by_user_id/(?P<user_id>[0-9]+)')
+    def by_user_id(self,request, user_id = None):
+        tasks = Task.objects.filter(user_id = user_id)
+        serializer = TaskSerializer(tasks, many = True)
+        return Response(serializer.data)
     serializer_class = TaskSerializer
 
 class SubtaskViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Subtask.objects.all()
+    @action(detail= False, url_path='by_task_id/(?P<task_id>[0-9]+)')
+    def by_task_id(self, request, task_id = None):
+        subtasks = Subtask.objects.filter(task_id=task_id)
+        serializer = SubtaskSerializer(subtasks, many = True)
+        return Response(serializer.data)
     serializer_class = SubtaskSerializer
 
 class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Comment.objects.all()
+    @action(detail=False, url_path='by_task_id/(?P<task_id>[0-9]+)')
+    def by_task_id(self, request, task_id = None):
+        comments = Comment.objects.filter(task_id=task_id)
+        serializer = CommentSerializer(comments, many = True)
+        return Response(serializer.data)
     serializer_class = CommentSerializer

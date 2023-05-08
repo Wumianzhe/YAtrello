@@ -1,8 +1,29 @@
 from django.db import models
-from django.core.validators import MaxValueValidator,MaxLengthValidator
-from django.contrib.auth.models import User
+from django.core.validators import MaxLengthValidator
+from .managers import ProfileManager 
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
+
 # Create your models here. 
+
+
+class Profile(AbstractBaseUser, PermissionsMixin):
+    id = models.AutoField(primary_key=True)
+    email = models.EmailField(unique=True)
+    username = models.CharField(max_length=20, unique=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    short_bio = models.TextField(blank=True, validators=[MaxLengthValidator(999)])
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    
+    objects = ProfileManager()
+
+    REQUIRED_FIELDS = ['email']
+    USERNAME_FIELD = 'username'
+    EMAIL_FIELD = 'email'
+
+
 
 class Group(models.Model):
     id = models.AutoField(primary_key=True)
@@ -23,13 +44,13 @@ class Section(models.Model):
     board_id = models.ForeignKey(Board, on_delete=models.CASCADE)
 
 class UserGroup(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
 
 class Task(models.Model):
     id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users_task')
-    author_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='authors_task')
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='users_task')
+    author_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='authors_task')
     text = models.TextField(validators=[MaxLengthValidator(999)])
     section_id = models.ForeignKey(Section, on_delete=models.CASCADE)
     is_completed = models.BooleanField(default=False)
@@ -39,9 +60,12 @@ class Task(models.Model):
 class Subtask(models.Model):
     id = models.AutoField(primary_key=True)
     task_id = models.ForeignKey(Task, on_delete=models.CASCADE)
+    text = models.TextField(validators=[MaxLengthValidator(999)])
     is_completed = models.BooleanField(default=False)
 
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     task_id =  models.ForeignKey(Task, on_delete=models.CASCADE)
+    text = models.TextField(validators=[MaxLengthValidator(999)],default='')
+    time = models.DateTimeField(default=timezone.now)
