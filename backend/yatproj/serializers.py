@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from yatapp.models import Board, Section, Group, Task, Subtask, Comment, Profile
+from yatapp.models import Board, Section, Group, Task, Subtask, Comment, Profile, UserGroup
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,6 +21,11 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = '__all__'
 
+class UserGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserGroup
+        fields = '__all__'
+        
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task

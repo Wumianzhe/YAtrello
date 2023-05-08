@@ -1,11 +1,11 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action, api_view
-from .models import Board,Section, Group, Task, Subtask, Comment, Profile
-from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, ProfileSerializer
+from .models import Board,Section, Group, Task, Subtask, Comment, Profile, UserGroup
+from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, ProfileSerializer, UserGroupSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.authtoken.models import Token
-
+from django.db.models import Q
 
 @api_view(['GET'])
 def uid_by_token(request):
@@ -30,6 +30,11 @@ class BoardViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
+    @action(detail=False, url_path='by_user_id/(?P<user_id>[0-9]+)')
+    def by_user_id(self, request, name = None):
+        queryset = Board.objects.filter(Q(admin_gid__in = Group))
+
+
     @action(detail=False, url_path='by_name/(?P<name>.+)')
     def by_name(self, request, name = None):
         queryset = self.get_queryset().filter(name=name)
@@ -82,3 +87,14 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer = CommentSerializer(comments, many = True)
         return Response(serializer.data)
     serializer_class = CommentSerializer
+
+class UserGroupViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = Comment.objects.all()
+    serializer_class = UserGroupSerializer
+    @action(detail=False, url_path='by_user_id/(?P<user_id>[0-9]+)')
+    def by_user_id(self, request, user_id = None):
+        usergroups = UserGroup.objects.filter(user_id = user_id).values('group_id')
+        serializer = UserGroupSerializer(usergroups, many = True)
+        return Response(serializer.data)
+    #@action(detail=False, url_path='')
