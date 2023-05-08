@@ -24,6 +24,23 @@ def uid_by_token(request):
 class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Profile.objects.all()
+    @action(detail=True, methods=["get"], url_path=r'tasks',)
+    def tasks(self,request, pk = None):
+        tasks = Task.objects.filter(user_id = pk)
+        serializer = TaskSerializer(tasks, many = True)
+        return Response(serializer.data)
+    @action(detail=True, methods=["get"], url_path=r'groups',)
+    def groups(self,request, pk = None):
+        groups = UserGroup.objects.filter(user_id = pk)
+        serializer = UserGroupSerializer(groups, many = True)
+        return Response(serializer.data)
+    @action(detail=True, methods=["get"], url_path=r'boards',)
+    def boards(self,request, pk = None):
+        groups = UserGroup.objects.filter(user_id = pk).values('group_id')
+        board_admin = Board.objects.filter(admin_gid__in = groups)
+        board_user = Board.objects.filter(user_gid__in = groups)
+        serializer = BoardSerializer([board_admin,board_user], many= True);
+        return Response(serializer.data)
     serializer_class = ProfileSerializer
     
 class BoardViewSet(viewsets.ModelViewSet):
