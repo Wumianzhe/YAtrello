@@ -1,19 +1,27 @@
-import axios from 'axios';
-const API_URL = 'http://localhost:8080';
+import { axInstance } from './Auth';
 
 export default class BoardsService{
-	//constructor(){}
-	
-	static async getBoards2() {
-		const url = `${API_URL}/api/boards`;
-		return axios.get(url).then(response => response.data).catch(error => {console.error(error)});
+	async getBoard (id) {
+		try {
+			const response = await axInstance.get(`/api/boards/${id}`);
+			return response.data;
+		} catch (err) {
+			console.log(err);
+		}
 	}  
-	getBoards() {
-		const url = `${API_URL}/api/boards`;
-		return axios.get(url).then(response => response.data);
-	}  
-	createBoard(board){
-		const url = `${API_URL}/api/boards/`;
-		return axios.post(url,board);
+	async createBoard(board){
+		try {
+			await axInstance.post(`/api/boards/`, board);
+		} catch (err) {
+			console.log(err);
+		}
 	}
+    async getSections(id) {
+        try {
+			const response = await axInstance.get(`/api/sections/by_board_id/${id}`);
+			return response.data;
+		} catch (err) {
+			console.log(err);
+		}
+    }
 }
