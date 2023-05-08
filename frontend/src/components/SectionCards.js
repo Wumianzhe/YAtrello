@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TaskCard from '../components/TaskCard';
+import List from '@mui/material/List';
+import ListItemText from '@mui/material/ListItemText';
+import { ListItem } from '@mui/material';
 
 
-function TaskList() {
+function TaskList(secId) {
   const [data, setData] = useState([]);
   useEffect(() => {
     fetch('http://localhost:8080/api/tasks/', {
@@ -41,9 +43,20 @@ export default function SectionCards(props) {
         <Typography variant="h5" component="div">
           {props.sec.name}
         </Typography>
+        <br/>
+        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
         {taskList.map((task, i) =>
-          <TaskCard key={i} task={task}/>
+        <ListItem
+        key={i}
+        disableGutters
+        secondaryAction={
+          <TaskCard task={task}/>
+        }
+      >
+        <ListItemText primary={`${task.text}`} />
+        </ListItem>
         )}
+        </List>
       </CardContent>
       <CardActions>
         {/* <Button size="small">Add</Button> */}
