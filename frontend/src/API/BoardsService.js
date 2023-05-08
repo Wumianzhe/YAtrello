@@ -18,7 +18,7 @@ export default class BoardsService{
 	}
     async getSections(id) {
         try {
-			const response = await axInstance.get(`/api/sections/by_board_id/${id}`);
+			const response = await axInstance.get(`/api/boards/${id}/sections`);
 			return response.data;
 		} catch (err) {
 			console.log(err);

@@ -19,9 +19,17 @@ export default class SectionService {
 			console.error(error);
 		}
 	}
+	async getTasks(id) {
+		try {
+			const response = await axInstance.get(`/api/sections/${id}/tasks`);
+			return response.data;
+		} catch (err) {
+			console.log(err);
+		}
+	}
 	async deleteSection(section) {
 		try {
-			await axInstance.delete(`/api/section/${section.id}`);
+			await axInstance.delete(`/api/sections/${section.id}`);
 		} catch (err) {
 			console.log(err);
 		}
@@ -35,7 +43,7 @@ export default class SectionService {
 	}
 	async updateSection(section) {
 		try {
-			await axInstance.put(`/api/section/${section.id}`, section);
+			await axInstance.put(`/api/sections/${section.id}`, section);
 		} catch (err) {
 			console.log(err);
 		}
