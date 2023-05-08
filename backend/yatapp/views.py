@@ -46,10 +46,12 @@ class BoardViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
-    @action(detail=False, url_path='by_user_id/(?P<user_id>[0-9]+)')
-    def by_user_id(self, request, name = None):
-        queryset = Board.objects.filter(Q(admin_gid__in = Group))
-
+    @action(detail=False, url_path='by_group/(?P<user_id>[0-9]+)')
+    def by_user_id(self, request, user_id, name = None):
+        usergroups = UserGroup.objects.filter(user_id = user_id).values('group_id')
+        boards = Board.objects.filter(Q(admin_gid__in = usergroups) | Q(user_gid__in = usergroups)).values('id')
+        serializer = BoardSerializer(boards, many = True)
+        return Response(serializer.data)
 
     @action(detail=False, url_path='by_name/(?P<name>.+)')
     def by_name(self, request, name = None):
@@ -77,6 +79,11 @@ class GroupViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Task.objects.all()
+    @action(detail=False, url_path='by_section_id/(?P<section_id>[0-9]+)')
+    def by_section_id(self, request, section_id = None):
+        tasks = Task.objects.filter(section_id=section_id)
+        serializer = TaskSerializer(tasks, many = True)
+        return Response(serializer.data)
     @action(detail= False, url_path='by_user_id/(?P<user_id>[0-9]+)')
     def by_user_id(self,request, user_id = None):
         tasks = Task.objects.filter(user_id = user_id)

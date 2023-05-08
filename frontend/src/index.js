@@ -1,16 +1,16 @@
 import React from 'react';
-import Board, { loader as boardLoader } from "./pages/BoardPH"
-import Login from "./pages/LoginPH"
+import Board, { loader as boardLoader } from "./pages/Board"
+import Login from "./pages/Login"
 import Root from "./pages/Root"
 import { hasJWT } from './API/Auth';
-import Register from "./pages/RegisterPH"
-import Profile, { loader as profileLoader } from "./pages/ProfilePH"
+import Register from "./pages/Register"
+import Profile, { loader as profileLoader } from "./pages/Profile"
 import Main from "./pages/DashboardPH"
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom";
 import ErrorPage from './pages/error-page';
-import {action as loginAction} from "./pages/LoginPH"
-import {action as registerAction} from "./pages/RegisterPH"
+import {action as loginAction} from "./pages/Login"
+import {action as registerAction} from "./pages/Register"
 
 const routes = [
   {
