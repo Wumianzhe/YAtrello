@@ -9,7 +9,7 @@ from rest_framework.authtoken.models import Token
 
 @api_view(['GET'])
 def uid_by_token(request):
-    permisson_classes = [AllowAny]
+    # permisson_classes = [AllowAny]
     auth_header = request.META.get('HTTP_AUTHORIZATION')
     if auth_header is not None and auth_header.startswith('Token '):
         token_key = auth_header.split()[1]
