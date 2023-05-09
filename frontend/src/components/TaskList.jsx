@@ -28,8 +28,10 @@ export default function TaskList({ tasks }) {
                     <Typography component={'div'} variant="body2" color="textSecondary" style={{ paddingLeft: theme.spacing(1) }}>
                       <strong>
                         <p>{task.header + '\n'}</p>
+                      </strong>
+                      <strong>
                         deadline:
-                      </strong> {new Date(task.time_deadline).toLocaleString()}
+                      </strong> {task.time_deadline === null? "None" : new Date(task.time_deadline).toLocaleString()}
                     </Typography>
                   } />
                 </ListItem>
