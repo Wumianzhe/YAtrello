@@ -23,10 +23,10 @@ export default function SubtaskCard(props) {
 
   return (
     <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      {props.list.map((value) => {
+      {props.list.map((value,index) => {
         return (
           <ListItem
-            key={value}
+            key={index}
             secondaryAction={
               <Checkbox
                 edge="end"

@@ -10,8 +10,24 @@ import CommentIcon from '@mui/icons-material/Comment';
 import IconButton from '@mui/material/IconButton';
 
 import SubtaskCard from '../components/SubtaskCard';
+import TaskService from '../API/TaskService';
+
+const TS = new TaskService();
+  
 
 export default function BasicCard({task}) {
+    const [changed, setChanged] = useState(true)
+  const [subtasks,setSubtasks] = useState([])
+  useEffect(() => {
+    const fetchData = async() => {
+      const res = await TS.getSubtasks(task.id);
+      setSubtasks(res)
+    }
+    if (changed) {
+      fetchData();
+      setChanged(false);
+    }
+  },[changed, task.id])
     const [open, setOpen] = React.useState(false);
     // const subtaskList = SubtaskList(task.id)
     const handleClickOpen = () => {
@@ -31,7 +47,7 @@ export default function BasicCard({task}) {
         <DialogContent>
             <br/>
             <Typography>Subtasks</Typography>
-          <SubtaskCard list={task.subtasks}/>
+          <SubtaskCard list={subtasks}/>
             <br/>
             <Typography variant="body2">
                 Author and Users list wil be added soon
