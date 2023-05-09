@@ -11,7 +11,7 @@ const theme = createTheme();
 
 export default function TaskList({ tasks }) {
   return (
-      <Grid item md={12} lg={6}>
+    <div>
         {tasks.map((task, i) =>
           <div key={i} style={{ 'paddingTop': '15px' }}>
             <Card variant="outlined">
@@ -25,7 +25,7 @@ export default function TaskList({ tasks }) {
                   <ListItemText primary={
                     <Typography component={'div'} variant="body2" color="textSecondary" style={{ paddingLeft: theme.spacing(1) }}>
                       <strong>
-                        {task.header + '\n'}
+                        <p>{task.header + '\n'}</p>
                         deadline:
                       </strong> {new Date(task.time_deadline).toLocaleString()}
                     </Typography>
@@ -36,6 +36,6 @@ export default function TaskList({ tasks }) {
 
           </div>
         )}
-      </Grid>
+    </div>
   )
 }

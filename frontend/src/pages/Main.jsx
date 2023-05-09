@@ -96,7 +96,7 @@ function MainInternal() {
       <Grid item xs={12}>
         <Paper>Main</Paper>
       </Grid>
-      <Grid item md={12} lg={6}>
+      <Grid item sm={12} md={6}>
         <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
           <Analytics boards={boards} tasks={tasks} incomplete={uncompletedTasks} />
         </Grid>
@@ -104,7 +104,9 @@ function MainInternal() {
           <BoardsList boards={boards} />
         </Grid>
       </Grid>
+      <Grid item sm={12} md={6}>
       <TaskList tasks={uncompletedTasks}/>
+      </Grid>
     </Grid>
   )
 }
