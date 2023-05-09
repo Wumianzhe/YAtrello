@@ -5,6 +5,7 @@ import Root from "./pages/Root"
 import { hasJWT } from './API/Auth';
 import Register from "./pages/Register"
 import Profile, { loader as profileLoader } from "./pages/Profile"
+import PEdit, {action as pEditAction} from "./pages/EditProfile"
 import FullWidthGrid, {loader as mainLoader, action as mainAction} from "./pages/Main"
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom";
@@ -26,8 +27,19 @@ const routes = [
     children: [
       {
         path: "users/:uid?",
-        element: <Profile />,
-        loader: profileLoader
+        children: [
+          {
+            index: true,
+            loader: profileLoader,
+            element: <Profile />,
+          },
+          {
+            path: "edit",
+            element: <PEdit/>,
+            loader: profileLoader,
+            action: pEditAction
+          }
+        ]
       },
       {
         path: "boards/:board_id",
