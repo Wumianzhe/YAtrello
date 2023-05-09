@@ -90,14 +90,19 @@ function MainInternal() {
   const classes = styles(theme);
   return(
   <div>
-    <Grid container spacing={2}>
+    <Grid 
+      sx={{padding: theme.spacing(4)}}
+      container spacing={2}
+    >
       <Grid item xs={12}>
         <Paper>Main</Paper>
       </Grid>
       <Grid item xs={12} sm={6}>
 
         <Grid item xs={12}>
-          <Paper>
+          <Paper
+            sx={{padding: theme.spacing(2)}}
+          >
             Analitics
             <br />
             Analitics
