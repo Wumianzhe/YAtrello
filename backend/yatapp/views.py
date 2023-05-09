@@ -102,9 +102,15 @@ class SectionViewSet(viewsets.ModelViewSet):
     
 
 class GroupViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+    @action(detail=False, url_path='by_name/(?P<name>.+)')
+    def by_name(self,request, name = None):
+        queryset_group = Group.objects.filter(name=name)
+        group_id = queryset_group[0].id
+        return Response({'group_id':group_id})
 
     @action(detail=True, methods=["get"], url_path=r'users',)
     def profiles(self,request, pk = None):
@@ -155,10 +161,20 @@ class TaskViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class SubtaskViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset = Subtask.objects.all()
     serializer_class = SubtaskSerializer
 
+    @action(detail=False,url_path='by_user_id/(?P<user_id>[0-9]+)')
+    def by_user_id(self, request, user_id = None):
+        tasks = Task.objects.filter(user_id=user_id)
+        subtasks = []
+        for task in tasks:
+            subtasks_queryset = Subtask.objects.filter(task_id = task.id)
+            subtasks.extend(subtasks_queryset)
+        serializer = SubtaskSerializer(subtasks, many = True)
+        return Response(serializer.data)
+    
     @action(detail= False, url_path='by_task_id/(?P<task_id>[0-9]+)')
     def by_task_id(self, request, task_id = None):
         subtasks = Subtask.objects.filter(task_id=task_id)

@@ -7,6 +7,7 @@ import ProfileService from '../API/ProfileService';
 import BoardsList from '../components/BoardsList'
 import { getUidByToken } from '../API/Auth'
 import TaskList from '../components/TaskList';
+import ADDNewBoard from '../components/AddNewBoard';
 
 import { Typography, CircularProgress, Box } from '@mui/material';
 
@@ -89,6 +90,7 @@ function MainInternal() {
   const { boards, tasks } = useLoaderData();
   const uncompletedTasks = CurrentTask(tasks);
   return (
+    <div>
     <Grid
       sx={{ padding: theme.spacing(4) }}
       container spacing={2}
@@ -108,6 +110,8 @@ function MainInternal() {
         <TaskList tasks={uncompletedTasks}/>
       </Grid>
     </Grid>
+    <ADDNewBoard/>
+  </div>
   )
 }
 

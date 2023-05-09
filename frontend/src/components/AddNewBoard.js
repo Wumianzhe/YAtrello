@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -13,9 +13,33 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import Paper from '@mui/material/Paper';
+import ProfileService from '../API/ProfileService';
+import BoardsService from '../API/BoardsService';
 
+
+let PS = new ProfileService();
+let BS = new BoardsService();
 
 export default function ADDNewBoard() {
+  const [textValue, setTextValue] = useState('');
+
+  const [changed, setChanged] = useState(true)
+  const [left,setLeft] = useState([])
+  useEffect(() => {
+    const fetchData = async() => {
+      const res = await PS.getProfileList();
+      setLeft(res)
+    }
+    if (changed) {
+      fetchData();
+      setChanged(false);
+    }
+  },[left,changed])
+  //const UL = users.map(user => {return })
+  console.log(left)
+
+
+
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -34,8 +58,8 @@ export default function ADDNewBoard() {
         return a.filter((value) => b.indexOf(value) !== -1);
     }
 
-    const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState([0, 1, 2, 3]);
+  const [checked, setChecked] = React.useState([]);
+  //const [left, setLeft] = React.useState(UL);
   const [right, setRight] = React.useState([]);
 
   const leftChecked = intersection(checked, left);
@@ -76,22 +100,22 @@ export default function ADDNewBoard() {
     setRight([]);
   };
 
-  const customList = (items) => (
+  const customList = (users) => (
     <Paper sx={{ width: 200, height: 230, overflow: 'auto' }}>
       <List dense component="div" role="list">
-        {items.map((value) => {
-          const labelId = `transfer-list-item-${value}-label`;
+        {users.map((user,i) => {
+          const labelId = `transfer-list-item-${user}-label`;
 
           return (
             <ListItem
-              key={value}
+              key={i}
               role="listitem"
               button
-              onClick={handleToggle(value)}
+              onClick={handleToggle(user)}
             >
               <ListItemIcon>
                 <Checkbox
-                  checked={checked.indexOf(value) !== -1}
+                  checked={checked.indexOf(user) !== -1}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{
@@ -99,7 +123,7 @@ export default function ADDNewBoard() {
                   }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+              <ListItemText id={labelId} primary={user.first_name + ' ' + user.last_name} />
             </ListItem>
           );
         })}
@@ -107,75 +131,90 @@ export default function ADDNewBoard() {
     </Paper>
   );
 
+  const handCreater = async(boardName, userList) =>{
+    if (boardName !== '' ){
+      let idGroup = await PS.createGroups(boardName)
+      for (let i = 0; i < userList.length; i++) {
+        await PS.addUserToGroup(userList[i].id, idGroup);
+      }
+      let board = {name: boardName, admin_gid: 1, user_gid: idGroup}
+      await BS.createBoard(board)
+      handleClose();
+    }   
+  } 
 
 
-    return (
-        <React.Fragment>
-        <Button variant="outlined" onClick={handleClickOpen}>
-            New board
-        </Button>
-        <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>New board</DialogTitle>
-        <DialogContent>
-        <TextField margin="dense" label="Board  name" variant="outlined" />
+  return (
+      <React.Fragment>
+      <Button variant="outlined" onClick={handleClickOpen}>
+          New board
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>New board</DialogTitle>
+      <DialogContent>
+      <TextField  
+        margin="dense" 
+        label="Board  name" 
+        variant="outlined" 
+        value={textValue}
+        onChange={(event) => setTextValue(event.target.value)}/>
 
 
-        <Grid container spacing={2} justifyContent="center" alignItems="center" label="User list">
-        <Grid item>{customList(left)}</Grid>
-        <Grid item>
-            <Grid container direction="column" alignItems="center">
-            <Button
-                sx={{ my: 0.5 }}
-                variant="outlined"
-                size="small"
-                onClick={handleAllRight}
-                disabled={left.length === 0}
-                aria-label="move all right"
-            >
-                ≫
-            </Button>
-            <Button
-                sx={{ my: 0.5 }}
-                variant="outlined"
-                size="small"
-                onClick={handleCheckedRight}
-                disabled={leftChecked.length === 0}
-                aria-label="move selected right"
-            >
-                &gt;
-            </Button>
-            <Button
-                sx={{ my: 0.5 }}
-                variant="outlined"
-                size="small"
-                onClick={handleCheckedLeft}
-                disabled={rightChecked.length === 0}
-                aria-label="move selected left"
-            >
-                &lt;
-            </Button>
-            <Button
-                sx={{ my: 0.5 }}
-                variant="outlined"
-                size="small"
-                onClick={handleAllLeft}
-                disabled={right.length === 0}
-                aria-label="move all left"
-            >
-                ≪
-            </Button>
-            </Grid>
-        </Grid>
-        <Grid item>{customList(right)}</Grid>
-        </Grid>
+      <Grid container spacing={2} justifyContent="center" alignItems="center" label="User list">
+      <Grid item>{customList(left)}</Grid>
+      <Grid item>
+          <Grid container direction="column" alignItems="center">
+          <Button
+              sx={{ my: 0.5 }}
+              variant="outlined"
+              size="small"
+              onClick={handleAllRight}
+              disabled={left.length === 0}
+              aria-label="move all right"
+          >
+              ≫
+          </Button>
+          <Button
+              sx={{ my: 0.5 }}
+              variant="outlined"
+              size="small"
+              onClick={handleCheckedRight}
+              disabled={leftChecked.length === 0}
+              aria-label="move selected right"
+          >
+              &gt;
+          </Button>
+          <Button
+              sx={{ my: 0.5 }}
+              variant="outlined"
+              size="small"
+              onClick={handleCheckedLeft}
+              disabled={rightChecked.length === 0}
+              aria-label="move selected left"
+          >
+              &lt;
+          </Button>
+          <Button
+              sx={{ my: 0.5 }}
+              variant="outlined"
+              size="small"
+              onClick={handleAllLeft}
+              disabled={right.length === 0}
+              aria-label="move all left"
+          >
+              ≪
+          </Button>
+          </Grid>
+      </Grid>
+      <Grid item>{customList(right)}</Grid>
+      </Grid>
 
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose}>Create</Button>
-        </DialogActions>
-        </Dialog>
-        </React.Fragment>
-  );
+      </DialogContent>
+      <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handCreater(textValue, right)}>Create</Button>
+      </DialogActions>
+      </Dialog>
+      </React.Fragment>
+);
 }
-  
