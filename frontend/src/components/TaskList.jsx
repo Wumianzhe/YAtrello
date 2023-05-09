@@ -1,4 +1,4 @@
-import TaskCard from "./TaskCard"
+import TaskModal from "./TaskModal"
 import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import { ListItem } from '@mui/material';
@@ -18,7 +18,7 @@ export default function TaskList({ tasks }) {
           key={i}
           disableGutters
           secondaryAction={
-            <TaskCard task={task} />
+            <TaskModal task={task} />
           }>
           <ListItemText primary={`${task.text}`} />
         </ListItem>

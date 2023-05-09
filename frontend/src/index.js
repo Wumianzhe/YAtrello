@@ -1,5 +1,5 @@
 import React from 'react';
-import Board, { loader as boardLoader } from "./pages/Board"
+import Board, { loader as boardLoader, action as boardAction } from "./pages/Board"
 import Login from "./pages/Login"
 import Root from "./pages/Root"
 import { hasJWT } from './API/Auth';
@@ -44,7 +44,8 @@ const routes = [
       {
         path: "boards/:board_id",
         element: <Board />,
-        loader: boardLoader
+        loader: boardLoader,
+        action: boardAction
       },
       {
         index: true,
