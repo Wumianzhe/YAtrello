@@ -6,10 +6,15 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
+import Grid from '@mui/material/Grid';
+import {Form, redirect, Link} from 'react-router-dom';
+
 function  BoardsList({boards}){
     return (
         <div  className="boards--list">
+            <Grid container spacing={2}>
             {boards.map((board, index) =>
+                <Grid item xs={6} key={index}>
                 <Box sx={{ maxWidth: 300 }} key={index}>
                     <Card variant="outlined">
                         <CardContent>
@@ -24,12 +29,14 @@ function  BoardsList({boards}){
                                 boards.user_gid {board.user_gid}
                             </Typography>
                         </CardContent>
-                        <CardActions>
-                            <Button size="small">Learn More</Button>
+                        <CardActions style={{paddingLeft: '16px', marginTop: '-15px'}}>
+                            <Link to={`/boards/${board.id}`} style={{color: 'blue', textDecoration: 'none'}}>Learn more</Link>
                         </CardActions>
                     </Card>
-                </Box>)
-            }       
+                </Box>
+                </Grid>)
+            }      
+            </Grid> 
         </div>
     );
 }
