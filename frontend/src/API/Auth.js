@@ -71,3 +71,11 @@ export async function getUidByToken() {
             }).catch(err => console.log(err));
   return uid;
 }
+
+export async function updateProfile(uid, user) {
+  try {
+    await axInstance.patch(`/api/profiles/${uid}/`, user);
+  } catch (err) {
+    console.log(err);
+  }
+}
