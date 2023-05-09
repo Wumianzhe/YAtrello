@@ -22,7 +22,7 @@ export default function SectionCard({sec}) {
       fetchData();
       setChanged(false);
     }
-  },[tasks,changed])
+  },[changed])
   return (
     <Card sx={{ maxWidth: 500, minWidth: 300 }}>
       <CardContent>
