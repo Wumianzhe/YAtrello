@@ -62,6 +62,7 @@ class BoardViewSet(viewsets.ModelViewSet):
         # serializer = BoardSerializer(board)
         return Response({'board_id':f'{board_id}'})
 
+
     @action(detail=False, url_path='by_name/(?P<name>.+)')
     def by_name(self, request, name = None):
         queryset = self.get_queryset().filter(name=name)
