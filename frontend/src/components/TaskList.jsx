@@ -29,13 +29,9 @@ export default function TaskList({ tasks }) {
                       <strong>
                         <p>{task.header + '\n'}</p>
                       </strong>
-                      { task.time_deadline === null?null:
-                      <div>
                       <strong>
                         deadline:
-                      </strong> {new Date(task.time_deadline).toLocaleString()}
-                      </div>
-                      }
+                      </strong> {task.time_deadline === null? "None" : new Date(task.time_deadline).toLocaleString()}
                     </Typography>
                   } />
                 </ListItem>
