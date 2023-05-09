@@ -14,8 +14,10 @@ export default function TaskList({ tasks }) {
     <div>
         {tasks.map((task, i) =>
           <div key={i} style={{ 'paddingTop': '15px' }}>
-            <Card variant="outlined">
-              <CardContent>
+            <Card variant="outlined" style={{marginRight: '-30px'}}>
+              <CardContent
+                style={{margin: '-15px'}}
+              >
                 <ListItem
                   disableGutters
                   secondaryAction={
