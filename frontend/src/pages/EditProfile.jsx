@@ -13,6 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
+import Paper from '@mui/material/Paper';
 
 
 
@@ -46,17 +47,23 @@ function InputWithLabel(props) {
     console.log("props", props)
     return (
         <div style={{display: 'flex'}}>
-        <div style={{display: 'flex', alignItems: 'center'}}><strong>{props.text} </strong></div>
-        <div style={{display: 'flex', paddingLeft: '20px', align: "right"}}>
-            <FormControl variant="standard">
-                <Input 
-                    id="component-simple" 
-                    defaultValue={`${props.default}`} 
-                    name={`${props.name}`}
-                />
-            </FormControl>
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <div style={{display: 'flex', alignItems: 'center'}}><strong>{props.text} </strong></div>
+                </Grid>
+                <Grid item xs={6}>
+                    <div style={{paddingLeft: '20px', "text-align": "right"}}>
+                        <FormControl variant="standard">
+                            <Input 
+                                id="component-simple" 
+                                defaultValue={`${props.default}`} 
+                                name={`${props.name}`}
+                            />
+                        </FormControl>
+                    </div>
+                </Grid>
+            </Grid>
         </div>
-    </div>
     );
   }
   
@@ -78,29 +85,32 @@ export default function Edit() {
   return (
     <Form method="put">
       <Box padding={3}>
-      <a name="id">{data.id}</a>
           <Grid
               container
               direction="column"
               justifyContent="center"
               alignItems="center"
+              style={{'margin-top': '5%'}}             
           >
-              <Grid item>
+              <Paper style={{padding: '15px'}}>
+              `  <Grid style={{padding: '25px'}} item>
 
-                <InputWithLabel text="login" default={data.username} name="username"/>
-                <InputWithLabel text="email" default={data.email} name="email"/>
-                <InputWithLabel text="First name" default={data.first_name} name="first_name"/>
-                <InputWithLabel text="Last name" default={data.last_name} name="last_name"/>
-                <InputWithLabel text="Something about me" default={data.short_bio} name="short_bio"/>
-                <Button 
-                    variant="contained" 
-                    style={{background: 'blue'}}
-                    type="submit"
-                    //disabled={newSection.name===''}
-                >
-                    Save
-                </Button>
-              </Grid>
+                    <div style={{fontSize: 26, 'textAlign': 'center', color: 'blue', marginTop: '-25px', padding: '10px'}}>Editing a profile</div>
+                    <InputWithLabel text="login" default={data.username} name="username"/>
+                    <InputWithLabel text="email" default={data.email} name="email"/>
+                    <InputWithLabel text="First name" default={data.first_name} name="first_name"/>
+                    <InputWithLabel text="Last name" default={data.last_name} name="last_name"/>
+                    <InputWithLabel text="Something about me" default={data.short_bio} name="short_bio"/>
+                    <Button 
+                        variant="contained" 
+                        style={{background: 'blue'}}
+                        type="submit"
+                        //disabled={newSection.name===''}
+                    >
+                        Save
+                    </Button>
+                </Grid>`
+              </Paper>
           </Grid>
       </Box>
       </Form>

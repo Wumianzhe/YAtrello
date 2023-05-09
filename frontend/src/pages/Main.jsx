@@ -104,8 +104,8 @@ function MainInternal() {
           <BoardsList boards={boards} />
         </Grid>
       </Grid>
-      <Grid item sm={12} md={6}>
-      <TaskList tasks={uncompletedTasks}/>
+      <Grid item sm={12} md={6} style={{paddingRight: '30px'}}>
+        <TaskList tasks={uncompletedTasks}/>
       </Grid>
     </Grid>
   )
