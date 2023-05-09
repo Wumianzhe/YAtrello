@@ -13,6 +13,8 @@ import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 // import {useHistory} from "react-router-dom";
+import InfoIcon from '@mui/icons-material/Info';
+import HomeIcon from '@mui/icons-material/Home';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -112,9 +114,9 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            YATrello
+            Suneb
           </Typography>
-          <Search>
+          <Search style={{marginLeft: '8%', width: '500px'}}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -126,6 +128,25 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
+              //onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <Link to={`/`} style={{color: 'white'}}>
+                  <HomeIcon fontSize='large'/>
+              </Link>
+            </IconButton>
+          </Box>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <IconButton
+              //onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <InfoIcon fontSize='large'/>
+            </IconButton>
+          </Box>
+          
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <IconButton
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
@@ -133,7 +154,7 @@ export default function PrimarySearchAppBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircle fontSize='large'/>
             </IconButton>
           </Box>
         </Toolbar>
