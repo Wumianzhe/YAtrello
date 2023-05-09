@@ -102,9 +102,15 @@ class SectionViewSet(viewsets.ModelViewSet):
     
 
 class GroupViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+    @action(detail=False, url_path='by_name/(?P<name>.+)')
+    def by_name(self,request, name = None):
+        queryset_group = Group.objects.filter(name=name)
+        group_id = queryset_group[0].id
+        return Response({'group_id':group_id})
 
     @action(detail=True, methods=["get"], url_path=r'users',)
     def profiles(self,request, pk = None):
