@@ -7,16 +7,13 @@ import ProfileCard from '../components/ProfileCards';
 import PersonalInfoCards from '../components/PersonalInfoCards';
 import { getUidByToken, getUserData } from "../API/Auth";
 
-export async function loader ({params}) {
-  let uid = params["uid"];
-  if (uid === undefined) {
-    uid = await getUidByToken();
-  }
-  const user = await getUserData(uid);
-  return user;
+export async function action ({ request }) {
+  const formData = await request.formData();
+  // patchProfile
+  return null;
 }
 
-export default function Main() {
+export default function Edit() {
   const data = useLoaderData();
   console.log(data)
   return (
