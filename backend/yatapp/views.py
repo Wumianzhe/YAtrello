@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action, api_view
 from .models import Board,Section, Group, Task, Subtask, Comment, Profile
 from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, ProfileSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.models import Token
 from django.db.models import Q
 from django.http import HttpResponseBadRequest
@@ -78,7 +78,7 @@ class BoardViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class SectionViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
 
@@ -88,11 +88,18 @@ class SectionViewSet(viewsets.ModelViewSet):
         serializer = SectionSerializer(sections, many = True)
         return Response(serializer.data)
     
+    @action(detail = False, url_path='by_task_id/(?P<task_id>[0-9]+)')
+    def by_task_id(self, request, task_id = None):
+        task_query = Task.objects.filter(id = task_id).values('section_id')
+        section_id = task_query[0]['section_id']
+        return Response({'section_id':section_id})
+
     @action(detail=True, methods=["get"], url_path=r'tasks',)
     def tasks(self,request, pk = None):
         tasks = Task.objects.filter(section_id = pk)
         serializer = TaskSerializer(tasks, many = True)
         return Response(serializer.data)
+    
 
 class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
