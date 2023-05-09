@@ -43,6 +43,7 @@ class Task(models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='users_task')
     author_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='authors_task')
+    header = models.TextField(validators=[MaxLengthValidator(99)])
     text = models.TextField(validators=[MaxLengthValidator(999)])
     section_id = models.ForeignKey(Section, on_delete=models.CASCADE)
     is_completed = models.BooleanField(default=False)

@@ -26,34 +26,33 @@ def uid_by_token(request):
 class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
     @action(detail=True, methods=["get"], url_path=r'tasks',)
     def tasks(self,request, pk = None):
         tasks = Task.objects.filter(user_id = pk)
         serializer = TaskSerializer(tasks, many = True)
         return Response(serializer.data)
+    
     @action(detail=True, methods=["get"], url_path=r'groups',)
     def groups(self,request, pk = None):
         groups = Profile.objects.get(pk=pk).groups.all()
         serializer = GroupSerializer(groups, many = True)
         return Response(serializer.data)
+    
     @action(detail=True, methods=["get"], url_path=r'boards',)
     def boards(self,request, pk = None):
         groups = Profile.objects.get(pk=pk).groups.all().values('id')
         boards = Board.objects.filter(Q(admin_gid__in = groups) | Q(user_gid__in = groups))
-        serializer = BoardSerializer(boards, many= True);
+        serializer = BoardSerializer(boards, many= True)
         return Response(serializer.data)
-    serializer_class = ProfileSerializer
+    
     
 class BoardViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
-    @action(detail=False, url_path='by_group/(?P<user_id>[0-9]+)')
-    def by_user_id(self, request, user_id, name = None):
-        usergroups = UserGroup.objects.filter(user_id = user_id).values('group_id')
-        boards = Board.objects.filter(Q(admin_gid__in = usergroups) | Q(user_gid__in = usergroups)).values('id')
-        serializer = BoardSerializer(boards, many = True)
-        return Response(serializer.data)
+
     @action(detail=False, url_path='by_name/(?P<name>.+)')
     def by_name(self, request, name = None):
         queryset = self.get_queryset().filter(name=name)
@@ -61,6 +60,7 @@ class BoardViewSet(viewsets.ModelViewSet):
             return Response({'error':'Object not found'}, status= status.HTTP_404_NOT_FOUND)    
         serializer = self.get_serializer(queryset, many = True)
         return Response(serializer.data)
+    
     @action(detail=True, methods=["get"], url_path=r'sections',)
     def sections(self,request, pk = None):
         sections = Section.objects.filter(board_id = pk)
@@ -70,12 +70,14 @@ class BoardViewSet(viewsets.ModelViewSet):
 class SectionViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Section.objects.all()
+    serializer_class = SectionSerializer
+
     @action(detail= False, url_path='by_board_id/(?P<board_id>[0-9]+)')
     def by_board_id(self, request, board_id = None):
         sections = Section.objects.filter(board_id=board_id)
         serializer = SectionSerializer(sections, many = True)
         return Response(serializer.data)
-    serializer_class = SectionSerializer
+    
     @action(detail=True, methods=["get"], url_path=r'tasks',)
     def tasks(self,request, pk = None):
         tasks = Task.objects.filter(section_id = pk)
@@ -86,11 +88,13 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
     @action(detail=True, methods=["get"], url_path=r'users',)
     def profiles(self,request, pk = None):
         profiles = Group.objects.get(pk=pk).profile_set.all()
         serializer = ProfileSerializer(profiles, many = True)
         return Response(serializer.data)
+    #todo
     @action(detail=True, methods=["post"], url_path=r'add_users',)
     def add_users(self,request, pk = None):
         try:
@@ -100,28 +104,33 @@ class GroupViewSet(viewsets.ModelViewSet):
         profiles = Profile.objects.filter(id__in = body_data["users"])
         serializer = ProfileSerializer(profiles, many = True)
         group = Group.objects.get(pk=pk)
-        group.add(profiles)
+        for profile in profiles:
+            group.profile_set.add(profile.id)
         return Response(serializer.data)
 
 class TaskViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
     @action(detail=False, url_path='by_section_id/(?P<section_id>[0-9]+)')
     def by_section_id(self, request, section_id = None):
         tasks = Task.objects.filter(section_id=section_id)
         serializer = TaskSerializer(tasks, many = True)
         return Response(serializer.data)
+    
     @action(detail= False, url_path='by_user_id/(?P<user_id>[0-9]+)')
     def by_user_id(self,request, user_id = None):
         tasks = Task.objects.filter(user_id = user_id)
         serializer = TaskSerializer(tasks, many = True)
         return Response(serializer.data)
-    serializer_class = TaskSerializer
+    
     @action(detail=True, methods=["get"], url_path=r'subtasks',)
     def subtasks(self,request, pk = None):
         subtasks = Subtask.objects.filter(task_id = pk)
         serializer = SubtaskSerializer(subtasks, many = True)
         return Response(serializer.data)
+    
     @action(detail=True, methods=["get"], url_path=r'comments',)
     def comments(self,request, pk = None):
         comments = Comment.objects.filter(task_id = pk)
@@ -131,19 +140,23 @@ class TaskViewSet(viewsets.ModelViewSet):
 class SubtaskViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Subtask.objects.all()
+    serializer_class = SubtaskSerializer
+
     @action(detail= False, url_path='by_task_id/(?P<task_id>[0-9]+)')
     def by_task_id(self, request, task_id = None):
         subtasks = Subtask.objects.filter(task_id=task_id)
         serializer = SubtaskSerializer(subtasks, many = True)
         return Response(serializer.data)
-    serializer_class = SubtaskSerializer
+    
 
 class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
     @action(detail=False, url_path='by_task_id/(?P<task_id>[0-9]+)')
     def by_task_id(self, request, task_id = None):
         comments = Comment.objects.filter(task_id=task_id)
         serializer = CommentSerializer(comments, many = True)
         return Response(serializer.data)
-    serializer_class = CommentSerializer
+    

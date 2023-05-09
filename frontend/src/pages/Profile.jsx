@@ -13,7 +13,7 @@ export async function loader ({params}) {
   if (uid === undefined) {
     uid = await getUidByToken();
   }
-  const user = await getUserData(uid.user_id);
+  const user = await getUserData(uid);
   return user;
 }
 
