@@ -39,4 +39,19 @@ export default class TaskService {
       console.log(err);
     }
   }
+  async patchTask(id,fields) {
+    try {
+      await axInstance.patch(`/api/tasks/${id}`,fields);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  async parentBoard(id) {
+    try {
+      const response = await axInstance.delete(`/api/boards/by_task_id/${id}`);
+      return response.data;
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }

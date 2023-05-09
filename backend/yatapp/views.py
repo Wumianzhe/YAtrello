@@ -110,7 +110,7 @@ class GroupViewSet(viewsets.ModelViewSet):
         try:
             body_data = json.loads(request.body.decode("utf-8"))
         except Exception as e:
-            return HttpResponseBadRequest(json.dumps({'error': 'Invalid request: {0}'.format(str(e))}), content_type="application/json")
+            return HttpResponseBadRequest(json.dumps({'error': 'Invalid request: {0}'.format(str(e))}).encode(), content_type="application/json")
         profiles = Profile.objects.filter(id__in = body_data["users"])
         serializer = ProfileSerializer(profiles, many = True)
         group = Group.objects.get(pk=pk)
@@ -169,4 +169,3 @@ class CommentViewSet(viewsets.ModelViewSet):
         comments = Comment.objects.filter(task_id=task_id)
         serializer = CommentSerializer(comments, many = True)
         return Response(serializer.data)
-    
