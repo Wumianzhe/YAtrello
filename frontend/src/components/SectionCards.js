@@ -8,15 +8,19 @@ import SectionService from '../API/SectionService';
 
 const SS = new SectionService();
 
-export default function SectionCards({sec}) {
+export default function SectionCard({sec}) {
+  const [changed, setChanged] = useState(true)
   const [tasks,setTasks] = useState([])
   useEffect(() => {
     const fetchData = async() => {
       const res = await SS.getTasks(sec.id);
       setTasks(res)
     }
-    fetchData();
-  },[tasks])
+    if (changed) {
+      fetchData();
+      setChanged(false);
+    }
+  },[tasks,changed])
   return (
     <Card sx={{ maxWidth: 500, minWidth: 300 }}>
       <CardContent>

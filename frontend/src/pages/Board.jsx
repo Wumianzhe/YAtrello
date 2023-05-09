@@ -2,7 +2,7 @@
 import { useLoaderData } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
-import SectionCards from '../components/SectionCards';
+import SectionCard from '../components/SectionCards';
 import Scrollable from '../components/UI/Scrollable';
 import '../styles/App.css';
 import BoardsService from "../API/BoardsService";
@@ -33,7 +33,7 @@ export default function Board() {
       <Scrollable _class="sections_line">
         {sections.map((sec, i) =>
             <Grid key={i} item>
-              <SectionCards sec={sec}/>
+              <SectionCard sec={sec}/>
             </Grid>
         )}
       </Scrollable>
