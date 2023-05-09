@@ -2,31 +2,38 @@
 import { useLoaderData } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
-import SectionCards from '../components/SectionCards';
+import SectionCard from '../components/SectionCards';
 import Scrollable from '../components/UI/Scrollable';
 import '../styles/App.css';
 import BoardsService from "../API/BoardsService";
 
 import FormDialog from '../components/FormDialog'
 
+const BS = new BoardsService();
 
 export async function loader ({params}) {
   // should be
   // const board = await getBoard(params.uid)
-  const BS = new BoardsService();
   let board = await BS.getBoard(params.board_id);
-  board.sections = await BS.getSections(params.board_id);
   return board;
 }
 
 export default function Board() {
   const board = useLoaderData();
+  const [sections,setSections] = useState([]);
+  useEffect(() => {
+    const fetchData = async() => {
+      const res = await BS.getSections(board.id);
+      setSections(res)
+    }
+    fetchData();
+  },[board])
   return (
     <Grid container padding={7} spacing={3}>
       <Scrollable _class="sections_line">
-        {board.sections.map((sec, i) =>
+        {sections.map((sec, i) =>
             <Grid key={i} item>
-              <SectionCards sec={sec}/>
+              <SectionCard sec={sec}/>
             </Grid>
         )}
       </Scrollable>

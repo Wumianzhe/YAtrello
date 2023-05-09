@@ -10,34 +10,26 @@ import CommentIcon from '@mui/icons-material/Comment';
 import IconButton from '@mui/material/IconButton';
 
 import SubtaskCard from '../components/SubtaskCard';
+import TaskService from '../API/TaskService';
 
+const TS = new TaskService();
+  
 
-function FindById(usersList, userId){
-    let users = usersList.filter(user => user.id === userId);
-    return users;
-}
-
-function SubtaskList(taskId) {
-    const [data, setData] = useState([]);
-    useEffect(() => {
-      fetch('http://localhost:8080/api/subtasks/by_task_id/'+ taskId +'/', {
-            method: 'GET',
-            origin: 'CHmI',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-        .then(response => response.json())
-        .then(data => setData(data));
-    }, []);
-    return (
-      data
-    );
-  }
-
-export default function BasicCard(props) {
+export default function BasicCard({task}) {
+    const [changed, setChanged] = useState(true)
+  const [subtasks,setSubtasks] = useState([])
+  useEffect(() => {
+    const fetchData = async() => {
+      const res = await TS.getSubtasks(task.id);
+      setSubtasks(res)
+    }
+    if (changed) {
+      fetchData();
+      setChanged(false);
+    }
+  },[changed, task.id])
     const [open, setOpen] = React.useState(false);
-    const subtaskList = SubtaskList(props.task.id)
+    // const subtaskList = SubtaskList(task.id)
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -51,11 +43,11 @@ export default function BasicCard(props) {
             <CommentIcon />
         </IconButton>
         <Dialog open={open} onClose={handleClose} fullWidth={true}>
-        <DialogTitle>{props.task.text}</DialogTitle>
+        <DialogTitle>{task.text}</DialogTitle>
         <DialogContent>
             <br/>
             <Typography>Subtasks</Typography>
-            <SubtaskCard list={subtaskList}/>
+          <SubtaskCard list={subtasks}/>
             <br/>
             <Typography variant="body2">
                 Author and Users list wil be added soon

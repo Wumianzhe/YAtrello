@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import ProfileService from '../API/ProfileService';
 import BoardsList from '../components/BoardsList'
 import { getUidByToken } from '../API/Auth'
+import TaskList from '../components/TaskList';
 
 import TaskCard from '../components/TaskCard'
 import List from '@mui/material/List';
@@ -31,6 +32,9 @@ export async function loader () {
     console.log("this user has no boards"); // debug-only. Remove when there'll be visual way of displaying this
   }
   const tasks = await profileService.getTasks(uid);
+  if (tasks.length == 0) {
+    console.log("this user has no tasks"); // debug-only. Remove when there'll be visual way of displaying this
+  }
   return {boards,tasks};
 }
 
@@ -138,8 +142,6 @@ const MyTask = (props) => {
     </Paper>
   )
 }
-
-const TaskPaper = withStyles(styles(theme))(MyTask)
 
 function MainInternal() {
   const {boards,tasks} = useLoaderData();

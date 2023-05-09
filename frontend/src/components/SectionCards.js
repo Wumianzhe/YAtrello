@@ -3,60 +3,52 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import TaskCard from '../components/TaskCard';
-import List from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
-import { ListItem } from '@mui/material';
+import TaskList from './TaskList';
+import SectionService from '../API/SectionService';
+import EditIcon from '@mui/icons-material/Edit';
+import { Grid, IconButton } from '@mui/material';
 
+const SS = new SectionService();
 
-function TaskList(secId) {
-  const [data, setData] = useState([]);
+export default function SectionCard({sec}) {
+  const [changed, setChanged] = useState(true)
+  const [tasks,setTasks] = useState([])
   useEffect(() => {
-    fetch('http://localhost:8080/api/tasks/', {
-          method: 'GET',
-          origin: 'CHmI',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-      .then(response => response.json())
-      .then(data => setData(data));
-  }, []);
-  return (
-    data
-  );
-}
-
-function TaskBySectionId(taskList, secId){
-  let taskArray = taskList.filter(task => task.section_id === secId);
-  return taskArray;
-  }
-
-export default function SectionCards(props) {
-    const taskList = TaskBySectionId(TaskList(), props.sec.id)
-    //console.log("section id", props.sec.id)
-    //console.log("taskList")
-    //console.log(taskList)
+    const fetchData = async() => {
+      const res = await SS.getTasks(sec.id);
+      setTasks(res)
+    }
+    if (changed) {
+      fetchData();
+      setChanged(false);
+    }
+  },[tasks,changed])
   return (
     <Card sx={{ maxWidth: 500, minWidth: 300 }}>
       <CardContent>
-        <Typography variant="h5" component="div">
-          {props.sec.name}
-        </Typography>
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Grid item>
+            <Typography variant="h5" component="div">
+              {sec.name}
+            </Typography>
+          </Grid>
+          <Grid item>
+
+          <IconButton color="primary">
+            <EditIcon />
+          </IconButton>
+
+          </Grid>
+
+        </Grid>
+        
         <br/>
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {taskList.map((task, i) =>
-        <ListItem
-        key={i}
-        disableGutters
-        secondaryAction={
-          <TaskCard task={task}/>
-        }
-      >
-        <ListItemText primary={`${task.text}`} />
-        </ListItem>
-        )}
-        </List>
+        <TaskList tasks={tasks}/>
       </CardContent>
       <CardActions>
         {/* <Button size="small">Add</Button> */}
