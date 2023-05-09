@@ -24,8 +24,8 @@ export default function SectionCard({sec}) {
     }
   },[changed])
   return (
-    <Card sx={{ maxWidth: 500, minWidth: 300 }}>
-      <CardContent>
+    <Card sx={{ maxWidth: 500, minWidth: 250}}>
+      <CardContent style={{ marginRight: '-15px'}}>
         <Grid
           container
           direction="row"
@@ -48,7 +48,9 @@ export default function SectionCard({sec}) {
         </Grid>
         
         <br/>
-        <TaskList tasks={tasks}/>
+        <div>
+          <TaskList tasks={tasks}/>
+        </div>
       </CardContent>
       <CardActions>
         {/* <Button size="small">Add</Button> */}
