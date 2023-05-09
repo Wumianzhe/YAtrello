@@ -9,6 +9,15 @@ export default class BoardsService{
 			console.log(err);
 		}
 	}  
+
+	async getBoardsByName (name) {
+		try {
+			const response = await axInstance.get(`/api/boards/by_name/`, name);
+			return response.data;
+		} catch (err) {
+			console.log(err);
+		}
+	}  
 	async createBoard(board){
 		try {
 			await axInstance.post(`/api/boards/`, board);

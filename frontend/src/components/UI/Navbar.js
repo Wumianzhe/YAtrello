@@ -106,15 +106,15 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Box sx={{ m: -1 }}>
-      <AppBar position="static">
+      <AppBar position="static" style={{background: '#07a0d1'}}>
         <Toolbar>
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Suneb
+            <strong>Suneb</strong>
           </Typography>
           <Search style={{marginLeft: '8%', width: '500px'}}>
             <SearchIconWrapper>

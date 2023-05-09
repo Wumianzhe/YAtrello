@@ -11,6 +11,10 @@ import ADDNewBoard from '../components/AddNewBoard';
 
 import { Typography, CircularProgress, Box } from '@mui/material';
 
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+
 
 //import CircularProgress from '@mui/material/CircularProgress';
 
@@ -27,7 +31,11 @@ export async function loader() {
   if (tasks.length == 0) {
     console.log("this user has no tasks"); // debug-only. Remove when there'll be visual way of displaying this
   }
-  return { boards, tasks };
+  const subtasks = await profileService.getSubtasks(uid);
+  if (subtasks.length == 0) {
+    console.log("this user has no subtasks"); // debug-only. Remove when there'll be visual way of displaying this
+  }
+  return { boards, tasks, subtasks };
 }
 
 //???????????????????????????????????????????
@@ -45,7 +53,7 @@ function CircularProgressWithLabel(props) {
       <CircularProgress style={{ color: props.color }} size={`${props.size}px`} variant="determinate" value={(props.first) * 100 / props.second} />
       <Box
         sx={{
-          top: '3px',
+          top: '5px',
           left: 0,
           bottom: 0,
           right: 0,
@@ -53,7 +61,7 @@ function CircularProgressWithLabel(props) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: 16 * props.size / 70
+          fontSize: 13 * props.size / 70
         }}
       >
         <div>
@@ -63,7 +71,7 @@ function CircularProgressWithLabel(props) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: 10 * props.size / 70
+            fontSize: 8 * props.size / 70
           }}
           >
             {(props.first)}/{props.second}
@@ -74,21 +82,67 @@ function CircularProgressWithLabel(props) {
   );
 }
 
-function Analytics({ boards, tasks, incomplete }) {
+function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtasks }) {
   return(
-  <Paper sx={{ padding: theme.spacing(2) }}>
-    <CircularProgressWithLabel first={tasks.length - incomplete.length} second={tasks.length} text={"tasks"} size={100} color={'blue'} />
-    <br />
-    <Typography component={'div'} variant="body2" color="textSecondary">
-      <strong>Total boards:</strong> {boards.length}
-    </Typography>
-  </Paper>
+  <Card variant="outlined">
+    <CardContent>
+      <div style={{fontSize: 26, 'textAlign': 'center', color: 'blue', padding: '10px'}}>Analitics</div>
+      <Grid container spacing={3} style={{padding: '10px'}}>
+        <Grid item xs={4}>
+          <CircularProgressWithLabel first={subtasks.length - incompleteSubtasks.length} second={subtasks.length} text={"subtasks"} size={150} color={'pink'} />
+          <br/>
+          <br/>
+        </Grid>
+        <Grid item xs={4}>
+          <div style={{paddingTop: '25px'}}>
+            <CircularProgressWithLabel first={tasks.length - incompleteTasks.length} second={tasks.length} text={"tasks"} size={100} color={'blue'} />
+          </div>
+        </Grid>
+        <Grid item xs={4}>
+          <Card variant="outlined">
+            <CardContent>
+              <Typography component={'div'} variant="body2" color="blue">
+                <strong>Need to complete</strong>
+              </Typography>
+              <br/>
+              <Typography component={'div'} variant="body2" color="textSecondary">
+                <strong>tasks:</strong> {incompleteTasks.length}
+              </Typography>
+              <Typography component={'div'} variant="body2" color="textSecondary">
+                <strong>subtasks:</strong> {incompleteSubtasks.length}
+              </Typography>
+            </CardContent>
+          </Card>
+          <br/>
+          <br/>
+          <Card variant="outlined">
+            <CardContent>
+              <Typography component={'div'} variant="body2" color="blue">
+                <strong>Total</strong>
+              </Typography>
+              <br/>
+              <Typography component={'div'} variant="body2" color="textSecondary">
+                <strong>boards:</strong> {boards.length}
+              </Typography>
+              <Typography component={'div'} variant="body2" color="textSecondary">
+                <strong>tasks:</strong> {tasks.length}
+              </Typography>
+              <Typography component={'div'} variant="body2" color="textSecondary">
+                <strong>subtasks:</strong> {subtasks.length}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    </CardContent>
+  </Card>
   )
 }
 
 function MainInternal() {
-  const { boards, tasks } = useLoaderData();
+  const { boards, tasks, subtasks } = useLoaderData();
   const uncompletedTasks = CurrentTask(tasks);
+  const uncompletedSubtasks = CurrentTask(subtasks);
   return (
     <div>
     <Grid
@@ -100,7 +154,7 @@ function MainInternal() {
       </Grid>
       <Grid item sm={12} md={6}>
         <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
-          <Analytics boards={boards} tasks={tasks} incomplete={uncompletedTasks} />
+          <Analytics boards={boards} tasks={tasks} incompleteTasks={uncompletedTasks} subtasks={subtasks} incompleteSubtasks={uncompletedSubtasks} />
         </Grid>
         <Grid style={{ paddingTop: '20px' }}>
           <BoardsList boards={boards} />

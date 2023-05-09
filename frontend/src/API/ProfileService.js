@@ -25,6 +25,14 @@ export default class ProfileService {
       console.log(err);
     }
   }
+  async getSubtasks(id) {
+    try {
+      const response = await axInstance.get(`/api/subtasks/by_user_id/${id}/`);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
   async getGroups(id) {
     try {
       const response = await axInstance.get(`/api/profiles/${id}/groups`);
