@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import Grid from '@mui/material/Grid';
-import {Form, redirect, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 function  BoardsList({boards}){
     return (
