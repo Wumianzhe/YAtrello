@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action, api_view
 from .models import Board,Section, Group, Task, Subtask, Comment, Profile
 from yatproj.serializers import BoardSerializer, SectionSerializer, GroupSerializer, TaskSerializer, SubtaskSerializer, CommentSerializer, ProfileSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.db.models import Q
 from django.http import HttpResponseBadRequest
@@ -11,7 +11,7 @@ import json
 
 @api_view(['GET'])
 def uid_by_token(request):
-    # permisson_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     auth_header = request.META.get('HTTP_AUTHORIZATION')
     if auth_header is not None and auth_header.startswith('Token '):
         token_key = auth_header.split()[1]
@@ -24,7 +24,7 @@ def uid_by_token(request):
         
 
 class ProfileViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
@@ -49,7 +49,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     
     
 class BoardViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
 
@@ -78,7 +78,7 @@ class BoardViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class SectionViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
 
@@ -95,7 +95,7 @@ class SectionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class GroupViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
@@ -104,7 +104,7 @@ class GroupViewSet(viewsets.ModelViewSet):
         profiles = Group.objects.get(pk=pk).profile_set.all()
         serializer = ProfileSerializer(profiles, many = True)
         return Response(serializer.data)
-    #todo
+    
     @action(detail=True, methods=["post"], url_path=r'add_users',)
     def add_users(self,request, pk = None):
         try:
@@ -119,7 +119,7 @@ class GroupViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class TaskViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
@@ -148,7 +148,7 @@ class TaskViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class SubtaskViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Subtask.objects.all()
     serializer_class = SubtaskSerializer
 
@@ -160,7 +160,7 @@ class SubtaskViewSet(viewsets.ModelViewSet):
     
 
 class CommentViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
