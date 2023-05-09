@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
-export default function ProfileCard() {
+export default function ProfileCard(props) {
   return (
     <Card sx={{ maxWidth: 500 }}>
       <CardContent>
@@ -16,18 +16,11 @@ export default function ProfileCard() {
         </Typography>
         <Box padding={2}>
             <TextField
-            id="id_username"
-            label="Username"
-            defaultValue="db_username"
-            />
-        </Box>
-        <Box padding={2}>
-            <TextField
-            id="outlined-multiline-static"
+            id="bio_text"
             label="Bio"
             multiline
             rows={4}
-            defaultValue="db_bio"
+            defaultValue={props.bio}
             />
         </Box>
         <CardActions>

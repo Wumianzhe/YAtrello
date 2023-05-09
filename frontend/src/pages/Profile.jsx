@@ -19,6 +19,7 @@ export async function loader ({params}) {
 
 export default function Main() {
   const data = useLoaderData();
+  console.log(data)
   return (
       <Box padding={3}>
           <Grid
@@ -28,10 +29,10 @@ export default function Main() {
               alignItems="center"
           >
               <Grid item>
-                  <ProfileCard post={{name: data.username, last: data.id, email: data.email}}/>
+                  <ProfileCard post={{name: data.first_name, last: data.last_name, email: data.email}}/>
               </Grid>
               <Grid item>
-                  <PersonalInfoCards/>
+                  <PersonalInfoCards bio={ data.short_bio}/>
               </Grid>
           </Grid>
       </Box>
