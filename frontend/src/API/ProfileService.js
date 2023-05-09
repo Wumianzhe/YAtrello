@@ -9,6 +9,14 @@ export default class ProfileService {
       console.log(err);
     }
   }
+  async getProfileList() {
+    try {
+      const response = await axInstance.get(`/auth/users/`);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
   async getTasks(id) {
     try {
       const response = await axInstance.get(`/api/profiles/${id}/tasks`);
@@ -22,6 +30,21 @@ export default class ProfileService {
       const response = await axInstance.get(`/api/profiles/${id}/groups`);
       return response.data;
     } catch (err) {
+      console.log(err);
+    }
+  }
+  async createGroups(name){
+    try{
+      const responce = await axInstance.post(`/api/groups/`, {is_visible: true, name: name});
+      return responce.id
+    } catch(err){
+      console.log(err)
+    }
+  }
+  async addUserToGroup(userId, idGroup){
+    try {
+      await axInstance.post(`/api/profiles/${userId}/groups/`, {id: idGroup})
+    } catch (err){
       console.log(err);
     }
   }
