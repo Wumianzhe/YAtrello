@@ -53,6 +53,15 @@ class BoardViewSet(viewsets.ModelViewSet):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
 
+    @action(detail=False, url_path='by_task_id/(?P<task_id>[0-9]+)')
+    def by_task_id(self, request, task_id = None):
+        task_query = Task.objects.filter(id = task_id).values('section_id')
+        section_id = task_query[0]['section_id']
+        section_query = Section.objects.filter(id = section_id).values('board_id')
+        board_id = section_query[0]['board_id']
+        # serializer = BoardSerializer(board)
+        return Response({'board_id':f'{board_id}'})
+
     @action(detail=False, url_path='by_name/(?P<name>.+)')
     def by_name(self, request, name = None):
         queryset = self.get_queryset().filter(name=name)
