@@ -21,6 +21,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     groups = models.ManyToManyField(Group)
+    image_url = models.URLField()
     
     objects = ProfileManager()
 
@@ -31,6 +32,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
 class Board(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=25)
+    description = models.TextField(validators=[MaxLengthValidator(999)])
     admin_gid = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='board_admins')
     user_gid = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='board_users')
 
