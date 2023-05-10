@@ -16,7 +16,7 @@ function  BoardsList({boards}){
             {boards.map((board, index) =>
                 <Grid item xs={6} key={index}>
                 <Box sx={{ maxWidth: 300 }} key={index}>
-                    <Card variant="outlined">
+                    <Card variant="outlined" style={{'border-radius': '15px'}}>
                         <CardContent>
                             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                                 {board.name}
