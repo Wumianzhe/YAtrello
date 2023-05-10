@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import SubtaskCard from '../components/SubtaskCard';
 import TaskService from '../API/TaskService';
 import ProfileService from '../API/ProfileService';
+import AddNewSubtask from './AddSubtask';
 
 const TS = new TaskService();
 const PS = new ProfileService();
@@ -61,6 +62,8 @@ export default function BasicCard({ task }) {
                                 <SubtaskCard list={subtasks} />
                             </div>:null
                     }
+                    <br/>
+                    <AddNewSubtask taskId={task.id}/>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Close</Button>
