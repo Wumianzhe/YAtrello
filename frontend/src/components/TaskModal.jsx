@@ -11,23 +11,28 @@ import IconButton from '@mui/material/IconButton';
 
 import SubtaskCard from '../components/SubtaskCard';
 import TaskService from '../API/TaskService';
+import ProfileService from '../API/ProfileService';
 
 const TS = new TaskService();
-  
+const PS = new ProfileService();
 
-export default function BasicCard({task}) {
+
+export default function BasicCard({ task }) {
     const [changed, setChanged] = useState(true)
-  const [subtasks,setSubtasks] = useState([])
-  useEffect(() => {
-    const fetchData = async() => {
-      const res = await TS.getSubtasks(task.id);
-      setSubtasks(res)
-    }
-    if (changed) {
-      fetchData();
-      setChanged(false);
-    }
-  },[changed, task.id])
+    const [subtasks, setSubtasks] = useState([])
+    const [taskAuthor, setAuthor] = useState({})
+    useEffect(() => {
+        const fetchData = async () => {
+            const subs = await TS.getSubtasks(task.id);
+            const author = await PS.getProfile(task.author_id);
+            setSubtasks(subs)
+            setAuthor(author)
+        }
+        if (changed) {
+            fetchData();
+            setChanged(false);
+        }
+    }, [changed, task.id])
     const [open, setOpen] = React.useState(false);
     // const subtaskList = SubtaskList(task.id)
     const handleClickOpen = () => {
@@ -39,25 +44,33 @@ export default function BasicCard({task}) {
     };
     return (
         <React.Fragment>
-        <IconButton aria-label="comment" onClick={handleClickOpen}>
-            <CommentIcon />
-        </IconButton>
-        <Dialog open={open} onClose={handleClose} fullWidth={true}>
-        <DialogTitle>{task.text}</DialogTitle>
-        <DialogContent>
-            <br/>
-            <Typography>Subtasks</Typography>
-          <SubtaskCard list={subtasks}/>
-            <br/>
-            <Typography variant="body2">
-                Author and Users list wil be added soon
-            </Typography>
-
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={handleClose}>Close</Button>
-        </DialogActions>
-        </Dialog>
+            <IconButton aria-label="comment" onClick={handleClickOpen}>
+                <CommentIcon />
+            </IconButton>
+            <Dialog open={open} onClose={handleClose} fullWidth={true}>
+                <DialogTitle>{task.header}</DialogTitle>
+                <DialogContent>
+                    <Typography variant="body2">
+                      Author: {taskAuthor.email}
+                    </Typography>
+                    <p>
+                        {task.text}
+                    </p>
+                    {() => {
+                        if (subtasks.length > 0) {
+                            return <br>
+                                <Typography>Subtasks</Typography>
+                                <SubtaskCard list={subtasks} />
+                            </br>
+                        } else {
+                            return null
+                        }
+                    }}
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Close</Button>
+                </DialogActions>
+            </Dialog>
         </React.Fragment>
     );
 }
