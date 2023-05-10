@@ -121,7 +121,12 @@ export default function ADDNewBoard() {
                   }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={user.first_name + ' ' + user.last_name} />
+              <ListItemText id={labelId} primary={() => {
+                const fullName = user.first_name + ' ' + user.last_name
+                return (fullName == " ") ? user.email : fullName
+              }
+              }
+              />
             </ListItem>
           );
         })}
@@ -135,7 +140,7 @@ export default function ADDNewBoard() {
       // console.log(boardName);
       let userGroupId = await PS.createGroup(boardName)
       await PS.addUsersToGroup(userList.map(user => user.id), userGroupId)
-      let board = {name: boardName, admin_gid: 1, user_gid: userGroupId}
+      let board = { name: boardName, admin_gid: 1, user_gid: userGroupId }
       await BS.createBoard(board)
       handleClose();
     }
