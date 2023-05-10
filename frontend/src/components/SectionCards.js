@@ -6,7 +6,9 @@ import Typography from "@mui/material/Typography";
 import TaskList from './TaskList';
 import SectionService from '../API/SectionService';
 import EditIcon from '@mui/icons-material/Edit';
-import { Grid, IconButton } from '@mui/material';
+import { Grid, IconButton, ListItemButton} from '@mui/material';
+import MoveModal from "./MoveModal"
+
 
 const SS = new SectionService();
 
@@ -38,11 +40,7 @@ export default function SectionCard({sec}) {
             </Typography>
           </Grid>
           <Grid item>
-
-          <IconButton color="primary">
-            <EditIcon />
-          </IconButton>
-
+            <MoveModal task={sec} />
           </Grid>
 
         </Grid>
