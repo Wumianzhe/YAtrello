@@ -154,14 +154,14 @@ function MainInternal() {
     <Grid>
       <Grid item xs={12}>
         <div
-          style={{marginTop: "-75px", position: 'relative'}}
+          
         >
           <SearchBoards boards={boards}/>
         </div>
       </Grid>
     <div>
     <Grid
-      sx={{ padding: theme.spacing(4), position: 'relative', 'z-index': '-1' }}
+      sx={{ padding: theme.spacing(4) }}
       container spacing={2}
     >
       

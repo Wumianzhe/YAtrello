@@ -69,7 +69,7 @@ export default function SearchBoards({ boards }) {
     }
 
     return (
-      <div>
+      <div style={{marginTop: "20px", }}>
       <Grid container spacing={3} >
       <Grid item xs={4}></Grid>
         <Grid item xs={4}>
@@ -90,8 +90,8 @@ export default function SearchBoards({ boards }) {
             {console.log("listOfFoundBoards2",listOfFoundBoards)}
           </Search>
           {listOfFoundBoards.map((board, i) =>
-            <Button key={i} style={{marginLeft: '-8%', width: '500px', background: "white", border: "gray", position: 'relative', 'z-index': '1'}}>
-              <Link to={`/boards/${board.id}`} style={{color: 'blue', textDecoration: 'none'}}>
+            <Button key={i} style={{marginLeft: '-8%', width: '500px', background: "white", border: "gray", padding: "15px"}}>
+              <Link to={`/boards/${board.id}`} style={{color: 'blue', textDecoration: 'none', fontSize: 30}}>
                 {board.name}
               </Link>
             </Button>
