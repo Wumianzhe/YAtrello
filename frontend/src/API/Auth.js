@@ -1,14 +1,19 @@
 import axios from 'axios'
+import ProfileService from './ProfileService';
+
 
 export const axInstance = axios.create({
-  baseURL : 'http://localhost:8080'
+  baseURL: 'http://localhost:8080'
 })
 
-export function hasJWT() {
+const PS = new ProfileService()
+
+export function hasAuth() {
   let flag = false;
-  localStorage.getItem("token") ? flag=true:flag=false;
+  localStorage.getItem("auth") ? flag = true : flag = false;
   if (flag && axInstance.defaults.headers.common["Authorization"] === undefined) {
-    axInstance.defaults.headers.common["Authorization"] = `Token ${localStorage.getItem("token")}`
+    const auth = JSON.parse(localStorage.getItem("auth"))
+    axInstance.defaults.headers.common["Authorization"] = `Token ${auth.token}`
   }
   return flag
 }
@@ -18,41 +23,38 @@ export const handleLogin = async (login, pass) => {
     username: login,
     password: pass
   }
+  let token
   await axInstance.post(`/auth/token/login`, loginPayload)
-       .then(response => {
-         const token = response.data.auth_token;
+    .then(response => {
+      token = response.data.auth_token;
 
-         localStorage.setItem("token", token);
-         setAuthToken(token);
-       }).catch(err => console.log(err));
+      setAuthToken(token);
+    }).catch(err => console.log(err));
+  const uid = await getUidByToken();
+  const groups = await PS.getGroups(uid);
+  localStorage.setItem("auth", JSON.stringify({
+    token: token,
+    uid: uid,
+    isStaff: groups.some(item => item.id == 1)
+  }))
 }
 
-export const handleRegister = async(formData) => {
+export const handleRegister = async (formData) => {
   const registerPayload = {
     username: formData.get("login"),
     password: formData.get("pass"),
     email: formData.get("email")
   }
   await axInstance.post(`/auth/users/`, registerPayload)
-                  .then().catch(err => console.log(err))
-  await handleLogin(registerPayload.username,registerPayload.password);
+    .then().catch(err => console.log(err))
+  await handleLogin(registerPayload.username, registerPayload.password);
 }
 
 export function logout() {
   axInstance.post(`/auth/token/logout`, {})
-       .then().catch(err => console.log(err));
+    .then().catch(err => console.log(err));
   setAuthToken(null);
-  localStorage.removeItem("token");
-}
-
-export async function getUserData(uid) {
-  let data
-  await axInstance.get(`/auth/users/${uid}/`,{})
-       .then(response => {
-         data = response.data
-       }).catch(err => console.log(err));
-  console.log("user data getter fired");
-  return data
+  localStorage.removeItem("auth");
 }
 
 export const setAuthToken = token => {
@@ -63,19 +65,11 @@ export const setAuthToken = token => {
   }
 }
 
-export async function getUidByToken() {
+async function getUidByToken() {
   let uid;
   await axInstance.get(`auth/uid_by_token`, {})
-            .then(response => {
-              uid = response.data.user_id
-            }).catch(err => console.log(err));
+    .then(response => {
+      uid = response.data.user_id
+    }).catch(err => console.log(err));
   return uid;
-}
-
-export async function updateProfile(uid, user) {
-  try {
-    await axInstance.patch(`/api/profiles/${uid}/`, user);
-  } catch (err) {
-    console.log(err);
-  }
 }

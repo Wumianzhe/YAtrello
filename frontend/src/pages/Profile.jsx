@@ -8,13 +8,16 @@ import PersonalInfoCards from '../components/PersonalInfoCards';
 import { getUidByToken, getUserData } from "../API/Auth";
 //import { Button } from "@mui/base";
 import Button from '@mui/material/Button';
+import ProfileService from "../API/ProfileService";
+
+const PS = new ProfileService()
 
 export async function loader ({params}) {
   let uid = params["uid"];
   if (uid === undefined) {
-    uid = await getUidByToken();
+    uid = JSON.parse(localStorage.getItem("auth")).uid;
   }
-  const user = await getUserData(uid);
+  const user = PS.getProfile(uid);
   return user;
 }
 

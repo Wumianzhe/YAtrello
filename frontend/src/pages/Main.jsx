@@ -5,7 +5,6 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import ProfileService from '../API/ProfileService';
 import BoardsList from '../components/BoardsList'
-import { getUidByToken } from '../API/Auth'
 import TaskList from '../components/TaskList';
 import ADDNewBoard from '../components/AddNewBoard';
 
@@ -24,7 +23,7 @@ const theme = createTheme();
 const profileService = new ProfileService();
 
 export async function loader() {
-  const uid = await getUidByToken();
+  const uid = JSON.parse(localStorage.getItem("auth")).uid;
   const boards = await profileService.getBoards(uid);
   if (boards.length == 0) {
     console.log("this user has no boards"); // debug-only. Remove when there'll be visual way of displaying this
@@ -87,7 +86,7 @@ function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtask
   return (
     <Card variant="outlined">
       <CardContent>
-        <div style={{ fontSize: 26, 'textAlign': 'center', color: 'blue', padding: '10px' }}>Analitics</div>
+        <div style={{ fontSize: 26, 'textAlign': 'center', color: 'blue', padding: '10px' }}>Analytics</div>
         <Grid container spacing={3} style={{ padding: '10px' }}>
           <Grid item xs={4}>
             <CircularProgressWithLabel
@@ -153,42 +152,36 @@ function MainInternal() {
   return (
     <Grid>
       <Grid item xs={12}>
-        <div
-          
+      </Grid>
+      <div>
+        <Grid
+          sx={{ padding: theme.spacing(4) }}
+          container spacing={2}
         >
-          <SearchBoards boards={boards}/>
-        </div>
-      </Grid>
-    <div>
-    <Grid
-      sx={{ padding: theme.spacing(4) }}
-      container spacing={2}
-    >
-      
-      <Grid item xs={12}>
-        <Paper>Main
-        <br/>
-        Suneb a eb-application for...
-        <br/>
-        <br/>
-        <br/>
-        </Paper>
-      </Grid>
-      <Grid item sm={12} md={6}>
-        <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
-          <Analytics boards={boards} tasks={tasks} incompleteTasks={uncompletedTasks} subtasks={subtasks} incompleteSubtasks={uncompletedSubtasks} />
-        </Grid>
-          <Grid style={{ paddingTop: '20px' }}>
-            <BoardsList boards={boards} />
+
+          <Grid item xs={12}>
+            <Paper>Main
+            </Paper>
           </Grid>
-      </Grid>
-      <Grid item sm={12} md={6} style={{paddingRight: '30px'}}>
-        <TaskList tasks={uncompletedTasks}/>
-      </Grid>
+          <Grid item sm={12} md={6}>
+            <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
+              <Analytics boards={boards} tasks={tasks} incompleteTasks={uncompletedTasks} subtasks={subtasks} incompleteSubtasks={uncompletedSubtasks} />
+            </Grid>
+            <Grid style={{ paddingTop: '20px' }}>
+              <SearchBoards boards={boards} >
+                {(boards) => (
+                  <BoardsList boards={boards} />
+                )}
+              </SearchBoards>
+            </Grid>
+          </Grid>
+          <Grid item sm={12} md={6} style={{ paddingRight: '30px' }}>
+            <TaskList tasks={uncompletedTasks} />
+          </Grid>
+        </Grid>
+        <ADDNewBoard />
+      </div>
     </Grid>
-    <ADDNewBoard/>
-  </div>
-  </Grid>
   )
 }
 
