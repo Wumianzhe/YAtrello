@@ -4,21 +4,18 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
+import TaskService from '../API/TaskService';
+
+let TS = new TaskService
 
 export default function SubtaskCard(props) {
   const [checked, setChecked] = React.useState([1]);
+  //React.useEffect(()=>{},[checked])
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
+  const handleToggle = async(subtask) =>{
+    subtask.is_completed = !subtask.is_completed
+    await TS.updateSubtask({id: subtask.id, is_completed: subtask.is_completed})
+    setChecked(!subtask.is_completed);
   };
 
   return (
@@ -30,7 +27,7 @@ export default function SubtaskCard(props) {
             secondaryAction={
               <Checkbox
                 edge="end"
-                //onChange={handleToggle(value)}
+                onChange={()=>handleToggle(value)}
                 checked={value.is_completed}
               />
             }

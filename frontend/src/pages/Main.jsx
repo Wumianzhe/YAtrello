@@ -36,7 +36,8 @@ export async function loader() {
   if (subtasks.length == 0) {
     console.log("this user has no subtasks"); // debug-only. Remove when there'll be visual way of displaying this
   }
-  return { boards, tasks, subtasks };
+  const staff = JSON.parse(localStorage.getItem("auth")).isStaff
+  return { boards, tasks, subtasks, admin: staff };
 }
 
 //???????????????????????????????????????????
@@ -146,7 +147,7 @@ function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtask
 }
 
 function MainInternal() {
-  const { boards, tasks, subtasks } = useLoaderData();
+  const { boards, tasks, subtasks, staff } = useLoaderData();
   const uncompletedTasks = CurrentTask(tasks);
   const uncompletedSubtasks = CurrentTask(subtasks);
   return (
@@ -179,7 +180,7 @@ function MainInternal() {
             <TaskList tasks={uncompletedTasks} />
           </Grid>
         </Grid>
-        <ADDNewBoard />
+    {staff?<ADDNewBoard />:null}
       </div>
     </Grid>
   )

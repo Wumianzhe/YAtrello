@@ -36,7 +36,7 @@ export default class ProfileService {
   async getGroups(id) {
     try {
       const response = await axInstance.get(`/api/profiles/${id}/groups`);
-      return response.data;
+      return (response.data);
     } catch (err) {
       console.log(err);
     }

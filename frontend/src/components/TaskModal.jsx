@@ -56,16 +56,11 @@ export default function BasicCard({ task }) {
                     <p>
                         {task.text}
                     </p>
-                    {() => {
-                        if (subtasks.length > 0) {
-                            return <br>
+                    {(subtasks.length > 0)?<div>
                                 <Typography>Subtasks</Typography>
                                 <SubtaskCard list={subtasks} />
-                            </br>
-                        } else {
-                            return null
-                        }
-                    }}
+                            </div>:null
+                    }
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Close</Button>
