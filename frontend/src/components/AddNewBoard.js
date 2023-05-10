@@ -98,7 +98,12 @@ export default function ADDNewBoard() {
     setRight([]);
   };
 
-  const customList = (users) => (
+  const customList = (users) => {
+    const UserString = (user) => {
+        const fullName = user.first_name + ' ' + user.last_name
+        return (fullName === " ") ? user.email : fullName
+    }
+    return (
     <Paper sx={{ width: 200, height: 230, overflow: 'auto' }}>
       <List dense component="div" role="list">
         {users.map((user, i) => {
@@ -121,18 +126,14 @@ export default function ADDNewBoard() {
                   }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={() => {
-                const fullName = user.first_name + ' ' + user.last_name
-                return (fullName == " ") ? user.email : fullName
-              }
-              }
+              <ListItemText id={labelId} primary={UserString(user)}
               />
             </ListItem>
           );
         })}
       </List>
     </Paper>
-  );
+  )};
 
   const hanleCreate = async (boardName, userList) => {
     if (boardName !== '') {
