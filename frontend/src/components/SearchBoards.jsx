@@ -53,9 +53,9 @@ function FoundBoards(boards, value) {
   return boards.filter(board => board.name.includes(value) === true);
 }
 
-export default function SearchBoards({ boards }) {
+export default function SearchBoards({ boards, children }) {
   const [inputBoardName, setInputBoardName] = useState({ name: '' });
-  const [listOfFoundBoards, setListOfFoundBoards] = useState([]);
+  const [listOfFoundBoards, setListOfFoundBoards] = useState(boards);
 
   async function getBoardsByPartOfName(boards, value) {
     setInputBoardName({ ...inputBoardName, name: value })
@@ -83,13 +83,7 @@ export default function SearchBoards({ boards }) {
             />
             {/* {console.log("listOfFoundBoards2", listOfFoundBoards)} */}
           </Search>
-          {listOfFoundBoards.map((board, i) =>
-            <Button key={i} style={{marginLeft: '-8%', width: '500px', background: "white", border: "gray", padding: "15px"}}>
-              <Link to={`/boards/${board.id}`} style={{color: 'blue', textDecoration: 'none', fontSize: 30}}>
-                {board.name}
-              </Link>
-            </Button>
-          )}
+          {children(listOfFoundBoards)}
         </Grid>
       </Grid>
     </div>

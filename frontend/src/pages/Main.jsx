@@ -152,37 +152,36 @@ function MainInternal() {
   return (
     <Grid>
       <Grid item xs={12}>
-        <div
-
+      </Grid>
+      <div>
+        <Grid
+          sx={{ padding: theme.spacing(4) }}
+          container spacing={2}
         >
-          <SearchBoards boards={boards}/>
-        </div>
-      </Grid>
-    <div>
-    <Grid
-      sx={{ padding: theme.spacing(4) }}
-      container spacing={2}
-    >
-      
-      <Grid item xs={12}>
-        <Paper>Main
-        </Paper>
-      </Grid>
-      <Grid item sm={12} md={6}>
-        <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
-          <Analytics boards={boards} tasks={tasks} incompleteTasks={uncompletedTasks} subtasks={subtasks} incompleteSubtasks={uncompletedSubtasks} />
-        </Grid>
-          <Grid style={{ paddingTop: '20px' }}>
-            <BoardsList boards={boards} />
+
+          <Grid item xs={12}>
+            <Paper>Main
+            </Paper>
           </Grid>
-      </Grid>
-      <Grid item sm={12} md={6} style={{paddingRight: '30px'}}>
-        <TaskList tasks={uncompletedTasks}/>
-      </Grid>
+          <Grid item sm={12} md={6}>
+            <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
+              <Analytics boards={boards} tasks={tasks} incompleteTasks={uncompletedTasks} subtasks={subtasks} incompleteSubtasks={uncompletedSubtasks} />
+            </Grid>
+            <Grid style={{ paddingTop: '20px' }}>
+              <SearchBoards boards={boards} >
+                {(boards) => (
+                  <BoardsList boards={boards} />
+                )}
+              </SearchBoards>
+            </Grid>
+          </Grid>
+          <Grid item sm={12} md={6} style={{ paddingRight: '30px' }}>
+            <TaskList tasks={uncompletedTasks} />
+          </Grid>
+        </Grid>
+        <ADDNewBoard />
+      </div>
     </Grid>
-    <ADDNewBoard/>
-  </div>
-  </Grid>
   )
 }
 
