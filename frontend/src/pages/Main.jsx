@@ -178,22 +178,9 @@ function MainInternal() {
         <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
           <Analytics boards={boards} tasks={tasks} incompleteTasks={uncompletedTasks} subtasks={subtasks} incompleteSubtasks={uncompletedSubtasks} />
         </Grid>
-        <Grid item sm={12} md={6}>
-          <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
-            <Analytics
-              boards={boards}
-              tasks={tasks}
-              incompleteTasks={uncompletedTasks}
-              subtasks={subtasks}
-              incompleteSubtasks={uncompletedSubtasks} />
-          </Grid>
           <Grid style={{ paddingTop: '20px' }}>
             <BoardsList boards={boards} />
           </Grid>
-        </Grid>
-        <Grid item sm={12} md={6} style={{ paddingRight: '30px' }}>
-          <TaskList tasks={uncompletedTasks} />
-        </Grid>
       </Grid>
       <Grid item sm={12} md={6} style={{paddingRight: '30px'}}>
         <TaskList tasks={uncompletedTasks}/>
