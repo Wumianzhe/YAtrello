@@ -41,17 +41,17 @@ export default class ProfileService {
       console.log(err);
     }
   }
-  async createGroups(name){
+  async createGroup(name){
     try{
       const responce = await axInstance.post(`/api/groups/`, {is_visible: true, name: name});
-      return responce.id
+      return responce.data.id
     } catch(err){
       console.log(err)
     }
   }
-  async addUserToGroup(userId, idGroup){
+  async addUsersToGroup(uidList, gid){
     try {
-      await axInstance.post(`/api/profiles/${userId}/groups/`, {id: idGroup})
+      await axInstance.post(`/api/groups/${gid}/add_users/`, {users: uidList})
     } catch (err){
       console.log(err);
     }
