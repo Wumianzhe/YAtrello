@@ -12,7 +12,7 @@ export default function ProfileCard(props){
         component="img"
         alt="id_photo"
         height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
+        image="https://koshka.top/uploads/posts/2021-12/1640112452_1-koshka-top-p-kotiki-rizhie-milie-1.jpg"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

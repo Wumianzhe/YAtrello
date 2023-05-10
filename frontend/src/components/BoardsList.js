@@ -12,7 +12,7 @@ import {Link} from 'react-router-dom';
 function  BoardsList({boards}){
     return (
         <div  className="boards--list">
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={{marginTop: "15px"}}>
             {boards.map((board, index) =>
                 <Grid item xs={6} key={index}>
                 <Box sx={{ maxWidth: 300 }} key={index}>

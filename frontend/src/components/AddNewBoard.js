@@ -150,7 +150,7 @@ export default function ADDNewBoard() {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button style={{background: 'blue', color: "white", marginLeft: '32px'}} variant="outlined" onClick={handleClickOpen}>
         New board
       </Button>
       <Dialog open={open} onClose={handleClose}>
