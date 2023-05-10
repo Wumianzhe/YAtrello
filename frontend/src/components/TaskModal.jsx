@@ -19,6 +19,7 @@ const PS = new ProfileService();
 
 
 export default function BasicCard({ task }) {
+    const staff = JSON.parse(localStorage.getItem("auth")).isStaff
     const [changed, setChanged] = useState(true)
     const [subtasks, setSubtasks] = useState([])
     const [taskAuthor, setAuthor] = useState({})
@@ -63,7 +64,7 @@ export default function BasicCard({ task }) {
                             </div>:null
                     }
                     <br/>
-                    <AddNewSubtask taskId={task.id}/>
+                    {staff ? <AddNewSubtask taskId={task.id}/> : <null/> }
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Close</Button>
