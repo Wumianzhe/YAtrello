@@ -1,48 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import CommentIcon from '@mui/icons-material/Comment';
 import IconButton from '@mui/material/IconButton';
-
-import SubtaskCard from '../components/SubtaskCard';
-import TaskService from '../API/TaskService';
-import ProfileService from '../API/ProfileService';
-import SectionService from "../API/SectionService";
-
 import EditIcon from '@mui/icons-material/Edit';
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import FormControl from '@mui/material/FormControl';
+import Input from '@mui/material/Input';
 
-const TS = new TaskService();
-const PS = new ProfileService();
-const sectionService = new SectionService();
-
-
-export default function BasicCard({ task }) {
-    const [changed, setChanged] = useState(true)
-    const [sections, setSections] = useState([])
-    const [subtasks, setSubtasks] = useState([])
-    const [taskAuthor, setAuthor] = useState({})
-    useEffect(() => {
-        const fetchData = async () => {
-            const subs = await TS.getSubtasks(task.id);
-            const author = await PS.getProfile(task.author_id);
-            setSubtasks(subs)
-            setAuthor(author)
-        }
-        if (changed) {
-            fetchData();
-            setChanged(false);
-        }
-    }, [changed, task.id])
+export default function BasicCard({ task, sections }) {
+    const [changed, setChanged] = useState(true);
+    const [newSectionName, setNewSectionName] = useState({});
     const [open, setOpen] = React.useState(false);
-    // const subtaskList = SubtaskList(task.id)
+
+    //console.log("task!!!", task)
+    //console.log("sections!!!", sections)
+    
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -50,6 +26,20 @@ export default function BasicCard({ task }) {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleMove = () => {
+        const newSection = sections.filter(section => section.name === newSectionName);
+        const newSectionId = (newSection.length !== 0) ? newSection[0].id : null;
+        if (newSectionId){
+            console.log("All correct")
+            console.log("newSectionId ", newSectionId );
+            console.log("task id", task.id);
+        }
+        else{
+            console.log("incorrect section")
+        }
+    };
+
     return (
         <React.Fragment>
             <IconButton aria-label="comment" onClick={handleClickOpen}>
@@ -58,34 +48,32 @@ export default function BasicCard({ task }) {
             <Dialog open={open} onClose={handleClose} fullWidth={true}>
                 <DialogTitle>Move task</DialogTitle>
                 <DialogContent>
-                    <Typography>
-                      Select section
-                    </Typography>
-                    <div>
-                    <Card style={{marginTop: '10px'}}>
-                        <CardContent style={{padding: '10px'}}>
-                            section
-                        </CardContent>
-                    </Card>
-                    <Card style={{marginTop: '10px'}}>
-                        <CardContent style={{padding: '10px'}}>
-                            section
-                        </CardContent>
-                    </Card>
-                    </div>
                     <br/>
-                    <Typography>Task for move</Typography>
                     <Card style={{marginTop: '10px'}}>
                         <CardContent style={{padding: '10px'}}>
-                            task
+                            <strong>Task for move: </strong>{task.header}
                         </CardContent>
                     </Card>
-
-
-
+                    <br/>
+                    <Card style={{marginTop: '10px'}}>
+                        <CardContent style={{padding: '10px'}}>
+                            <strong>Which section: </strong>
+                            <FormControl variant="standard">
+                                <Input
+                                    id="component-simple" 
+                                    type="text"
+                                    value={newSectionName.name}
+                                    onChange={(e) => {
+                                        setNewSectionName(e.target.value)
+                                    }}
+                                    placeholder="section name"
+                                />
+                            </FormControl>
+                        </CardContent>
+                    </Card>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Move</Button>
+                    <Button onClick={handleMove}>Move</Button>
                     <Button onClick={handleClose}>Close</Button>
                 </DialogActions>
             </Dialog>

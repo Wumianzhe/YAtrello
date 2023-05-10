@@ -12,12 +12,15 @@ import IconButton from '@mui/material/IconButton';
 import SubtaskCard from '../components/SubtaskCard';
 import TaskService from '../API/TaskService';
 import ProfileService from '../API/ProfileService';
+import { Grid, ListItemButton } from '@mui/material';
+import MoveModal from "./MoveModal"
 
 const TS = new TaskService();
 const PS = new ProfileService();
 
 
-export default function BasicCard({ task }) {
+export default function BasicCard({ task, sections }) {
+    const staff = JSON.parse(localStorage.getItem("auth")).isStaff
     const [changed, setChanged] = useState(true)
     const [subtasks, setSubtasks] = useState([])
     const [taskAuthor, setAuthor] = useState({})
@@ -49,6 +52,10 @@ export default function BasicCard({ task }) {
             </IconButton>
             <Dialog open={open} onClose={handleClose} fullWidth={true}>
                 <DialogTitle>{task.header}</DialogTitle>
+                <Grid item>
+                    <MoveModal task={task} sections={sections} />
+                    {/*staff ? <MoveModal task={task} sections={sections} /> : <null/>*/} 
+                </Grid>
                 <DialogContent>
                     <Typography variant="body2">
                       Author: {taskAuthor.email}

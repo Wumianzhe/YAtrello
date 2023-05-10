@@ -12,7 +12,7 @@ import MoveModal from "./MoveModal"
 
 const SS = new SectionService();
 
-export default function SectionCard({sec}) {
+export default function SectionCard({sec, sections}) {
   const staff = JSON.parse(localStorage.getItem("auth")).isStaff
   const [changed, setChanged] = useState(true)
   const [tasks,setTasks] = useState([])
@@ -41,14 +41,15 @@ export default function SectionCard({sec}) {
             </Typography>
           </Grid>
           <Grid item>
-            {staff ? <MoveModal task={sec}/> : <null/>} 
+            {console.log("staff ", staff )}
+            {/*staff ? <MoveModal task={sec}/> : <null/>*/} 
           </Grid>
 
         </Grid>
         
         <br/>
         <div>
-          <TaskList tasks={tasks}/>
+          <TaskList tasks={tasks} sections={sections}/>
         </div>
         
       </CardContent>
