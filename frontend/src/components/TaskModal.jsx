@@ -14,6 +14,7 @@ import TaskService from '../API/TaskService';
 import ProfileService from '../API/ProfileService';
 import { Grid, ListItemButton } from '@mui/material';
 import MoveModal from "./MoveModal"
+import AddNewSubtask from './AddSubtask';
 
 const TS = new TaskService();
 const PS = new ProfileService();
@@ -68,6 +69,8 @@ export default function BasicCard({ task, sections }) {
                                 <SubtaskCard list={subtasks} />
                             </div>:null
                     }
+                    <br/>
+                    {staff ? <AddNewSubtask taskId={task.id}/> : <null/> }
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Close</Button>

@@ -39,6 +39,13 @@ export default class TaskService {
       console.log(err)
     }
   }
+  async createSubtask(sub){
+    try{
+      await axInstance.post(`/api/subtasks/`, sub)
+    } catch(err){
+      console.log(err)
+    }
+  }
   async deleteTask(id) {
     try {
       await axInstance.delete(`/api/tasks/${id}/`);
