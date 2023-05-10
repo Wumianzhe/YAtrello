@@ -32,23 +32,30 @@ export default class TaskService {
       console.log(err);
     }
   }
+  async updateSubtask(sub){
+    try{
+      await axInstance.patch(`/api/subtasks/${sub.id}/`, {is_completed: sub.is_completed});
+    } catch(err){
+      console.log(err)
+    }
+  }
   async deleteTask(id) {
     try {
-      await axInstance.delete(`/api/tasks/${id}`);
+      await axInstance.delete(`/api/tasks/${id}/`);
     } catch (err) {
       console.log(err);
     }
   }
   async patchTask(id,fields) {
     try {
-      await axInstance.patch(`/api/tasks/${id}`,fields);
+      await axInstance.patch(`/api/tasks/${id}/`,fields);
     } catch (err) {
       console.log(err);
     }
   }
   async parentBoard(id) {
     try {
-      const response = await axInstance.delete(`/api/boards/by_task_id/${id}`);
+      const response = await axInstance.get(`/api/boards/by_task_id/${id}/`);
       return response.data;
     } catch (err) {
       console.log(err)

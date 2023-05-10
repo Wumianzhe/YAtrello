@@ -35,7 +35,7 @@ export const handleLogin = async (login, pass) => {
   localStorage.setItem("auth", JSON.stringify({
     token: token,
     uid: uid,
-    isStaff: groups.some(item => item.id == 1)
+    isStaff: groups.some(item => item.id === 1)
   }))
 }
 

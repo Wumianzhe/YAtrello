@@ -32,7 +32,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
 class Board(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=25)
-    description = models.TextField(validators=[MaxLengthValidator(999)])
+    description = models.TextField(validators=[MaxLengthValidator(999)], default='')
     admin_gid = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='board_admins')
     user_gid = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='board_users')
 
