@@ -168,11 +168,11 @@ function MainInternal() {
             <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
               <Analytics boards={boards} tasks={tasks} incompleteTasks={uncompletedTasks} subtasks={subtasks} incompleteSubtasks={uncompletedSubtasks} />
             </Grid>
-            <Grid style={{ paddingTop: '20px' }}>
+            <Grid item xs={12} style={{ marginTop: '15px' }}>
               <SearchBoards boards={boards} >
-                {(boards) => (
-                  <BoardsList boards={boards} />
-                )}
+                  {(boards) => (
+                    <BoardsList boards={boards} />
+                  )}
               </SearchBoards>
             </Grid>
           </Grid>

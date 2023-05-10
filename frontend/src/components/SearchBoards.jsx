@@ -65,10 +65,8 @@ export default function SearchBoards({ boards, children }) {
 
     return (
       <div style={{marginTop: "20px", }}>
-      <Grid container spacing={3} >
-        <Grid item xs={4}></Grid>
-        <Grid item xs={4}>
-          <Search style={{ marginLeft: '-8%', width: '500px' }}>
+      <Grid >
+          <Search style={{ marginLeft: '0', width: '100%'}}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -84,7 +82,6 @@ export default function SearchBoards({ boards, children }) {
             {/* {console.log("listOfFoundBoards2", listOfFoundBoards)} */}
           </Search>
           {children(listOfFoundBoards)}
-        </Grid>
       </Grid>
     </div>
   )
