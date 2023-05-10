@@ -116,15 +116,6 @@ export default function PrimarySearchAppBar() {
           >
             <strong>Suneb</strong>
           </Typography>
-          <Search style={{marginLeft: '8%', width: '500px'}}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton

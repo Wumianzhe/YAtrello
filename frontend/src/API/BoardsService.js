@@ -10,7 +10,7 @@ export default class BoardsService{
 		}
 	}  
 
-	async getBoardsByName (name) {
+	static async getBoardsByName (name) {
 		try {
 			const response = await axInstance.get(`/api/boards/by_name/`, name);
 			return response.data;

@@ -15,6 +15,8 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 
+import SearchBoards from '../components/SearchBoards'
+
 
 //import CircularProgress from '@mui/material/CircularProgress';
 
@@ -144,13 +146,28 @@ function MainInternal() {
   const uncompletedTasks = CurrentTask(tasks);
   const uncompletedSubtasks = CurrentTask(subtasks);
   return (
+    <Grid>
+      <Grid item xs={12}>
+        <div
+          style={{marginTop: "-75px", position: 'relative'}}
+        >
+          <SearchBoards boards={boards}/>
+        </div>
+      </Grid>
     <div>
     <Grid
-      sx={{ padding: theme.spacing(4) }}
+      sx={{ padding: theme.spacing(4), position: 'relative', 'z-index': '-1' }}
       container spacing={2}
     >
+      
       <Grid item xs={12}>
-        <Paper>Main</Paper>
+        <Paper>Main
+        <br/>
+        Suneb a eb-application for...
+        <br/>
+        <br/>
+        <br/>
+        </Paper>
       </Grid>
       <Grid item sm={12} md={6}>
         <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
@@ -166,6 +183,7 @@ function MainInternal() {
     </Grid>
     <ADDNewBoard/>
   </div>
+  </Grid>
   )
 }
 
