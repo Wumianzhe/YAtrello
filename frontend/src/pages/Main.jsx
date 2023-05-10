@@ -48,11 +48,10 @@ function CurrentTask(taskList) {
   return taskArray;
 }
 
-function CircularProgressWithLabel(props) {
-  console.log("props", props.value)
+function CircularProgressWithLabel({ first, second, color, size, text }) {
   return (
     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-      <CircularProgress style={{ color: props.color }} size={`${props.size}px`} variant="determinate" value={(props.first) * 100 / props.second} />
+      <CircularProgress style={{ color: color }} size={`${size}px`} variant="determinate" value={(first) * 100 / second} />
       <Box
         sx={{
           top: '5px',
@@ -63,20 +62,20 @@ function CircularProgressWithLabel(props) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: 13 * props.size / 70
+          fontSize: 13 * size / 70
         }}
       >
         <div>
-          {props.text}
+          {text}
           <br />
           <span style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: 8 * props.size / 70
+            fontSize: 8 * size / 70
           }}
           >
-            {(props.first)}/{props.second}
+            {(first)}/{second}
           </span>
         </div>
       </Box>
@@ -85,59 +84,65 @@ function CircularProgressWithLabel(props) {
 }
 
 function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtasks }) {
-  return(
-  <Card variant="outlined">
-    <CardContent>
-      <div style={{fontSize: 26, 'textAlign': 'center', color: 'blue', padding: '10px'}}>Analitics</div>
-      <Grid container spacing={3} style={{padding: '10px'}}>
-        <Grid item xs={4}>
-          <CircularProgressWithLabel first={subtasks.length - incompleteSubtasks.length} second={subtasks.length} text={"subtasks"} size={150} color={'pink'} />
-          <br/>
-          <br/>
+  return (
+    <Card variant="outlined">
+      <CardContent>
+        <div style={{ fontSize: 26, 'textAlign': 'center', color: 'blue', padding: '10px' }}>Analitics</div>
+        <Grid container spacing={3} style={{ padding: '10px' }}>
+          <Grid item xs={4}>
+            <CircularProgressWithLabel
+              first={subtasks.length - incompleteSubtasks.length}
+              second={subtasks.length}
+              text={"subtasks"} size={150} color={'pink'} />
+            <br />
+            <br />
+          </Grid>
+          <Grid item xs={4}>
+            <div style={{ paddingTop: '25px' }}>
+              <CircularProgressWithLabel
+                first={tasks.length - incompleteTasks.length}
+                second={tasks.length}
+                text={"tasks"} size={100} color={'blue'} />
+            </div>
+          </Grid>
+          <Grid item xs={4}>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography component={'div'} variant="body2" color="blue">
+                  <strong>Need to complete</strong>
+                </Typography>
+                <br />
+                <Typography component={'div'} variant="body2" color="textSecondary">
+                  <strong>tasks:</strong> {incompleteTasks.length}
+                </Typography>
+                <Typography component={'div'} variant="body2" color="textSecondary">
+                  <strong>subtasks:</strong> {incompleteSubtasks.length}
+                </Typography>
+              </CardContent>
+            </Card>
+            <br />
+            <br />
+            <Card variant="outlined">
+              <CardContent>
+                <Typography component={'div'} variant="body2" color="blue">
+                  <strong>Total</strong>
+                </Typography>
+                <br />
+                <Typography component={'div'} variant="body2" color="textSecondary">
+                  <strong>boards:</strong> {boards.length}
+                </Typography>
+                <Typography component={'div'} variant="body2" color="textSecondary">
+                  <strong>tasks:</strong> {tasks.length}
+                </Typography>
+                <Typography component={'div'} variant="body2" color="textSecondary">
+                  <strong>subtasks:</strong> {subtasks.length}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-        <Grid item xs={4}>
-          <div style={{paddingTop: '25px'}}>
-            <CircularProgressWithLabel first={tasks.length - incompleteTasks.length} second={tasks.length} text={"tasks"} size={100} color={'blue'} />
-          </div>
-        </Grid>
-        <Grid item xs={4}>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography component={'div'} variant="body2" color="blue">
-                <strong>Need to complete</strong>
-              </Typography>
-              <br/>
-              <Typography component={'div'} variant="body2" color="textSecondary">
-                <strong>tasks:</strong> {incompleteTasks.length}
-              </Typography>
-              <Typography component={'div'} variant="body2" color="textSecondary">
-                <strong>subtasks:</strong> {incompleteSubtasks.length}
-              </Typography>
-            </CardContent>
-          </Card>
-          <br/>
-          <br/>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography component={'div'} variant="body2" color="blue">
-                <strong>Total</strong>
-              </Typography>
-              <br/>
-              <Typography component={'div'} variant="body2" color="textSecondary">
-                <strong>boards:</strong> {boards.length}
-              </Typography>
-              <Typography component={'div'} variant="body2" color="textSecondary">
-                <strong>tasks:</strong> {tasks.length}
-              </Typography>
-              <Typography component={'div'} variant="body2" color="textSecondary">
-                <strong>subtasks:</strong> {subtasks.length}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-    </CardContent>
-  </Card>
+      </CardContent>
+    </Card>
   )
 }
 
@@ -173,8 +178,21 @@ function MainInternal() {
         <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
           <Analytics boards={boards} tasks={tasks} incompleteTasks={uncompletedTasks} subtasks={subtasks} incompleteSubtasks={uncompletedSubtasks} />
         </Grid>
-        <Grid style={{ paddingTop: '20px' }}>
-          <BoardsList boards={boards} />
+        <Grid item sm={12} md={6}>
+          <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
+            <Analytics
+              boards={boards}
+              tasks={tasks}
+              incompleteTasks={uncompletedTasks}
+              subtasks={subtasks}
+              incompleteSubtasks={uncompletedSubtasks} />
+          </Grid>
+          <Grid style={{ paddingTop: '20px' }}>
+            <BoardsList boards={boards} />
+          </Grid>
+        </Grid>
+        <Grid item sm={12} md={6} style={{ paddingRight: '30px' }}>
+          <TaskList tasks={uncompletedTasks} />
         </Grid>
       </Grid>
       <Grid item sm={12} md={6} style={{paddingRight: '30px'}}>
