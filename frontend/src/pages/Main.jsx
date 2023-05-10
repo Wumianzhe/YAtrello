@@ -86,7 +86,7 @@ function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtask
   return (
     <Card variant="outlined">
       <CardContent>
-        <div style={{ fontSize: 26, 'textAlign': 'center', color: 'blue', padding: '10px' }}>Analitics</div>
+        <div style={{ fontSize: 26, 'textAlign': 'center', color: 'blue', padding: '10px' }}>Analytics</div>
         <Grid container spacing={3} style={{ padding: '10px' }}>
           <Grid item xs={4}>
             <CircularProgressWithLabel
@@ -166,11 +166,6 @@ function MainInternal() {
       
       <Grid item xs={12}>
         <Paper>Main
-        <br/>
-        Suneb a eb-application for...
-        <br/>
-        <br/>
-        <br/>
         </Paper>
       </Grid>
       <Grid item sm={12} md={6}>
