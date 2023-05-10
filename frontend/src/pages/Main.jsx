@@ -5,7 +5,6 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import ProfileService from '../API/ProfileService';
 import BoardsList from '../components/BoardsList'
-import { getUidByToken } from '../API/Auth'
 import TaskList from '../components/TaskList';
 import ADDNewBoard from '../components/AddNewBoard';
 
@@ -24,7 +23,7 @@ const theme = createTheme();
 const profileService = new ProfileService();
 
 export async function loader() {
-  const uid = await getUidByToken();
+  const uid = JSON.parse(localStorage.getItem("auth")).uid;
   const boards = await profileService.getBoards(uid);
   if (boards.length == 0) {
     console.log("this user has no boards"); // debug-only. Remove when there'll be visual way of displaying this

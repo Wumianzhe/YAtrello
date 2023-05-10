@@ -2,7 +2,7 @@ import React from 'react';
 import Board, { loader as boardLoader, action as boardAction } from "./pages/Board"
 import Login from "./pages/Login"
 import Root from "./pages/Root"
-import { hasJWT } from './API/Auth';
+import { hasAuth } from './API/Auth';
 import Register from "./pages/Register"
 import Profile, { loader as profileLoader } from "./pages/Profile"
 import PEdit, {action as pEditAction} from "./pages/EditProfile"
@@ -19,7 +19,7 @@ const routes = [
     element: <Root />,
     errorElement: <ErrorPage />,
     loader: () => {
-      if (!hasJWT()) {
+      if (!hasAuth()) {
         throw redirect(`/login`)
       }
       return null
