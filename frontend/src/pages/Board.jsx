@@ -49,7 +49,7 @@ export default function Board() {
       <Scrollable _class="sections_line">
         {sections.map((sec, i) =>
           <Grid key={i} item>
-            <SectionCard sec={sec} />
+            <SectionCard sec={sec} sections={sections}/>
           </Grid>
         )}
       </Scrollable>
@@ -63,7 +63,7 @@ export default function Board() {
             fullWidth
             variant="standard"
           />
-    </FormDialog>
+      </FormDialog>
     </Grid>
   )
 }

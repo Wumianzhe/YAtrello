@@ -50,10 +50,15 @@ function CurrentTask(taskList) {
   return taskArray;
 }
 
-function CircularProgressWithLabel({ first, second, color, size, text }) {
+function CircularProgressWithLabel({ first, second, color, textSize, size, text, variant, position}) {
   return (
     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-      <CircularProgress style={{ color: color }} size={`${size}px`} variant="determinate" value={(first) * 100 / second} />
+      {position ?
+        <CircularProgress sx={{ position: 'absolute', left: 0,}} variant={variant} style={{ color: color }} thickness='5' size={`${size}px`} value={(first) * 100 / second} />
+        :
+        <CircularProgress variant={variant} style={{ color: color }} thickness='5' size={`${size}px`} value={100} />
+      }
+      
       <Box
         sx={{
           top: '5px',
@@ -64,53 +69,101 @@ function CircularProgressWithLabel({ first, second, color, size, text }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: 13 * size / 70
+          //fontSize: 13 * textSize / 70,
+          fontSize: textSize,
+          fontWeight: 'bold',
+          fontFamily: 'default',
+          color: "#677a84"
         }}
       >
         <div>
           {text}
           <br />
-          <span style={{
+          <Box style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: 8 * size / 70
+            //fontSize: 8 * size / 70
+            fontSize: '80%',
           }}
           >
             {(first)}/{second}
-          </span>
+          </Box>
         </div>
       </Box>
     </Box>
   );
 }
 
+
+function FullCircularProgressWithLabel({ first, second, color, textSize, size, text}) {
+  return (
+    <Box sx={{ position: 'relative' }}>
+      <CircularProgressWithLabel first={first} second={second} color="#dee2e7" textSize={textSize} size={size} text={text} variant="determinate" />
+      <CircularProgress style={{ color: color }} thickness='5' size={`${size}px`} value={(first) * 100 / second} variant="determinate" sx={{ position: 'absolute', left: 0,}}/>
+      {/*<CircularProgressWithLabel first={first} second={second} color={color} textSize={textSize} size={size} text={text} variant="determinate" position='absolute'/>*/}
+    </Box>
+  );
+}
+
+
 function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtasks }) {
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" style={{background: '#dee2e7', 'border-radius': '15px', padding: '20px'}}>
       <CardContent>
-        <div style={{ fontSize: 26, 'textAlign': 'center', color: 'blue', padding: '10px' }}>Analytics</div>
-        <Grid container spacing={3} style={{ padding: '10px' }}>
-          <Grid item xs={4}>
-            <CircularProgressWithLabel
-              first={subtasks.length - incompleteSubtasks.length}
-              second={subtasks.length}
-              text={"subtasks"} size={150} color={'pink'} />
-            <br />
-            <br />
+        <Card variant="outlined" style={{'border-radius': '15px'}}>
+          <CardContent>
+            <Box sx={{ fontWeight: 'bold', fontSize: 'h3.fontSize', fontFamily: 'default', color: "#677a84", 'textAlign': 'center', marginTop: '15px'}}>
+                Analytics
+            </Box>
+          </CardContent>
+        </Card>
+        <Grid container spacing={2}>
+          <Grid container xs={8} style={{paddingLeft: '15px', paddingTop: '30px'}}>
+          <Card variant="outlined" style={{width: '100%', 'border-radius': '15px'}}>
+            <CardContent>
+              <Grid container spacing={2} style={{ padding: '10px' }}>
+                <Grid item xs={6}
+                  container
+                  spacing={0}
+                  direction="column"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <FullCircularProgressWithLabel
+                    first={subtasks.length - incompleteSubtasks.length}
+                    second={subtasks.length}
+                    text={"subtasks"} 
+                    textSize="h5.fontSize"
+                    size={150} 
+                    color={'#33e3ff'} />
+                  <br />
+                  <br />
+                </Grid>
+                <Grid item xs={6}
+                  container
+                  spacing={0}
+                  direction="column"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <FullCircularProgressWithLabel
+                    first={tasks.length - incompleteTasks.length}
+                    second={tasks.length}
+                    text={"tasks"} 
+                    textSize={'h6.fontSize'}
+                    size={100} 
+                    color={'#33beff'} />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
           </Grid>
-          <Grid item xs={4}>
-            <div style={{ paddingTop: '25px' }}>
-              <CircularProgressWithLabel
-                first={tasks.length - incompleteTasks.length}
-                second={tasks.length}
-                text={"tasks"} size={100} color={'blue'} />
-            </div>
-          </Grid>
-          <Grid item xs={4}>
-            <Card variant="outlined">
+
+          <Grid item xs={4} style={{paddingTop: '30px'}}>
+            <Card variant="outlined" style={{'border-radius': '15px'}}>
               <CardContent>
-                <Typography component={'div'} variant="body2" color="blue">
+                <Typography component={'div'} variant="body2" color="#677a84">
                   <strong>Need to complete</strong>
                 </Typography>
                 <br />
@@ -123,10 +176,9 @@ function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtask
               </CardContent>
             </Card>
             <br />
-            <br />
-            <Card variant="outlined">
+            <Card variant="outlined" style={{'border-radius': '15px'}}>
               <CardContent>
-                <Typography component={'div'} variant="body2" color="blue">
+                <Typography component={'div'} variant="body2" color="#677a84">
                   <strong>Total</strong>
                 </Typography>
                 <br />
@@ -162,15 +214,18 @@ function MainInternal() {
           container spacing={2}
         >
 
-          <Grid item xs={12}>
-            <Paper>Main
-            </Paper>
-          </Grid>
           <Grid item sm={12} md={6}>
             <Grid item xs={12} style={{ 'paddingTop': '15px' }}>
               <Analytics boards={boards} tasks={tasks} incompleteTasks={uncompletedTasks} subtasks={subtasks} incompleteSubtasks={uncompletedSubtasks} />
             </Grid>
             <Grid item xs={12} style={{ marginTop: '15px' }}>
+              <Card variant="outlined" style={{background: 'white', marginTop: '15px', 'border-radius': '15px'}}>
+                <CardContent>
+                  <Box sx={{ fontWeight: 'bold', fontSize: 'h4.fontSize', fontFamily: 'default', color: "#54656e", 'textAlign': 'center', marginTop: '15px'}}>
+                      My boards {staff?<ADDNewBoard />:null}
+                  </Box>
+                </CardContent>
+              </Card>
               <SearchBoards boards={boards} >
                   {(boards) => (
                     <BoardsList boards={boards} />
@@ -178,11 +233,20 @@ function MainInternal() {
               </SearchBoards>
             </Grid>
           </Grid>
-          <Grid item sm={12} md={6} style={{ paddingRight: '30px' }}>
-            <TaskList tasks={uncompletedTasks} />
+          <Grid item sm={12} md={6}>
+            <Card variant="outlined" style={{background: '#dee2e7', marginTop: '15px', 'border-radius': '15px'}}>
+              <CardContent>
+                <Box sx={{ fontWeight: 'bold', fontSize: 'h4.fontSize', fontFamily: 'default', color: "#54656e", 'textAlign': 'center', marginTop: '15px'}}>
+                    Need to complete
+                </Box>
+              </CardContent>
+            </Card>
+            <Grid style={{ paddingRight: '30px' }}>
+              <TaskList tasks={uncompletedTasks} />
+            </Grid>
           </Grid>
         </Grid>
-    {staff?<ADDNewBoard />:null}
+    
       </div>
     </Grid>
   )

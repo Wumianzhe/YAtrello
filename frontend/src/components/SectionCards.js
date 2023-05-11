@@ -12,7 +12,8 @@ import MoveModal from "./MoveModal"
 
 const SS = new SectionService();
 
-export default function SectionCard({sec}) {
+export default function SectionCard({sec, sections}) {
+  const staff = JSON.parse(localStorage.getItem("auth")).isStaff
   const [changed, setChanged] = useState(true)
   const [tasks,setTasks] = useState([])
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function SectionCard({sec}) {
     }
   },[changed])
   return (
-    <Card sx={{ maxWidth: 500, minWidth: 250}}>
+    <Card sx={{ maxWidth: 500, minWidth: 250}} style={{borderRadius: "15px"}}>
       <CardContent style={{ marginRight: '-15px'}}>
         <Grid
           container
@@ -40,15 +41,17 @@ export default function SectionCard({sec}) {
             </Typography>
           </Grid>
           <Grid item>
-            <MoveModal task={sec} />
+            {console.log("staff ", staff )}
+            {/*staff ? <MoveModal task={sec}/> : <null/>*/} 
           </Grid>
 
         </Grid>
         
         <br/>
         <div>
-          <TaskList tasks={tasks}/>
+          <TaskList tasks={tasks} sections={sections}/>
         </div>
+        
       </CardContent>
       <CardActions>
         {/* <Button size="small">Add</Button> */}

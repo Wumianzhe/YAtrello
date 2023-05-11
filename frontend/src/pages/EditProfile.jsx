@@ -90,10 +90,10 @@ export default function Edit() {
           alignItems="center"
           style={{ 'margin-top': '5%' }}
         >
-          <Paper style={{ padding: '15px' }}>
-            `  <Grid style={{ padding: '25px' }} item>
+          <Paper style={{ padding: '15px', borderRadius: '15px' }}>
+            <Grid style={{ padding: '25px' }} item>
 
-              <div style={{ fontSize: 26, 'textAlign': 'center', color: 'blue', marginTop: '-25px', padding: '10px' }}>Editing a profile</div>
+              <div style={{ fontSize: 26, 'textAlign': 'center', color: '#33beff', marginTop: '-25px', padding: '10px' }}><strong>Editing a profile</strong></div>
               <InputWithLabel text="login" default={data.username} name="username" />
               <InputWithLabel text="email" default={data.email} name="email" />
               <InputWithLabel text="First name" default={data.first_name} name="first_name" />
@@ -101,13 +101,12 @@ export default function Edit() {
               <InputWithLabel text="Something about me" default={data.short_bio} name="short_bio" />
               <Button
                 variant="contained"
-                style={{ background: 'blue' }}
+                style={{ background: '#33beff' }}
                 type="submit"
-              //disabled={newSection.name===''}
               >
                 Save
               </Button>
-            </Grid>`
+            </Grid>
           </Paper>
         </Grid>
       </Box>

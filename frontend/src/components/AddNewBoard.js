@@ -15,6 +15,9 @@ import Checkbox from '@mui/material/Checkbox';
 import Paper from '@mui/material/Paper';
 import ProfileService from '../API/ProfileService';
 import BoardsService from '../API/BoardsService';
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
 
 
 let PS = new ProfileService();
@@ -150,9 +153,16 @@ export default function ADDNewBoard() {
 
   return (
     <React.Fragment>
+      {/*
       <Button style={{background: 'blue', color: "white", marginLeft: '32px'}} variant="outlined" onClick={handleClickOpen}>
         New board
       </Button>
+      */}
+      <span style={{marginTop: "-5px"}}>
+        <IconButton onClick={handleClickOpen}>
+            <AddIcon fontSize='large' style={{color: 'white', background: '#33beff', borderRadius: "30px" }}/>
+        </IconButton>
+      </span>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New board</DialogTitle>
         <DialogContent>
