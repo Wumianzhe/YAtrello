@@ -54,8 +54,8 @@ class BoardViewSet(viewsets.ModelViewSet):
     serializer_class = BoardSerializer
     @action(detail=True, url_path=r'users')
     def users(self, request, methods=["get"], pk = None):
-        board = Board.objects.filter(pk=pk)
-        group = board[0].user_gid
+        board = Board.objects.get(pk=pk)
+        group = boards.user_gid
         print(group)
         profiles = group.profile_set.all()
         serialzer = ProfileSerializer(profiles, many=True)
