@@ -71,9 +71,9 @@ export default class ProfileService {
       console.log(err);
     }
   }
-  async updateProfile(profile) {
+  async updateProfile(id, user) {
     try {
-      await axInstance.put(`/api/profile/${profile.id}`, profile);
+      await axInstance.patch(`/api/profiles/${id}/`, user);
     } catch (err) {
       console.log(err);
     }

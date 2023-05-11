@@ -9,6 +9,10 @@ import { getUidByToken, getUserData } from "../API/Auth";
 //import { Button } from "@mui/base";
 import Button from '@mui/material/Button';
 import ProfileService from "../API/ProfileService";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
 
 const PS = new ProfileService()
 
@@ -26,25 +30,44 @@ export default function Main() {
   console.log(data)
   return (
       <Box padding={3}>
-          <Grid
-              container
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-          >
-              <Grid item>
-                  <ProfileCard post={{name: data.first_name, last: data.last_name, email: data.email}}/>
-              </Grid>
-              <Grid item>
-                  <PersonalInfoCards bio={ data.short_bio}/>
-              </Grid>
+        {console.log("data", data)}
+        <Grid container spacing={2}>
+          <Grid item container xs={4} style={{paddingLeft: '15px', paddingTop: '30px'}}>
+            <Avatar 
+                alt="Remy Sharp" 
+                src={`${data.image_url}`} 
+                sx={{ width: '300px', height: "300px"}}
+            />
           </Grid>
-          <Button
-            variant="contained" 
-            style={{background: 'blue'}}
-          >
-              <Link to={'/users/edit'} style={{color: 'white', textDecoration: 'none'}}>Edit</Link>
-          </Button>
+          <Grid item container xs={8} style={{paddingLeft: '15px', paddingTop: '30px'}}>
+            <Card style={{width: '95%', paddingTop: "20px", paddingLeft: '20px' }}>
+              <CardContent style={{}}>
+                <Typography gutterBottom variant="h4" component="div" color="text.secondary">
+                  <strong>My profile: </strong>
+                </Typography>
+                <Typography gutterBottom variant="h5" component="div" color="text.secondary">
+                  <strong>Login: </strong>{data.username} 
+                  <br/>
+                  <strong>Email: </strong>{data.email} 
+                  <br/>
+                  <strong>First name: </strong>{data.first_name} 
+                  <br/>
+                  <strong>Second name: </strong>{data.last_name}
+                  <br/>
+                  <strong>Something about me: </strong>{data.short_bio}
+                </Typography>
+                <Button
+                  variant="contained" 
+                  style={{background: '#33beff'}}
+                >
+                    <Link to={'/users/edit'} style={{color: 'white', textDecoration: 'none'}}>Edit</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+          
+
       </Box>
   )
 }

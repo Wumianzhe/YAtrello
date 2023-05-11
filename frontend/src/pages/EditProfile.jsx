@@ -32,10 +32,10 @@ export async function action({ params, request }) {
     short_bio: formData.get("short_bio") ? formData.get("short_bio") : data.short_bio,
   }
   await PS.updateProfile(uid, user);
-
-  //console.log("123formData123", formData);
-  //console.log("123data123", data);
-  //console.log("123user123", user)
+  console.log("uid", uid);
+  console.log("123formData123", formData);
+  console.log("123data123", data);
+  console.log("123user123", user)
   return null;
 }
 
@@ -50,7 +50,7 @@ function InputWithLabel(props) {
           <div style={{ display: 'flex', alignItems: 'center' }}><strong>{props.text} </strong></div>
         </Grid>
         <Grid item xs={6}>
-          <div style={{ paddingLeft: '20px', "text-align": "right" }}>
+          <div style={{ paddingLeft: '20px' }}>
             <FormControl variant="standard">
               <Input
                 id="component-simple"
@@ -88,7 +88,7 @@ export default function Edit() {
           direction="column"
           justifyContent="center"
           alignItems="center"
-          style={{ 'margin-top': '5%' }}
+          style={{ 'marginTop': '5%' }}
         >
           <Paper style={{ padding: '15px', borderRadius: '15px' }}>
             <Grid style={{ padding: '25px' }} item>

@@ -4,7 +4,7 @@ from yatapp.models import Board, Section, Group, Task, Subtask, Comment, Profile
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['id','email','username','first_name','last_name','short_bio', 'groups']
+        fields = ['id','email','username','first_name','last_name','short_bio', 'groups', 'image_url']
 
 class BoardSerializer(serializers.ModelSerializer):
     class Meta:
