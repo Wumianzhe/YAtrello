@@ -33,4 +33,12 @@ export default class BoardsService{
 			console.log(err);
 		}
     }
+	async getListOfUsersByBoardId(id) {
+        try {
+			const response = await axInstance.get(`/api/boards/${id}/users`);
+			return response.data;
+		} catch (err) {
+			console.log(err);
+		}
+    }
 }

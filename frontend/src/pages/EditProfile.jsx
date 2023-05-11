@@ -30,6 +30,7 @@ export async function action({ params, request }) {
     first_name: formData.get("first_name") ? formData.get("first_name") : data.first_name,
     last_name: formData.get("last_name") ? formData.get("last_name") : data.last_name,
     short_bio: formData.get("short_bio") ? formData.get("short_bio") : data.short_bio,
+    image_url: formData.get("image_url") ? formData.get("image_url") : data.image_url,
   }
   await PS.updateProfile(uid, user);
   console.log("uid", uid);
@@ -99,6 +100,7 @@ export default function Edit() {
               <InputWithLabel text="First name" default={data.first_name} name="first_name" />
               <InputWithLabel text="Last name" default={data.last_name} name="last_name" />
               <InputWithLabel text="Something about me" default={data.short_bio} name="short_bio" />
+              <InputWithLabel text="URL image" default={data.image_url} name="image_url" />
               <Button
                 variant="contained"
                 style={{ background: '#33beff' }}
