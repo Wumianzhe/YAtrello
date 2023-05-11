@@ -1,4 +1,6 @@
 import React from 'react';
+import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { createStyles } from '@mui/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -11,15 +13,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import {Form, redirect, Link} from 'react-router-dom';
-import { handleRegister as register } from "../API/Auth";
-
-export async function action({ request }) {
-  const formData = await request.formData();
-  await register(formData);
-  return redirect(`/`);
-}
-
+import {Form, Link, useNavigate} from 'react-router-dom';
+import { createProfile } from '../API/profileSlice';
 
 const theme = createTheme();
 const useStyles = createStyles((theme) => ({
@@ -46,6 +41,10 @@ const useStyles = createStyles((theme) => ({
 
 const Reg = () => {
     const classes = useStyles(theme);
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const {register, handleSubmit} = useForm()
 
     const [values, setValues] = React.useState({
         email: '',
@@ -60,10 +59,13 @@ const Reg = () => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+    function onSubmit(username,pass) {
+        dispatch(createProfile(username, pass)).then(navigate('/login'));
+    }
 
     return (
         <div style={classes.root}>
-            <Form method="post">
+            <Form onSubmit={handleSubmit(onSubmit)}>
             <Grid container justifyContent="center" style={classes.main_grid_style}> 
                 <Grid item xs={12} sm={5}>
                     <Paper style={classes.paper}>
@@ -73,33 +75,31 @@ const Reg = () => {
                         <div style={classes.div_style}>
                             <FormControl style={classes.form_style} variant="outlined">
                                 <InputLabel htmlFor="component-outlined">Login</InputLabel>
-                                <OutlinedInput 
+                              <OutlinedInput {...register("username",{required : true})}
                                     id="component-outlined" 
                                     //value={values.email} 
                                     //onChange={handleChange('email')} 
                                     label="login"
                                     type="text"
-                                    name="login" 
                                 />
                             </FormControl>
                         </div>
                         <div style={classes.div_style}>
                             <FormControl style={classes.form_style} variant="outlined">
                                 <InputLabel htmlFor="component-outlined">Email</InputLabel>
-                                <OutlinedInput 
+                              <OutlinedInput {...register("email",{required: true})}
                                     id="component-outlined" 
                                     //value={values.email} 
                                     //onChange={handleChange('email')} 
                                     label="email"
                                     type="text"
-                                    name="email" 
                                 />
                             </FormControl>
                         </div>
                         <div style={classes.div_style}>
                             <FormControl style={classes.form_style} variant="outlined">
                                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                <OutlinedInput
+                              <OutlinedInput {...register("pass",{required:true})}
                                     id="outlined-adornment-password"
                                     type={values.showPassword ? 'text' : 'password'}
                                     //value={values.password}

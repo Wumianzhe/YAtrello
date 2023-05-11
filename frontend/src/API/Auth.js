@@ -21,7 +21,7 @@ const handleError = (error) => {
     console.log(error.request);
   } else {
     // Something happened in setting up the request that triggered an Error
-    console.log('Erroror', error.message);
+    console.log('Error', error.message);
   }
 }
 
@@ -29,7 +29,7 @@ export function hasAuth() {
   let flag = false;
   const authState = store.getState().auth
   // if its undefined, there was no login yet
-  authState.auth === undefined ? flag = false : flag = true;
+  authState.auth ? flag = true : flag = false;
   if (flag && axInstance.defaults.headers.common["Authorization"] === undefined) {
     const token = selectToken(authState);
     axInstance.defaults.headers.common["Authorization"] = `Token ${token}`
@@ -55,22 +55,9 @@ export const handleLogin = async (payload) => {
   return auth;
 }
 
-export const handleRegister = async (formData) => {
-  const registerPayload = {
-    username: formData.get("login"),
-    password: formData.get("pass"),
-    email: formData.get("email")
-  }
-  await axInstance.post(`/auth/users/`, registerPayload)
-    .then().catch(err => console.log(err))
-  await handleLogin(registerPayload.username, registerPayload.password);
-}
-
 export function logout() {
   axInstance.post(`/auth/token/logout`, {})
-    .then().catch(err => console.log(err));
-  setAuthToken(null);
-  localStorage.removeItem("auth");
+            .then().catch(err => handleError(err));
 }
 
 export const setAuthToken = token => {
@@ -86,6 +73,6 @@ async function getUidByToken() {
   await axInstance.get(`auth/uid_by_token`, {})
     .then(response => {
       uid = response.data.user_id
-    }).catch(err => console.log(err));
+    }).catch(err => handleError(err));
   return uid;
 }

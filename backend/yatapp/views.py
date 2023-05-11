@@ -24,7 +24,7 @@ def uid_by_token(request):
         
 
 class ProfileViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 

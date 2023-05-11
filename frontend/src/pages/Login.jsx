@@ -15,7 +15,7 @@ import Button from '@mui/material/Button';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { login } from "../API/authSlice";
-import {Form, redirect, Link, useNavigate} from 'react-router-dom';
+import {Form, Link, useNavigate} from 'react-router-dom';
 
 
 const theme = createTheme();

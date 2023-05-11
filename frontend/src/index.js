@@ -13,7 +13,7 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom";
 import ErrorPage from './pages/error-page';
 // import {action as loginAction} from "./pages/Login"
-import {action as registerAction} from "./pages/Register"
+// import {action as registerAction} from "./pages/Register"
 
 const routes = [
   {
@@ -65,7 +65,7 @@ const routes = [
   {
     path: "register",
     element: <Register />,
-    action: registerAction,
+    // action: registerAction,
   },
 ]
 

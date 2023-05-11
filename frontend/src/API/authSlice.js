@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { handleLogin, setAuthToken, } from './Auth'
+import { logout as lo } from './Auth'
 
 export const login = createAsyncThunk('auth/login', async ({username, pass}) => {
   const loginPayload = {
@@ -20,6 +21,7 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.auth = null;
       localStorage.removeItem("auth");
+      lo()
       setAuthToken(null)
     },
   },
