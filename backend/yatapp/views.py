@@ -49,9 +49,17 @@ class ProfileViewSet(viewsets.ModelViewSet):
     
     
 class BoardViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
+    @action(detail=True, url_path=r'users')
+    def users(self, request, methods=["get"], pk = None):
+        board = Board.objects.filter(pk=pk)
+        group = board[0].user_gid
+        print(group)
+        profiles = group.profile_set.all()
+        serialzer = ProfileSerializer(profiles, many=True)
+        return Response(serialzer.data)
 
     @action(detail=False, url_path='by_task_id/(?P<task_id>[0-9]+)')
     def by_task_id(self, request, task_id = None):
