@@ -9,13 +9,16 @@ import TaskService from '../API/TaskService';
 let TS = new TaskService
 
 export default function SubtaskCard(props) {
+  const staff = JSON.parse(localStorage.getItem("auth")).isStaff
   const [checked, setChecked] = React.useState([1]);
   //React.useEffect(()=>{},[checked])
 
   const handleToggle = async(subtask) =>{
+    if (staff){
     subtask.is_completed = !subtask.is_completed
     await TS.updateSubtask({id: subtask.id, is_completed: subtask.is_completed})
     setChecked(!subtask.is_completed);
+  }
   };
 
   return (

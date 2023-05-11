@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
+import { useDispatch } from 'react-redux'
 import {Link} from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
-import {logout} from '../../API/Auth'
+import {logout} from '../../API/authSlice'
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -58,6 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
 
   const isMenuOpen = Boolean(anchorEl);
   // const router = useHistory();
@@ -95,7 +97,7 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
       <MenuItem>
         <Link to={`/login`} onClick={() => {
-          logout()
+          dispatch(logout())
           handleMenuClose()
         }}>
           Logout

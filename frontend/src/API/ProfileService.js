@@ -1,6 +1,9 @@
 import { axInstance } from './Auth';
 
 export default class ProfileService {
+  async createProfile(profile) {
+    return axInstance.post(`/auth/users/`,profile)
+  }
   async getProfile(id) {
     try {
       const response = await axInstance.get(`/api/profiles/${id}`);

@@ -9,19 +9,19 @@ import CardContent from '@mui/material/CardContent';
 
 const theme = createTheme();
 
-export default function TaskList({ tasks }) {
+export default function TaskList({ tasks, sections }) {
   return (
     <div>
         {tasks.map((task, i) =>
           <div key={i} style={{ 'paddingTop': '15px' }}>
-            <Card variant="outlined" style={{marginRight: '-30px'}}>
+            <Card variant="outlined" style={{marginRight: '-30px', 'border-radius': '15px'}}>
               <CardContent
                 style={{margin: '-15px'}}
               >
                 <ListItem
                   disableGutters
                   secondaryAction={
-                    <TaskModal task={task} />
+                    <TaskModal task={task} sections={sections}/>
                   }
                 >
                   <ListItemText primary={

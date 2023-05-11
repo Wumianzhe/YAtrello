@@ -12,25 +12,26 @@ import {Link} from 'react-router-dom';
 function  BoardsList({boards}){
     return (
         <div  className="boards--list">
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={{marginTop: "15px"}}>
             {boards.map((board, index) =>
                 <Grid item xs={6} key={index}>
-                <Box sx={{ maxWidth: 300 }} key={index}>
-                    <Card variant="outlined">
+                <Box key={index}>
+                    <Card variant="outlined" style={{'border-radius': '15px'}}>
                         <CardContent>
-                            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                {board.name}
+                            <Typography component={'div'} variant="body2" color="#677a84">
+                                <strong>{board.name}</strong>
                             </Typography>
-                            <Typography variant="body2">
-                                boards.id {board.id}
-                                <br/>
-                                boards.admin_gid {board.admin_gid}
-                                <br/>
-                                boards.user_gid {board.user_gid}
+                            <br />
+                            <Typography component={'div'} variant="body2" color="textSecondary">
+                                <strong>description:</strong> {board.description}
                             </Typography>
                         </CardContent>
                         <CardActions style={{paddingLeft: '16px', marginTop: '-15px'}}>
-                            <Link to={`/boards/${board.id}`} style={{color: 'blue', textDecoration: 'none'}}>Learn more</Link>
+                            <Link to={`/boards/${board.id}`} style={{color: '#33beff', textDecoration: 'none'}}>
+                                <Typography component={'div'}>
+                                    <strong>Learn more</strong>
+                                </Typography>
+                            </Link>
                         </CardActions>
                     </Card>
                 </Box>
