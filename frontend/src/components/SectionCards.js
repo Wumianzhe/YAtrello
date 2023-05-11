@@ -27,7 +27,7 @@ export default function SectionCard({sec, sections}) {
     }
   },[changed])
   return (
-    <Card sx={{ maxWidth: 500, minWidth: 250}}>
+    <Card sx={{ maxWidth: 500, minWidth: 250}} style={{borderRadius: "15px"}}>
       <CardContent style={{ marginRight: '-15px'}}>
         <Grid
           container

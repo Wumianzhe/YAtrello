@@ -31,6 +31,7 @@ const useStyles = createStyles((theme) => ({
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
+      borderRadius: '15px',
 
     },
     form_style: {
@@ -67,7 +68,7 @@ const Reg = () => {
             <Grid container justifyContent="center" style={classes.main_grid_style}> 
                 <Grid item xs={12} sm={5}>
                     <Paper style={classes.paper}>
-                        <h1 style={{color: 'blue'}}>
+                        <h1 style={{color: '#33beff'}}>
                             Registration
                         </h1>
                         <div style={classes.div_style}>
@@ -75,8 +76,6 @@ const Reg = () => {
                                 <InputLabel htmlFor="component-outlined">Login</InputLabel>
                                 <OutlinedInput 
                                     id="component-outlined" 
-                                    //value={values.email} 
-                                    //onChange={handleChange('email')} 
                                     label="login"
                                     type="text"
                                     name="login" 
@@ -88,8 +87,6 @@ const Reg = () => {
                                 <InputLabel htmlFor="component-outlined">Email</InputLabel>
                                 <OutlinedInput 
                                     id="component-outlined" 
-                                    //value={values.email} 
-                                    //onChange={handleChange('email')} 
                                     label="email"
                                     type="text"
                                     name="email" 
@@ -102,8 +99,6 @@ const Reg = () => {
                                 <OutlinedInput
                                     id="outlined-adornment-password"
                                     type={values.showPassword ? 'text' : 'password'}
-                                    //value={values.password}
-                                    //onChange={handleChange('password')}
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <IconButton
@@ -125,14 +120,13 @@ const Reg = () => {
                         <div style={classes.div_style}>
                             <Button 
                                 variant="contained" 
-                                style={{background: 'blue'}}
-                                //onClick={verificationAndAuthorization}
+                                style={{background: '#33beff'}}
                                 type="submit"
                             >
                                 Register
                             </Button>
                         </div>
-                        <Link to={'/login'} style={{color: 'blue'}}>Already registered?</Link>
+                        <Link to={'/login'} style={{color: '#33beff'}}>Already registered?</Link>
                     </Paper>
                 </Grid>
             </Grid>

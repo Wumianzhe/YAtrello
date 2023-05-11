@@ -31,6 +31,7 @@ const useStyles = createStyles((theme) => ({
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
+      borderRadius: '15px',
 
     },
     form_style: {
@@ -62,10 +63,15 @@ const Log = () => {
     return (
         <div style={classes.root}>
             <Form method="post">
-            <Grid container justifyContent="center" style={classes.main_grid_style}> 
+            <Grid container 
+                spacing={0}
+                justifyContent="center" 
+                alignItems="center" 
+                style={classes.main_grid_style}
+            > 
                 <Grid item xs={12} sm={5}>
                     <Paper style={classes.paper}>
-                        <h1 style={{color: 'blue'}}>
+                        <h1 style={{color: '#33beff'}}>
                             Authorization
                         </h1>
                         <div style={classes.div_style}>
@@ -106,13 +112,13 @@ const Log = () => {
                         <div style={classes.div_style}>
                             <Button 
                                 variant="contained" 
-                                style={{background: 'blue'}}
+                                style={{background: '#33beff'}}
                                 type="submit"
                             >
                                 Authorization
                             </Button>
                         </div>
-                        <Link to={'/register'} style={{color: 'blue'}}>Not registered yet?</Link>
+                        <Link to={'/register'} style={{color: '#33beff'}}>Not registered yet?</Link>
                     </Paper>
                 </Grid>
             </Grid>

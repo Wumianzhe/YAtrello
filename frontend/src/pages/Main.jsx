@@ -67,7 +67,8 @@ function CircularProgressWithLabel({ first, second, color, textSize, size, text,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: 13 * textSize / 70,
+          //fontSize: 13 * textSize / 70,
+          fontSize: textSize,
           fontWeight: 'bold',
           fontFamily: 'default',
           color: "#677a84"
@@ -76,15 +77,16 @@ function CircularProgressWithLabel({ first, second, color, textSize, size, text,
         <div>
           {text}
           <br />
-          <span style={{
+          <Box style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: 8 * size / 70
+            //fontSize: 8 * size / 70
+            fontSize: '80%',
           }}
           >
             {(first)}/{second}
-          </span>
+          </Box>
         </div>
       </Box>
     </Box>
@@ -114,32 +116,42 @@ function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtask
             </Box>
           </CardContent>
         </Card>
-        <Grid container spacing={2} style={{  }}>
+        <Grid container spacing={2}>
           <Grid container xs={8} style={{paddingLeft: '15px', paddingTop: '30px'}}>
           <Card variant="outlined" style={{width: '100%', 'border-radius': '15px'}}>
             <CardContent>
               <Grid container spacing={2} style={{ padding: '10px' }}>
-                <Grid item xs={6}>
+                <Grid item xs={6}
+                  container
+                  spacing={0}
+                  direction="column"
+                  alignItems="center"
+                  justifyContent="center"
+                >
                   <FullCircularProgressWithLabel
                     first={subtasks.length - incompleteSubtasks.length}
                     second={subtasks.length}
                     text={"subtasks"} 
-                    textSize={130}
+                    textSize="h5.fontSize"
                     size={150} 
-                    color={'pink'} />
+                    color={'#33e3ff'} />
                   <br />
                   <br />
                 </Grid>
-                <Grid item xs={6}>
-                  <div style={{ paddingTop: '25px' }}>
-                    <FullCircularProgressWithLabel
-                      first={tasks.length - incompleteTasks.length}
-                      second={tasks.length}
-                      text={"tasks"} 
-                      textSize={120}
-                      size={100} 
-                      color={'blue'} />
-                  </div>
+                <Grid item xs={6}
+                  container
+                  spacing={0}
+                  direction="column"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <FullCircularProgressWithLabel
+                    first={tasks.length - incompleteTasks.length}
+                    second={tasks.length}
+                    text={"tasks"} 
+                    textSize={'h6.fontSize'}
+                    size={100} 
+                    color={'#33beff'} />
                 </Grid>
               </Grid>
             </CardContent>
@@ -205,6 +217,13 @@ function MainInternal() {
               <Analytics boards={boards} tasks={tasks} incompleteTasks={uncompletedTasks} subtasks={subtasks} incompleteSubtasks={uncompletedSubtasks} />
             </Grid>
             <Grid item xs={12} style={{ marginTop: '15px' }}>
+              <Card variant="outlined" style={{background: 'white', marginTop: '15px', 'border-radius': '15px'}}>
+                <CardContent>
+                  <Box sx={{ fontWeight: 'bold', fontSize: 'h4.fontSize', fontFamily: 'default', color: "#54656e", 'textAlign': 'center', marginTop: '15px'}}>
+                      My boards {staff?<ADDNewBoard />:null}
+                  </Box>
+                </CardContent>
+              </Card>
               <SearchBoards boards={boards} >
                   {(boards) => (
                     <BoardsList boards={boards} />
@@ -225,7 +244,7 @@ function MainInternal() {
             </Grid>
           </Grid>
         </Grid>
-    {staff?<ADDNewBoard />:null}
+    
       </div>
     </Grid>
   )
