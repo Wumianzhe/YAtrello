@@ -15,6 +15,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 
 import SearchBoards from '../components/SearchBoards'
+import store from '../store';
 
 
 //import CircularProgress from '@mui/material/CircularProgress';
@@ -23,7 +24,8 @@ const theme = createTheme();
 const profileService = new ProfileService();
 
 export async function loader() {
-  const uid = JSON.parse(localStorage.getItem("auth")).uid;
+  const authState = store.getState().auth
+  const uid = authState.auth.uid;
   const boards = await profileService.getBoards(uid);
   if (boards.length == 0) {
     console.log("this user has no boards"); // debug-only. Remove when there'll be visual way of displaying this
@@ -36,7 +38,7 @@ export async function loader() {
   if (subtasks.length == 0) {
     console.log("this user has no subtasks"); // debug-only. Remove when there'll be visual way of displaying this
   }
-  const staff = JSON.parse(localStorage.getItem("auth")).isStaff
+  const staff = authState.auth.isStaff
   return { boards, tasks, subtasks, staff };
 }
 
