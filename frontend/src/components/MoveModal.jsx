@@ -11,6 +11,10 @@ import CardContent from "@mui/material/CardContent";
 import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
 
+import TaskService from '../API/TaskService';
+
+const TS = new TaskService();
+
 export default function BasicCard({ task, sections }) {
     const [changed, setChanged] = useState(true);
     const [newSectionName, setNewSectionName] = useState({});
@@ -32,6 +36,7 @@ export default function BasicCard({ task, sections }) {
         const newSectionId = (newSection.length !== 0) ? newSection[0].id : null;
         if (newSectionId){
             console.log("All correct")
+            TS.patchTask(task.id, {section_id: newSectionId})
             console.log("newSectionId ", newSectionId );
             console.log("task id", task.id);
         }

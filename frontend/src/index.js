@@ -1,4 +1,6 @@
 import React from 'react';
+import store from './store'
+import { Provider } from 'react-redux'
 import Board, { loader as boardLoader, action as boardAction } from "./pages/Board"
 import Login from "./pages/Login"
 import Root from "./pages/Root"
@@ -10,8 +12,8 @@ import FullWidthGrid, {loader as mainLoader, action as mainAction} from "./pages
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom";
 import ErrorPage from './pages/error-page';
-import {action as loginAction} from "./pages/Login"
-import {action as registerAction} from "./pages/Register"
+// import {action as loginAction} from "./pages/Login"
+// import {action as registerAction} from "./pages/Register"
 
 const routes = [
   {
@@ -58,12 +60,12 @@ const routes = [
   {
     path: "/login",
     element: <Login />,
-    action: loginAction,
+    // action: loginAction,
   },
   {
     path: "register",
     element: <Register />,
-    action: registerAction,
+    // action: registerAction,
   },
 ]
 
@@ -72,6 +74,8 @@ const router = createBrowserRouter(routes);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
     <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );

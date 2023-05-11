@@ -1,4 +1,6 @@
 import React from 'react';
+import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { createStyles } from '@mui/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -12,14 +14,9 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import { handleLogin as login } from "../API/Auth";
-import {Form, redirect, Link} from 'react-router-dom';
+import { login } from "../API/authSlice";
+import {Form, Link, useNavigate} from 'react-router-dom';
 
-export async function action({ request }) {
-    const formData = await request.formData();
-    await login(formData.get("login"), formData.get("pass"));
-    return redirect(`/`);
-  }
 
 const theme = createTheme();
 const useStyles = createStyles((theme) => ({
@@ -47,10 +44,13 @@ const useStyles = createStyles((theme) => ({
 
 const Log = () => {
     const classes = useStyles(theme);
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [values, setValues] = React.useState({
         showPassword: false,
     });
+    const {register, handleSubmit} = useForm()
 
     const handleClickShowPassword = () => {
         setValues({ ...values, showPassword: !values.showPassword });
@@ -59,10 +59,13 @@ const Log = () => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+    function onSubmit(username,pass) {
+        dispatch(login(username, pass)).then(navigate('/'));
+    }
 
     return (
         <div style={classes.root}>
-            <Form method="post">
+            <Form onSubmit={handleSubmit(onSubmit)}>
             <Grid container 
                 spacing={0}
                 justifyContent="center" 
@@ -77,18 +80,16 @@ const Log = () => {
                         <div style={classes.div_style}>
                             <FormControl style={classes.form_style} variant="outlined">
                                 <InputLabel htmlFor="component-outlined">Login</InputLabel>
-                                <OutlinedInput 
-                                    id="component-outlined" 
+                              <OutlinedInput {...register("username",{required : true})}
                                     label="login1"
                                     type="text"
-                                    name="login" 
                                 />
                             </FormControl>
                         </div>
                         <div style={classes.div_style}>
                             <FormControl style={classes.form_style} variant="outlined">
                                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                <OutlinedInput
+                              <OutlinedInput {...register("pass",{required: true})}
                                     id="outlined-adornment-password"
                                     type={values.showPassword ? 'text' : 'password'}
                                     endAdornment={
@@ -105,7 +106,6 @@ const Log = () => {
                                     }
                                     label="password"
                                     labelWidth={70}
-                                    name="pass"
                                 />
                             </FormControl>
                         </div>
