@@ -241,7 +241,7 @@ function MainInternal() {
                 </Box>
               </CardContent>
             </Card>
-            <Grid style={{ paddingRight: '30px' }}>
+            <Grid style={{ marginTop:'20px' }}>
               <TaskList tasks={uncompletedTasks} />
             </Grid>
           </Grid>

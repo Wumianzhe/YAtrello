@@ -31,17 +31,17 @@ export default function Main() {
   return (
       <Box padding={3}>
         {console.log("data", data)}
-        <Grid container spacing={2}>
-          <Grid item container xs={4} style={{paddingLeft: '15px', paddingTop: '30px'}}>
+        <Grid container spacing={2} style={{background: 'white', borderRadius: "10px",padding: '20px', marginTop:"20px",maxWidth:'1200px',margin: "0 auto"}}>
+          <Grid item container xs={4} style={{paddingLeft: '15px', paddingTop: '0px'}}>
             <Avatar 
                 alt="Remy Sharp" 
                 src={`${data.image_url}`} 
                 sx={{ width: '300px', height: "300px"}}
             />
           </Grid>
-          <Grid item container xs={8} style={{paddingLeft: '15px', paddingTop: '30px'}}>
-            <Card style={{width: '95%', paddingTop: "20px", paddingLeft: '20px' }}>
-              <CardContent style={{}}>
+          <Grid item container xs={8} style={{}}>
+            <Card style={{width: '95%', paddingTop: "0px", paddingLeft: '20px',boxShadow:'none' }}>
+              <CardContent style={{padding: '0'}}>
                 <Typography gutterBottom variant="h4" component="div" color="text.secondary">
                   <strong>My profile: </strong>
                 </Typography>

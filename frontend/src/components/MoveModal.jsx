@@ -47,9 +47,9 @@ export default function BasicCard({ task, sections }) {
 
     return (
         <React.Fragment>
-            <IconButton aria-label="comment" onClick={handleClickOpen}>
-                <EditIcon />
-            </IconButton>
+            <Button style={{marginLeft:'15px'}} variant="outlined" onClick={handleClickOpen}>
+                Move subtask
+            </Button>
             <Dialog open={open} onClose={handleClose} fullWidth={true}>
                 <DialogTitle>Move task</DialogTitle>
                 <DialogContent>

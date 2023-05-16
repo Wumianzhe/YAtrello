@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CommentIcon from '@mui/icons-material/Comment';
 import IconButton from '@mui/material/IconButton';
-
+import EditIcon from '@mui/icons-material/Edit';
 import SubtaskCard from '../components/SubtaskCard';
 import TaskService from '../API/TaskService';
 import ProfileService from '../API/ProfileService';
@@ -49,14 +49,10 @@ export default function BasicCard({ task, sections }) {
     return (
         <React.Fragment>
             <IconButton aria-label="comment" onClick={handleClickOpen}>
-                <CommentIcon />
+                <EditIcon />
             </IconButton>
             <Dialog open={open} onClose={handleClose} fullWidth={true}>
                 <DialogTitle>{task.header}</DialogTitle>
-                <Grid item>
-                    <MoveModal task={task} sections={sections} />
-                    {/*staff ? <MoveModal task={task} sections={sections} /> : <null/>*/} 
-                </Grid>
                 <DialogContent>
                     <Typography variant="body2">
                       Author: {taskAuthor.email}
@@ -70,7 +66,7 @@ export default function BasicCard({ task, sections }) {
                             </div>:null
                     }
                     <br/>
-                    {staff ? <AddNewSubtask taskId={task.id}/> : <null/> }
+                    {staff ? <div><AddNewSubtask taskId={task.id}/><MoveModal task={task} sections={sections} /></div> : <null/> }
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Close</Button>

@@ -33,13 +33,19 @@
 .sections_line {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
     padding: 20px 0 20px 0;
-    cursor: pointer;
-    overflow: scroll;
+    /* overflow: scroll; */
     -ms-overflow-style: none;
 }
 .sections_line div > div {
+    
+}
+.sections_line > div {
+    flex: 0 0 31.81%;
     margin-right: 15px;
+    margin-bottom: 15px;
 }
 .sections_item {
     border-radius: 10px;

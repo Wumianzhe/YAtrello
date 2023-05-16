@@ -1,4 +1,4 @@
-import { useLoaderData, redirect, Form } from "react-router-dom";
+import { useLoaderData, redirect, Form, Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from "@mui/material/Box";
@@ -105,6 +105,7 @@ export default function Edit() {
                 variant="contained"
                 style={{ background: '#33beff' }}
                 type="submit"
+                onClick={() => {document.location='/users'}}
               >
                 Save
               </Button>

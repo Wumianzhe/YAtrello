@@ -13,21 +13,23 @@ export default function TaskList({ tasks, sections }) {
   return (
     <div>
         {tasks.map((task, i) =>
-          <div key={i} style={{ 'paddingTop': '15px' }}>
-            <Card variant="outlined" style={{marginRight: '-30px', 'border-radius': '15px'}}>
+          <div key={i} style={{  }}>
+            <Card variant="outlined" style={{ 'border-radius': '15px', margin:'0'}}>
               <CardContent
-                style={{margin: '-15px'}}
+                style={{padding:'10px'}}
               >
                 <ListItem
+                style={{padding:'0',}}
                   disableGutters
                   secondaryAction={
-                    <TaskModal task={task} sections={sections}/>
+                    <TaskModal style={{position:'absolute', top:'0',left:'0', color:'black'}} task={task} sections={sections}/>
+                    
                   }
                 >
-                  <ListItemText primary={
+                  <ListItemText style={{flex:'auto'}} primary={
                     <Typography component={'div'} variant="body2" color="textSecondary" style={{ paddingLeft: theme.spacing(1) }}>
                       <strong>
-                        <p>{task.header + '\n'}</p>
+                        <p style={{color:'black', marginBlock:'5px'}}>{task.header + '\n'}</p>
                       </strong>
                       <strong>
                         deadline:

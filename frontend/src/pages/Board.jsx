@@ -96,14 +96,14 @@ export default function Board() {
         </CardContent>
       </Card>
 
-      <Scrollable _class="sections_line">
+      <Scrollable _class="sections_line" >
         {sections.map((sec, i) =>
-          <Grid key={i} item>
+          <Grid key={i} item data-class="sections_item">
             <SectionCard sec={sec} sections={sections}/>
           </Grid>
         )}
       </Scrollable>
-      <FormDialog icon=<AddCircleIcon/> title={"Create section"}>
+      <FormDialog  icon=<AddCircleIcon/> title={"Create section"} >
           <TextField
             autoFocus
             margin="dense"
