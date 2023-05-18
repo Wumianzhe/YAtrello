@@ -43,24 +43,24 @@ export default function Main() {
             <Card style={{width: '95%', paddingTop: "0px", paddingLeft: '20px',boxShadow:'none' }}>
               <CardContent style={{padding: '0'}}>
                 <Typography gutterBottom variant="h4" component="div" color="text.secondary">
-                  <strong>My profile: </strong>
+                  <strong>Мой профиль: </strong>
                 </Typography>
                 <Typography gutterBottom variant="h5" component="div" color="text.secondary">
-                  <strong>Login: </strong>{data.username} 
+                  <strong>Логин: </strong>{data.username} 
                   <br/>
                   <strong>Email: </strong>{data.email} 
                   <br/>
-                  <strong>First name: </strong>{data.first_name} 
+                  <strong>Имя: </strong>{data.first_name} 
                   <br/>
-                  <strong>Second name: </strong>{data.last_name}
+                  <strong>Фамилия: </strong>{data.last_name}
                   <br/>
-                  <strong>Something about me: </strong>{data.short_bio}
+                  <strong>О себе: </strong>{data.short_bio}
                 </Typography>
                 <Button
                   variant="contained" 
                   style={{background: '#33beff'}}
                 >
-                    <Link to={'/users/edit'} style={{color: 'white', textDecoration: 'none'}}>Edit</Link>
+                    <Link to={'/users/edit'} style={{color: 'white', textDecoration: 'none'}}>Изменить</Link>
                 </Button>
               </CardContent>
             </Card>

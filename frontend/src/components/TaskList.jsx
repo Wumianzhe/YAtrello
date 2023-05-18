@@ -32,7 +32,7 @@ export default function TaskList({ tasks, sections }) {
                         <p style={{color:'black', marginBlock:'5px'}}>{task.header + '\n'}</p>
                       </strong>
                       <strong>
-                        deadline:
+                        Крайний срок:
                       </strong> {task.time_deadline === null? "None" : new Date(task.time_deadline).toLocaleString()}
                     </Typography>
                   } />

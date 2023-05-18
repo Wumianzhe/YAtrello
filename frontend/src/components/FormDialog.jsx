@@ -37,8 +37,8 @@ export default function FormDialog({icon,title,children}) {
           </Form>
         </DialogContent>
         <DialogActions>
-            <Button type="submit" form="dialForm" onClick={handleClose}>Submit</Button>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button type="submit" form="dialForm" onClick={handleClose}>Подтвердить</Button>
+            <Button onClick={handleClose}>Отменить</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -75,11 +75,11 @@ const Log = () => {
                 <Grid item xs={12} sm={5}>
                     <Paper style={classes.paper}>
                         <h1 style={{color: '#33beff'}}>
-                            Authorization
+                            Авторизация
                         </h1>
                         <div style={classes.div_style}>
                             <FormControl style={classes.form_style} variant="outlined">
-                                <InputLabel htmlFor="component-outlined">Login</InputLabel>
+                                <InputLabel htmlFor="component-outlined">Логин</InputLabel>
                               <OutlinedInput {...register("username",{required : true})}
                                     label="login1"
                                     type="text"
@@ -115,10 +115,10 @@ const Log = () => {
                                 style={{background: '#33beff'}}
                                 type="submit"
                             >
-                                Authorization
+                                Aвторизироваться
                             </Button>
                         </div>
-                        <Link to={'/register'} style={{color: '#33beff'}}>Not registered yet?</Link>
+                        <Link to={'/register'} style={{color: '#33beff'}}>Еще не зарегистрированы?</Link>
                     </Paper>
                 </Grid>
             </Grid>

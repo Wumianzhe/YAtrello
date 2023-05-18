@@ -94,7 +94,7 @@ export default function Edit() {
           <Paper style={{ padding: '15px', borderRadius: '15px' }}>
             <Grid style={{ padding: '25px' }} item>
 
-              <div style={{ fontSize: 26, 'textAlign': 'center', color: '#33beff', marginTop: '-25px', padding: '10px' }}><strong>Editing a profile</strong></div>
+              <div style={{ fontSize: 26, 'textAlign': 'center', color: '#33beff', marginTop: '-25px', padding: '10px' }}><strong>Изменение профиля</strong></div>
               <InputWithLabel text="login" default={data.username} name="username" />
               <InputWithLabel text="email" default={data.email} name="email" />
               <InputWithLabel text="First name" default={data.first_name} name="first_name" />
@@ -107,7 +107,7 @@ export default function Edit() {
                 type="submit"
                 onClick={() => {document.location='/users'}}
               >
-                Save
+                Сохранить
               </Button>
             </Grid>
           </Paper>

@@ -39,10 +39,10 @@ export default function AddNewSubtask({taskId}) {
   return (
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Add subtask
+        Добавить подзадачу
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>New subtask</DialogTitle>
+        <DialogTitle>Новая подзадача</DialogTitle>
         <DialogContent>
           <TextField
             margin="dense"
@@ -53,11 +53,11 @@ export default function AddNewSubtask({taskId}) {
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Отмена</Button>
           <Button onClick={() => {
             handleBlank()
             hanleCreate(textValue)
-          }}>Create</Button>
+          }}>Создать</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

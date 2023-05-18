@@ -71,11 +71,11 @@ const Reg = () => {
                 <Grid item xs={12} sm={5}>
                     <Paper style={classes.paper}>
                         <h1 style={{color: '#33beff'}}>
-                            Registration
+                            Регистрация
                         </h1>
                         <div style={classes.div_style}>
                             <FormControl style={classes.form_style} variant="outlined">
-                                <InputLabel htmlFor="component-outlined">Login</InputLabel>
+                                <InputLabel htmlFor="component-outlined">Логин</InputLabel>
                               <OutlinedInput {...register("username",{required : true})}
                                     id="component-outlined" 
                                     label="login"
@@ -95,7 +95,7 @@ const Reg = () => {
                         </div>
                         <div style={classes.div_style}>
                             <FormControl style={classes.form_style} variant="outlined">
-                                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                <InputLabel htmlFor="outlined-adornment-password">Пароль</InputLabel>
                               <OutlinedInput {...register("pass",{required:true})}
                                     id="outlined-adornment-password"
                                     type={values.showPassword ? 'text' : 'password'}
@@ -123,10 +123,10 @@ const Reg = () => {
                                 style={{background: '#33beff'}}
                                 type="submit"
                             >
-                                Register
+                                Зарегистрироваться
                             </Button>
                         </div>
-                        <Link to={'/login'} style={{color: '#33beff'}}>Already registered?</Link>
+                        <Link to={'/login'} style={{color: '#33beff'}}>Уже зарегистрировались?</Link>
                     </Paper>
                 </Grid>
             </Grid>

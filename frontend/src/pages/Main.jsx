@@ -114,7 +114,7 @@ function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtask
         <Card variant="outlined" style={{'border-radius': '15px'}}>
           <CardContent>
             <Box sx={{ fontWeight: 'bold', fontSize: 'h3.fontSize', fontFamily: 'default', color: "#677a84", 'textAlign': 'center', marginTop: '15px'}}>
-                Analytics
+               Аналитика
             </Box>
           </CardContent>
         </Card>
@@ -164,14 +164,14 @@ function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtask
             <Card variant="outlined" style={{'border-radius': '15px'}}>
               <CardContent>
                 <Typography component={'div'} variant="body2" color="#677a84">
-                  <strong>Need to complete</strong>
+                  <strong>Нужно выполнить:</strong>
                 </Typography>
                 <br />
                 <Typography component={'div'} variant="body2" color="textSecondary">
-                  <strong>tasks:</strong> {incompleteTasks.length}
+                  <strong>Задачи:</strong> {incompleteTasks.length}
                 </Typography>
                 <Typography component={'div'} variant="body2" color="textSecondary">
-                  <strong>subtasks:</strong> {incompleteSubtasks.length}
+                  <strong>подзадачи:</strong> {incompleteSubtasks.length}
                 </Typography>
               </CardContent>
             </Card>
@@ -179,17 +179,17 @@ function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtask
             <Card variant="outlined" style={{'border-radius': '15px'}}>
               <CardContent>
                 <Typography component={'div'} variant="body2" color="#677a84">
-                  <strong>Total</strong>
+                  <strong>Всего</strong>
                 </Typography>
                 <br />
                 <Typography component={'div'} variant="body2" color="textSecondary">
-                  <strong>boards:</strong> {boards.length}
+                  <strong>Досок:</strong> {boards.length}
                 </Typography>
                 <Typography component={'div'} variant="body2" color="textSecondary">
-                  <strong>tasks:</strong> {tasks.length}
+                  <strong>Задач:</strong> {tasks.length}
                 </Typography>
                 <Typography component={'div'} variant="body2" color="textSecondary">
-                  <strong>subtasks:</strong> {subtasks.length}
+                  <strong>Подзадачи:</strong> {subtasks.length}
                 </Typography>
               </CardContent>
             </Card>
@@ -222,7 +222,7 @@ function MainInternal() {
               <Card variant="outlined" style={{background: 'white', marginTop: '15px', 'border-radius': '15px'}}>
                 <CardContent>
                   <Box sx={{ fontWeight: 'bold', fontSize: 'h4.fontSize', fontFamily: 'default', color: "#54656e", 'textAlign': 'center', marginTop: '15px'}}>
-                      My boards {staff?<ADDNewBoard />:null}
+                      Мои доски {staff?<ADDNewBoard />:null}
                   </Box>
                 </CardContent>
               </Card>
@@ -237,7 +237,7 @@ function MainInternal() {
             <Card variant="outlined" style={{background: '#dee2e7', marginTop: '15px', 'border-radius': '15px'}}>
               <CardContent>
                 <Box sx={{ fontWeight: 'bold', fontSize: 'h4.fontSize', fontFamily: 'default', color: "#54656e", 'textAlign': 'center', marginTop: '15px'}}>
-                    Need to complete
+                    Нужно выполнить
                 </Box>
               </CardContent>
             </Card>

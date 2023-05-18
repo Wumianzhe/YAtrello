@@ -225,7 +225,7 @@ export default function ADDNewBoard() {
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Отменить</Button>
           <Button onClick={() => {
             handleBlank()
             hanleCreate(textValue, right)

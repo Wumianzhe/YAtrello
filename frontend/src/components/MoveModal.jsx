@@ -48,21 +48,21 @@ export default function BasicCard({ task, sections }) {
     return (
         <React.Fragment>
             <Button style={{marginLeft:'15px'}} variant="outlined" onClick={handleClickOpen}>
-                Move subtask
+                Переместить подзадачу
             </Button>
             <Dialog open={open} onClose={handleClose} fullWidth={true}>
-                <DialogTitle>Move task</DialogTitle>
+                <DialogTitle>Переместить задачу</DialogTitle>
                 <DialogContent>
                     <br/>
                     <Card style={{marginTop: '10px'}}>
                         <CardContent style={{padding: '10px'}}>
-                            <strong>Task for move: </strong>{task.header}
+                            <strong>Переносимая задача: </strong>{task.header}
                         </CardContent>
                     </Card>
                     <br/>
                     <Card style={{marginTop: '10px'}}>
                         <CardContent style={{padding: '10px'}}>
-                            <strong>Which section: </strong>
+                            <strong>В какую секцию: </strong>
                             <FormControl variant="standard">
                                 <Input
                                     id="component-simple" 
@@ -78,8 +78,8 @@ export default function BasicCard({ task, sections }) {
                     </Card>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleMove}>Move</Button>
-                    <Button onClick={handleClose}>Close</Button>
+                    <Button onClick={handleMove}>Перенести</Button>
+                    <Button onClick={handleClose}>Закрыть</Button>
                 </DialogActions>
             </Dialog>
         </React.Fragment>

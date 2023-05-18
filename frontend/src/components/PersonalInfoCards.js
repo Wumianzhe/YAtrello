@@ -12,7 +12,7 @@ export default function ProfileCard(props) {
     <Card sx={{ maxWidth: 500 }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-            Manage your personal information 
+          Управляйте своей личной информацией
         </Typography>
         <Box padding={2}>
             <TextField
@@ -24,7 +24,7 @@ export default function ProfileCard(props) {
             />
         </Box>
         <CardActions>
-            <Button variant="contained" size="small">Save</Button>
+            <Button variant="contained" size="small">Сохранить</Button>
         </CardActions>
       </CardContent>
     </Card>

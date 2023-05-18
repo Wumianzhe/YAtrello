@@ -66,13 +66,13 @@ export default function Board() {
       <Card style={{width: '100%', paddingTop: "10px", paddingLeft: '10px', borderRadius: "15px" }}>
         <CardContent style={{}}>
           <Typography gutterBottom variant="h4" component="div" color="text.secondary">
-            <strong>Board: </strong>{board.name}
+            <strong>Доска: </strong>{board.name}
             {staff?
               <>
                 <br/>
                 <div style={{display: 'block'}}>
                   <div style={{display: 'inline-block'}}>
-                    <strong>Users: </strong>
+                    <strong>Пользователи: </strong>
                   </div>
                   <div style={{display: 'inline-block', marginLeft: "15px"}}>
                     <Stack direction="row" spacing={2}>

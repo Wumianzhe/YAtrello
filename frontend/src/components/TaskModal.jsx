@@ -55,13 +55,13 @@ export default function BasicCard({ task, sections }) {
                 <DialogTitle>{task.header}</DialogTitle>
                 <DialogContent>
                     <Typography variant="body2">
-                      Author: {taskAuthor.email}
+                      Автор: {taskAuthor.email}
                     </Typography>
                     <p>
                         {task.text}
                     </p>
                     {(subtasks.length > 0)?<div>
-                                <Typography>Subtasks</Typography>
+                                <Typography>Подзадачи</Typography>
                                 <SubtaskCard list={subtasks} />
                             </div>:null
                     }
@@ -69,7 +69,7 @@ export default function BasicCard({ task, sections }) {
                     {staff ? <div><AddNewSubtask taskId={task.id}/><MoveModal task={task} sections={sections} /></div> : <null/> }
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Close</Button>
+                    <Button onClick={handleClose}>Закрыть</Button>
                 </DialogActions>
             </Dialog>
         </React.Fragment>
