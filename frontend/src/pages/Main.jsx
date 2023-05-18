@@ -133,8 +133,8 @@ function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtask
                   <FullCircularProgressWithLabel
                     first={subtasks.length - incompleteSubtasks.length}
                     second={subtasks.length}
-                    text={"subtasks"} 
-                    textSize="h5.fontSize"
+                    text={"Подзадачи"} 
+                    textSize="h7.fontSize"
                     size={150} 
                     color={'#33e3ff'} />
                   <br />
@@ -150,8 +150,8 @@ function Analytics({ boards, tasks, incompleteTasks, subtasks, incompleteSubtask
                   <FullCircularProgressWithLabel
                     first={tasks.length - incompleteTasks.length}
                     second={tasks.length}
-                    text={"tasks"} 
-                    textSize={'h6.fontSize'}
+                    text={"Задачи"} 
+                    textSize={'h7.fontSize'}
                     size={100} 
                     color={'#33beff'} />
                 </Grid>
